@@ -1,0 +1,144 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #FBDFDB;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 940px;
+  height: 366px;
+  margin: 0 auto 50px;
+}
+
+.main .txt {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-right: 248px;
+  margin-left: 54px;
+}
+
+.main h1 {
+  text-align: left;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.main p {
+  text-align: left;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  color: #000000;
+  opacity: 0.7;
+  margin-top: 10px;
+  max-width: 330px;
+  max-height: 84px;
+}
+
+.main img {
+  width: 216px;
+  height: 300px;
+  margin-right: 100px;
+  margin-top: 66px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+  row-gap: 30px;
+  justify-content: center;
+
+  margin: 0px auto 50px;
+  width: 100%;
+  max-width: 940px;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.card img {
+  width: 300px;
+  height: 140px;
+  border-radius: 15px;
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--body-color);
+  margin: 20px auto 5px;
+}
+.card p {
+  font-size: 14px;
+  color: var(--p-color);
+}
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color:#FFFFFF;
+  width: 100%;
+  max-width: 660px;
+  height: 413px;
+  margin: 30vh auto;
+  border-radius: 16px;
+
+  position: relative;
+}
+
+
+.image-container img{
+  width: 600px;
+  height: 200px;
+  margin: 30px;
+  margin-bottom: 0;
+  border-radius: 15px;
+}
+
+.content-modal {
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+
+.content-modal p.name {
+  font-size: 24px;
+  color: var(--body-color);
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.content-modal p.cooker {
+  font-size: 18px;
+  color: var(--p-color);
+  text-align: center;
+}
+
+.close-modal a {
+  font-size: 16px;
+  color: #999999;
+  cursor: pointer;
+}
+
+/* === MODAL ACTIVE === */
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}

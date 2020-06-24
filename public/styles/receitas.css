@@ -1,0 +1,104 @@
+.header {
+  margin-bottom: 50px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+  row-gap: 30px;
+  justify-content: center;
+
+  margin: 0px auto 50px;
+  width: 100%;
+  max-width: 940px;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.card img {
+  width: 300px;
+  height: 140px;
+  border-radius: 15px;
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--body-color);
+  margin: 20px auto 5px;
+}
+.card p {
+  font-size: 14px;
+  color:var(--p-color);
+}
+
+/* === MODAL === */
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color:#FFFFFF;
+  width: 100%;
+  max-width: 660px;
+  height: 413px;
+  margin: 30vh auto;
+  border-radius: 16px;
+
+  position: relative;
+}
+
+
+.image-container img{
+  width: 600px;
+  height: 200px;
+  margin: 30px;
+  margin-bottom: 0;
+  border-radius: 15px;
+}
+
+.content-modal {
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+
+.content-modal p.name {
+  font-size: 24px;
+  color: var(--body-color);
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.content-modal p.cooker {
+  font-size: 18px;
+  color: var(--p-color);
+  text-align: center;
+}
+
+.close-modal a {
+  font-size: 16px;
+  color: #999999;
+  cursor: pointer;
+}
+
+/* === MODAL ACTIVE === */
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}

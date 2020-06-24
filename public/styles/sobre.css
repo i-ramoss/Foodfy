@@ -1,0 +1,26 @@
+.header {
+  margin-bottom: 50px;
+}
+
+.topic {
+  width: 100%;
+  max-width: 940px;
+  margin: 0px auto 20px;
+}
+
+.txt {
+  width: 100%;
+  max-width: 940px;
+  margin: 0px auto 30px;
+}
+
+.txt p {
+  color: #444444;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+footer {
+  margin-top: 20px;
+}
