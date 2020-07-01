@@ -20,7 +20,7 @@
 
 
 <div align="center">
-  <img src="https://i.ibb.co/Dz8BR15/foodfy.gif" alt="Foodfy" height="450px">
+  <img src="https://s7.gifyu.com/images/foodfy461a0c54a2bc86a8.gif" alt="Foodfy" height="450px">
 </div>
 
 
