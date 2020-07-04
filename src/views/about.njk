@@ -1,31 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'layout.njk' %}
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block head %} 
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="stylesheet" href="/styles/sobre.css">
 
-    <title>Foodfy</title>
+<title>Sobre - Foodfy</title>
+{% endblock %}
 
-    <link rel="icon" href="/public/assets/restaurant-white-18dp.svg" type="image/x-icon" />
+{% block header %}
+  <li><a href="/about"><strong>Sobre</strong></a></li>
+  <li><a href="/recipes">Receitas</a></li>
+{% endblock %}
 
-    <link rel="stylesheet" href="/public/styles/main.css">
-    <link rel="stylesheet" href="/public/styles/sobre.css">
-  </head>
-
-  <body>
-    
-    <header class="header">
-      <a href="index.html"><img src="/public/assets/logo.png" alt="foodfy"></a>
-      <nav>
-        <ul class="menu">
-          <li><a href="sobre.html"><strong>Sobre</strong></a></li>
-          <li><a href="receitas.html">Receitas</a></li>
-        </ul>
-      </nav>
-
-    </header>
-
+{% block content %}
     <div class="topic">
       <h2>Sobre o Foodfy:</h2>
     </div>
@@ -52,7 +39,4 @@
       <p>Fusce nec pulvinar nunc. Duis porttitor tincidunt accumsan. Quisque pulvinar mollis ipsum ut accumsan. Proin ligula lectus, rutrum vel nisl quis, efficitur porttitor nisl. Morbi ut accumsan felis, eu ultrices lacus. Integer in tincidunt arcu, et posuere ligula. Morbi cursus facilisis feugiat. Praesent euismod nec nisl at accumsan. Donec libero neque, vulputate semper orci et, malesuada sodales eros. Nunc ut nulla faucibus enim ultricies euismod.</p>
     </div>
 
-    <footer><p>Todos os direitos reservados, receitas Foodfy</p></footer>
-
-  </body>
-</html>
+{% endblock %}
