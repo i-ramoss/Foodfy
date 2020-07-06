@@ -1,0 +1,12 @@
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 100px auto auto;
+  max-width: 940px;
+  width: 100%;
+  border-radius: 20px;
+  padding: 50px 30px;
+  background-color: #FBDFDB;
+}

@@ -2,19 +2,28 @@
 
 {% block head %} 
 <link rel="stylesheet" href="/styles/main.css">
-<link rel="stylesheet" href="/styles/sobre.css">
+<link rel="stylesheet" href="/styles/about.css">
 
-<title>Sobre - Foodfy</title>
+<title>{{info.title}}</title>
 {% endblock %}
 
 {% block header %}
-  <li><a href="/about"><strong>Sobre</strong></a></li>
-  <li><a href="/recipes">Receitas</a></li>
+  <li><a href="/about" class='about'>{{info.about}}</a></li>
+  <li><a href="/recipes">{{info.recipes}}</a></li>
 {% endblock %}
 
 {% block content %}
     <div class="topic">
-      <h2>Sobre o Foodfy:</h2>
+      <h2>{{info.about_foodfy}}</h2>
+    </div>
+
+    <div class="txt">
+      <p>Suspendisse placerat neque neque. Morbi dictum nulla non sapien rhoncus, et mattis erat commodo. Aliquam vel lacus a justo mollis luctus. Proin vel auctor eros, sed eleifend nunc. Curabitur eget tincidunt risus. Mauris malesuada facilisis magna, vitae volutpat sapien tristique eu. Morbi metus nunc, interdum in erat placerat, aliquam iaculis massa. Duis vulputate varius justo pharetra maximus. In vehicula enim nec nibh porta tincidunt. Vestibulum at ultrices turpis, non dictum metus. Vivamus ligula ex, semper vitae eros ut, euismod convallis augue. <br><br>
+    
+    Fusce nec pulvinar nunc. Duis porttitor tincidunt accumsan. Quisque pulvinar mollis ipsum ut accumsan. Proin ligula lectus, rutrum vel nisl quis, efficitur porttitor nisl. Morbi ut accumsan felis, eu ultrices lacus. Integer in tincidunt arcu, et posuere ligula. Morbi cursus facilisis feugiat. Praesent euismod nec nisl at accumsan. Donec libero neque, vulputate semper orci et, malesuada sodales eros. Nunc ut nulla faucibus enim ultricies euismod.</p>
+    </div>
+    <div class="topic">
+      <h2>{{info.start}}.</h2>
     </div>
 
     <div class="txt">
@@ -23,16 +32,7 @@
       Fusce nec pulvinar nunc. Duis porttitor tincidunt accumsan. Quisque pulvinar mollis ipsum ut accumsan. Proin ligula lectus, rutrum vel nisl quis, efficitur porttitor nisl. Morbi ut accumsan felis, eu ultrices lacus. Integer in tincidunt arcu, et posuere ligula. Morbi cursus facilisis feugiat. Praesent euismod nec nisl at accumsan. Donec libero neque, vulputate semper orci et, malesuada sodales eros. Nunc ut nulla faucibus enim ultricies euismod.</p>
     </div>
     <div class="topic">
-      <h2>Como tudo começou...</h2>
-    </div>
-
-    <div class="txt">
-      <p>Suspendisse placerat neque neque. Morbi dictum nulla non sapien rhoncus, et mattis erat commodo. Aliquam vel lacus a justo mollis luctus. Proin vel auctor eros, sed eleifend nunc. Curabitur eget tincidunt risus. Mauris malesuada facilisis magna, vitae volutpat sapien tristique eu. Morbi metus nunc, interdum in erat placerat, aliquam iaculis massa. Duis vulputate varius justo pharetra maximus. In vehicula enim nec nibh porta tincidunt. Vestibulum at ultrices turpis, non dictum metus. Vivamus ligula ex, semper vitae eros ut, euismod convallis augue. <br><br>
-
-      Fusce nec pulvinar nunc. Duis porttitor tincidunt accumsan. Quisque pulvinar mollis ipsum ut accumsan. Proin ligula lectus, rutrum vel nisl quis, efficitur porttitor nisl. Morbi ut accumsan felis, eu ultrices lacus. Integer in tincidunt arcu, et posuere ligula. Morbi cursus facilisis feugiat. Praesent euismod nec nisl at accumsan. Donec libero neque, vulputate semper orci et, malesuada sodales eros. Nunc ut nulla faucibus enim ultricies euismod.</p>
-    </div>
-    <div class="topic">
-      <h2>Nossas receitas:</h2>
+      <h2>{{info.our_recipes}}</h2>
     </div>
 
     <div class="txt">

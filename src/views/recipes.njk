@@ -1,47 +1,31 @@
 {% extends 'layout.njk' %}
 
 {% block head %}
-  <link rel="stylesheet" href="/styles/main.css">
-  <link rel="stylesheet" href="/styles/receitas.css">
+  <link rel='stylesheet' href='/styles/main.css'>
+  <link rel='stylesheet' href='/styles/recipes.css'>
 
-  <title>Receitas - Foodfy</title>
+  <title>{{info.title}}</title>
 {% endblock %}
 
 {% block header %}
-  <li><a href="/about">Sobre</a></li>
-  <li><a href="/recipes"><strong>Receitas</strong></a></li>
+  <li><a href='/about'>{{info.about}}</a></li>
+  <li><a href='/recipes' class='recipes'>{{info.recipes}}</a></li>
 {% endblock %}
 
 {% block content%}
 
-  <div class="cards">
+  <div class='cards'>
 
     {% for recipe in recipes %}
-      <div class="card">
-        <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
-        <h3 class="name">{{recipe.title}}</h3>
-        <p class="cooker">{{recipe.author}}</p>
+      <div class='card' id = '{{ recipes.indexOf(recipe) }}' >
+        <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
+        <h3 class='name'>{{recipe.title}}</h3>
+        <p class='cooker'>{{recipe.author}}</p>
       </div>
     {% endfor %}
 
   </div>
 
-
-    <div class="modal-overlay">
-
-      <div class="modal">
-        <div class="image-container">
-          <img src=""/>
-        </div>
-        <div class="content-modal">
-          <p class="name"></p>
-          <p class="cooker"></p>
-        </div>
-        <div class="close-modal"><a>Fechar</a></div>
-      </div>
-      
-    </div>
-
-    <script src="/scripts/scripts.js"></script>
+    <script src='/scripts/recipes.js'></script>
 
 {% endblock %}

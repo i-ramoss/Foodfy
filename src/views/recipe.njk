@@ -1,0 +1,58 @@
+{% extends 'layout.njk' %}
+
+{% block head %}
+  <link rel='stylesheet' href='/styles/recipe.css'>
+
+  <title>{{item.title}}</title>
+{% endblock %}
+
+{% block header %}
+  <li><a href='/about'>Sobre</a></li>
+  <li><a href='/recipes'><strong>Receitas</strong></a></li>
+{% endblock %}
+
+{% block content%}
+
+  <div class='content'>
+
+    <div class='image__container'>
+      <img src='{{item.image}}' alt='Imagem de {{item.image}}'>
+      <h3>{{item.title}}</h3>
+      <p>por {{item.author}}</p>
+    </div>
+    <div class='ingredients__container recipe'>
+      <div class='section'>
+        <h3>{{info.ingredients}}</h3>
+        <a class='hide'>{{info.hide}}</a>
+      </div>
+      <ul class='data'>
+      {% for ingredient in item.ingredients %}
+        <li>{{ingredient}};</li>
+      {% endfor %}
+    </div>
+      </ul>
+    <div class='preparation__container recipe'>
+      <div class='section'>
+        <h3>{{info.make}}</h3>
+        <a class='hide'>{{info.hide}}</a>
+      </div>
+      <ul class='data'>
+        {% for step in item.preparation %}
+        <li>{{step}}</li>
+      {% endfor %}
+      </ul>
+      
+    </div>
+    <div class='adittional_info__container recipe'>
+      <div class='section'>
+        <h3>{{info.adittional}}</h3>
+        <a class='hide'>{{info.hide}}</a>
+      </div>
+      <p class='data'>{{item.information}}</p>
+    </div>
+
+  </div>
+
+  <script src='/scripts/recipes.js'></script>
+
+{% endblock %}

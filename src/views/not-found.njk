@@ -1,0 +1,13 @@
+{% extends 'layout.njk' %}
+
+{% block head %}
+  <title>{{error.name}}</title>
+
+  <link rel="stylesheet" href="/styles/not-found.css">
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <h1>{{error.name}}</h1>
+  </div>
+{% endblock %}

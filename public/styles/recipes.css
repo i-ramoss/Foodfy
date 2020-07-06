@@ -2,6 +2,10 @@
   margin-bottom: 50px;
 }
 
+.menu a.recipes {
+  font-weight: bold;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -38,7 +42,7 @@
 /* === MODAL === */
 
 .modal-overlay {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(184, 153, 153, 0.6);
   width: 100%;
   height: 100%;
   position: fixed;

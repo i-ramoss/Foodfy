@@ -5,9 +5,10 @@ const nunjucks = require('nunjucks')
 const server = express()
 const recipes = require('./data')
 
-server.use(express.static('public'))
 
+server.use(express.static('public'))
 server.set('view engine', 'njk')
+
 
 nunjucks.configure('src/views', {
   express: server,
@@ -15,35 +16,67 @@ nunjucks.configure('src/views', {
   noCache: true
 })
 
+
 server.get('/', (require, response) => {
-  const txt = {
+  const info = {
     t1: 'As melhores receitas',
-    t2: 'Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo inteiro.'
+    t2: 'Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo inteiro.',
+    title: 'Foodfy'
   }
 
-  return response.render('index', { recipes: recipes, txt })
+  return response.render('index', { recipes: recipes, info })
 })
 
 server.get('/recipes', (require, response) => {
-  return response.render('recipes', { recipes: recipes })
+  const info = {
+    about: 'Sobre',
+    recipes: 'Receitas',
+    title: 'Receitas - Foodfy'
+  }
+
+  return response.render('recipes', { recipes: recipes, info })
 })
 
 server.get('/about', (require, response) => {
-  return response.render('about')
+  const info = {
+    about: 'Sobre',
+    recipes: 'Receitas',
+    title: 'Sobre - Foodfy',
+
+    about_foodfy: 'Sobre o Foodfy:',
+    start: 'Como tudo começou..',
+    our_recipes: 'Nossas receitas:',
+  }
+    
+  return response.render('about', { info })
 })
 
 server.get('/recipes/:index', (require, response) => {
   const recipeIndex = require.params.index
-
-  const recipe = recipes.find((recipe) => {
-    return recipe.index == recipeIndex
-  })
-
-  return response.render('course', { data: recipes[recipeIndex] })
-
+  const info = {
+    ingredients: 'Ingredientes',
+    hide: 'ESCONDER',
+    show: 'MOSTRAR',
+    make: 'Modo de preparo',
+    adittional: 'Informações adicionais'
+  }
+    
+  if(!recipes[recipeIndex]) {
+    const error = { name: 'Receita não existente'}
+    
+    return response.status(404).render('not-found', { error })
+  }
+  
+  
+  return response.render('recipe', { item: recipes[recipeIndex], info})
 })
 
+// Página não encontrada
+server.use( (require, response) => {
+  const error = { name: 'Página não encontrada' }
 
+  response.status(404).render('not-found', { error })
+})
 
 
 server.listen(3000, () => {

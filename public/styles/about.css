@@ -2,6 +2,10 @@
   margin-bottom: 50px;
 }
 
+.menu a.about {
+  font-weight: bold;
+}
+
 .topic {
   width: 100%;
   max-width: 940px;

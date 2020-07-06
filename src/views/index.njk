@@ -1,18 +1,17 @@
 {% extends 'layout.njk' %}
 
 {% block head %}
-  <link rel="stylesheet" href="/styles/main.css">
   <link rel="stylesheet" href="/styles/index.css">
 
-  <title>Foodfy</title>
+  <title>{{info.title}}</title>
 {% endblock %}
 
 {% block content %}
 
   <main class="main">
     <div class="txt">
-      <h1>{{txt.t1}}</h1>
-      <p>{{txt.t2}}</p>
+      <h1>{{info.t1}}</h1>
+      <p>{{info.t2}}</p>
     </div>
     <img src="/assets/chef.png" alt="Chef">
   </main>
@@ -20,30 +19,15 @@
   <div class="cards">
 
     {% for recipe in recipes %}
-      <div class="card">
+      <div class="card" id = '{{ recipes.indexOf(recipe) }}' >
         <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
         <h3 class="name">{{recipe.title}}</h3>
-        <p class="cooker">{{recipe.author}}</p>
+        <p class="cooker">por {{recipe.author}}</p>
       </div>
     {% endfor %}
 
   </div>
 
-  <div class="modal-overlay">
-
-    <div class="modal">
-      <div class="image-container">
-        <img src=""/>
-      </div>
-      <div class="content-modal">
-        <p class="name"></p>
-        <p class="cooker"></p>
-      </div>
-      <div class="close-modal"><a>Fechar</a></div>
-      
-    </div>
-  </div>
-
-  <script src="/scripts/scripts.js"></script>
+  <script src="/scripts/recipes.js"></script>
 
 {% endblock%}
