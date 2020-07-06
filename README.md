@@ -20,7 +20,7 @@
 
 
 <div align="center">
-  <img src="https://s7.gifyu.com/images/foodfy461a0c54a2bc86a8.gif" alt="Foodfy" height="450px">
+  <img src=".github/foodfy_back.gif" alt="Foodfy" height="450px">
 </div>
 
 
@@ -35,6 +35,10 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [HTML][html]
 - [CSS][css]
 - [JavaScript][js]
+- [Node.js][nodejs]
+- [Express][express]
+- [Nodemon][nodemon]
+- [Nunjucks][njk]
 
 ## :construction_worker: Como usar: (Em desenvolvimento)
 
@@ -49,6 +53,14 @@ $ git clone https://github.com/i-ramoss/Foodfy.git
 
 # Entre no repositório:
 $ cd Foodfy
+
+# Instale as dependências:
+$ npm install
+
+# Inicie o servidor
+$ nodemon
+
+# A aplicação estará rodando na porta 3000 (http://localhost:3000/)
 ```
 
 ## :confetti_ball: Como contribuir:
@@ -74,6 +86,10 @@ Feito por **Ian Ramos** :fire: [Entre em contato!][linkedin]
 [html]: https://developer.mozilla.org/pt-BR/docs/Web/HTML
 [css]: https://developer.mozilla.org/pt-BR/docs/Web/CSS
 [js]: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript
+[nodejs]: https://nodejs.org/en/
+[express]: https://expressjs.com/pt-br/
+[nodemon]: https://nodemon.io/
+[njk]: https://mozilla.github.io/nunjucks/
 [git]: https://git-scm.com
 [license]: https://github.com/i-ramoss/Foodfy/blob/master/LICENSE
 [linkedin]: https://www.linkedin.com/in/ian-ramos/
