@@ -1,0 +1,74 @@
+.container-header {
+  background-color: var(--body-color);
+  margin-bottom: 50px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header a img {
+  margin-right: 0;
+}
+
+.menu a.recipes {
+  font-weight: bold;
+}
+
+.menu a {
+  color: black;
+  font-size: 16px;
+  margin-right: 30px;
+  font-weight: 500;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 20px;
+  row-gap: 30px;
+  justify-content: center;
+
+  margin: 0px auto 50px;
+  width: 100%;
+  max-width: 940px;
+}
+
+.card-admin {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas: "img name"
+                       "img cooker"
+                       "img view"
+  ;
+  column-gap: 20px;
+}
+
+.card-admin img {
+  grid-area: img;
+  width: 172px;
+  height: 80px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.card-admin h3 {
+  grid-area: name;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--body-color);
+  cursor: pointer;
+}
+
+.card-admin p {
+  grid-area: cooker;
+  font-size: 14px;
+  color:var(--p-color);
+}
+
+.card-admin a {
+  grid-area: view;
+  font-size: 14px;
+  font-weight: bold;
+  color: #6558C3;
+}

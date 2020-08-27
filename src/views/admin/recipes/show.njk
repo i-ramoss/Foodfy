@@ -1,14 +1,23 @@
 {% extends 'layout.njk' %}
 
 {% block head %}
-  <link rel='stylesheet' href='/styles/recipe.css'>
+  <link rel='stylesheet' href='/styles/admin/recipe.css'>
 
   <title>{{item.title}}</title>
+{% endblock %}
+
+{% block header %}
+  <a href="/"><img src="/assets/logo_white.png" alt="foodfy"></a>
 {% endblock %}
 
 {% block content%}
 
   <div class='content'>
+
+    <div class="title">
+      <h3>{{info.recipe}} {{item.title}}</h3>
+      <a href="#" class="button">Editar receita</a>
+    </div>
 
     <div class='image__container'>
       <img src='{{item.image}}' alt='Imagem de {{item.image}}'>
@@ -18,7 +27,6 @@
     <div class='ingredients__container recipe'>
       <div class='section'>
         <h3>{{info.ingredients}}</h3>
-        <a class='hide'>{{info.hide}}</a>
       </div>
       <ul class='data'>
       {% for ingredient in item.ingredients %}
@@ -29,7 +37,6 @@
     <div class='preparation__container recipe'>
       <div class='section'>
         <h3>{{info.make}}</h3>
-        <a class='hide'>{{info.hide}}</a>
       </div>
       <ul class='data'>
         {% for step in item.preparation %}
@@ -41,7 +48,6 @@
     <div class='adittional_info__container recipe'>
       <div class='section'>
         <h3>{{info.adittional}}</h3>
-        <a class='hide'>{{info.hide}}</a>
       </div>
       <p class='data'>{{item.information}}</p>
     </div>

@@ -1,9 +1,5 @@
-.header {
-  margin-bottom: 50px;
-}
-
-.menu a.recipes {
-  font-weight: bold;
+.container-header  {
+  margin-bottom: 20px;
 }
 
 .cards {

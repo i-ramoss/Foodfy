@@ -1,9 +1,5 @@
-.header {
-  margin-bottom: 50px;
-}
-
-.menu a.about {
-  font-weight: bold;
+.container-header  {
+  margin-bottom: 20px;
 }
 
 .topic {

@@ -1,5 +1,14 @@
 .container-header {
+  background-color: var(--body-color);
+  margin-bottom: 50px;
+}
+
+.header {
   margin-bottom: 20px;
+}
+
+.header a img {
+  margin-right: 0;
 }
 
 .content {
@@ -9,6 +18,22 @@
 
   margin: 0px auto 50px;
   max-width: 940px;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.button {
+  padding: 8px 20px;
+  background-color: #6558C3;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .image__container {
@@ -60,6 +85,7 @@
   margin-bottom: 39px;
 }
 
+.title h3,
 .ingredients__container h3, 
 .preparation__container h3,
 .adittional_info__container h3 {

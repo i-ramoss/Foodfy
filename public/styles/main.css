@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
   --body-color: #111111 ;
@@ -24,13 +24,17 @@ body {
   color: var(--body-color);
 }
 
+.container-header {
+  width: 100%;
+}
+
 .header {
   display: flex;
   align-items: center;
 
   width: 100%;
   max-width: 940px;
-  margin: 30px auto 30px;
+  margin: 30px auto;
 }
 
 .header a img {
@@ -49,7 +53,6 @@ body {
   font-weight: 500;
 }
 
-
 .topic {
   width: 100%;
   max-width: 940px;
@@ -61,7 +64,6 @@ body {
   font-weight: bold;
   color: var(--body-color);
 }
-
 
 footer {
   margin-top: auto;

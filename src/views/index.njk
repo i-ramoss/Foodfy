@@ -18,8 +18,8 @@
 
   <div class="cards">
 
-    {% for recipe in recipes %}
-      <div class="card" id = '{{ recipes.indexOf(recipe) }}' >
+    {% for recipe in data %}
+      <div class="card" id = '{{ data.indexOf(recipe) }}' >
         <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
         <h3 class="name">{{recipe.title}}</h3>
         <p class="cooker">por {{recipe.author}}</p>
@@ -28,6 +28,6 @@
 
   </div>
 
-  <script src="/scripts/recipes.js"></script>
+  <script src="/scripts/scripts.js"></script>
 
 {% endblock%}

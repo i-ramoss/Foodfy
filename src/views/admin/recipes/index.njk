@@ -1,0 +1,34 @@
+{% extends 'layout.njk' %}
+
+{% block head %}
+  <link rel='stylesheet' href='/styles/main.css'>
+  <link rel='stylesheet' href='/styles/admin/recipes.css'>
+
+  <title>{{info.title}}</title>
+{% endblock %}
+
+{% block header %}
+  <a href="/"><img src="/assets/logo_white.png" alt="foodfy"></a>
+{% endblock %}
+
+
+{% block content%}
+
+  <div class="topic">
+    <h2>Gerenciar receitas</h2>
+  </div>
+
+  <div class='cards'>
+    {% for recipe in data %}
+      <div class='card-admin' id = '{{ data.indexOf(recipe) }}' >
+        <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
+        <h3 class='name'>{{recipe.title}}</h3>
+        <p class='cooker'>por {{recipe.author}}</p>
+        <a href="#">Visualizar</a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <script src='/scripts/scripts.js'></script>
+
+{% endblock %}
