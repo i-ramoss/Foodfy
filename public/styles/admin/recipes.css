@@ -11,17 +11,6 @@
   margin-right: 0;
 }
 
-.menu a.recipes {
-  font-weight: bold;
-}
-
-.menu a {
-  color: black;
-  font-size: 16px;
-  margin-right: 30px;
-  font-weight: 500;
-}
-
 .cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

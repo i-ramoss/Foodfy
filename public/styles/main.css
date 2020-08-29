@@ -3,6 +3,8 @@
 :root {
   --body-color: #111111 ;
   --p-color: #777777;
+  --button-color: #6558C3;
+  --border-color: #DDDDDD;
 }
 
 * {

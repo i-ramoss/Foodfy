@@ -1,0 +1,26 @@
+.container-header {
+  background-color: var(--body-color);
+  margin-bottom: 50px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.header a img {
+  margin-right: 0;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 60px auto auto;
+  max-width: 940px;
+  width: 50%;
+  border-radius: 20px;
+  padding: 50px 30px;
+  background-color: var(--body-color);
+  color: #FBDFDB;
+}

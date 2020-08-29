@@ -1,7 +1,7 @@
 {% extends 'layout.njk' %}
 
 {% block head %}
-  <link rel='stylesheet' href='/styles/admin/recipe.css'>
+  <link rel='stylesheet' href='/styles/admin/show.css'>
 
   <title>{{item.title}}</title>
 {% endblock %}
@@ -16,13 +16,13 @@
 
     <div class="title">
       <h3>{{info.recipe}} {{item.title}}</h3>
-      <a href="#" class="button">Editar receita</a>
+      <a href="#" class="button">{{info.edit}}</a>
     </div>
 
     <div class='image__container'>
       <img src='{{item.image}}' alt='Imagem de {{item.image}}'>
       <h3>{{item.title}}</h3>
-      <p>por {{item.author}}</p>
+      <p>by {{item.author}}</p>
     </div>
     <div class='ingredients__container recipe'>
       <div class='section'>
@@ -40,8 +40,8 @@
       </div>
       <ul class='data'>
         {% for step in item.preparation %}
-        <li>{{step}}</li>
-      {% endfor %}
+          <li>{{step}}</li>
+        {% endfor %}
       </ul>
       
     </div>

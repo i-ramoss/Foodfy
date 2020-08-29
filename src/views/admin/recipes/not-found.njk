@@ -1,9 +1,13 @@
 {% extends 'layout.njk' %}
 
 {% block head %}
-  <title>{{error.name}}</title>
+  <link rel="stylesheet" href="/styles/admin/not-found.css">
 
-  <link rel="stylesheet" href="/styles/not-found.css">
+  <title>{{error.name}}</title>
+{% endblock %}
+
+{% block header %}
+  <a href="/"><img src="/assets/logo_white.png" alt="foodfy"></a>
 {% endblock %}
 
 {% block content %}

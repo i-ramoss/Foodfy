@@ -5,9 +5,10 @@ const nunjucks = require('nunjucks')
 const server = express()
 
 server.use(express.static('public'))
+server.use(express.urlencoded({ extended: true }))
 server.use(routes)
 server.use( (require, response) => {
-  const error = { name: 'Página não encontrada' }
+  const error = { name: 'Page not-found!' }
 
   response.status(404).render('not-found', { error })
 })
@@ -20,6 +21,6 @@ nunjucks.configure('src/views', {
 })
 
 
-server.listen(3000, () => {
-  console.log('The server is running successfully on port 3000')
-})
+server.listen(5000, () => {
+  console.log('The server is running successfully on port 5000')
+}) 

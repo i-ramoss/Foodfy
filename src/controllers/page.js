@@ -1,24 +1,22 @@
-const data = require('../data')
+const data = require('../../data.json')
 
 exports.index = (require, response) => {
   const info = {
-    t1: 'As melhores receitas',
-    t2: 'Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo inteiro.',
+    t1: 'The best recipes',
+    t2: 'Learn how to build the best dishes with recipes created by professionals from all over the world.',
     title: 'Foodfy'
   }
 
-  return response.render('index', { data, info })
+  return response.render('index', { data: data.recipes, info })
 }
 
 exports.about = (require, response) => {
   const info = {
-    about: 'Sobre',
-    recipes: 'Receitas',
-    title: 'Sobre - Foodfy',
+    title: 'About - Foodfy',
 
-    about_foodfy: 'Sobre o Foodfy:',
-    start: 'Como tudo começou..',
-    our_recipes: 'Nossas receitas:',
+    about_foodfy: 'About Foodfy:',
+    start: 'How it all began..',
+    our_recipes: 'Our recipes:',
   }
     
   return response.render('about', { info })
@@ -26,29 +24,28 @@ exports.about = (require, response) => {
 
 exports.all = (require, response) => {
   const info = {
-    about: 'Sobre',
-    recipes: 'Receitas',
-    title: 'Receitas - Foodfy'
+    title: 'Recipes - Foodfy'
   }
 
-  return response.render('recipes', { data, info })
+  return response.render('recipes', { data: data.recipes, info })
 }
 
 exports.show = (require, response) => {
   const recipeIndex = require.params.index
   const info = {
-    ingredients: 'Ingredientes',
-    hide: 'ESCONDER',
-    show: 'MOSTRAR',
-    make: 'Modo de preparo',
-    adittional: 'Informações adicionais'
+    ingredients: 'Ingredients',
+    hide: 'HIDE',
+    show: 'SHOW',
+    make: 'Preparation mode:',
+    adittional: 'Additional Information:'
   }
-    
-  if(!data[recipeIndex]) {
+  const item = data.recipes[recipeIndex]
+  
+  if(!item) {
     const error = { name: 'Receita não existente'}
     
     return response.status(404).render('not-found', { error })
   }
   
-  return response.render('recipe', { item: data[recipeIndex], info})
+  return response.render('recipe', { item, info})
 }

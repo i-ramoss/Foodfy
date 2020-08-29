@@ -14,7 +14,6 @@
 .content {
   display: flex;
   flex-direction: column;
-  align-items: left;
 
   margin: 0px auto 50px;
   max-width: 940px;
@@ -45,10 +44,6 @@
 }
 
 .image__container img {
-  /* width: 100%;
-  height: 280px; */
-  /* object-fit: cover;  */
-
   border-radius: 15px;
   margin-bottom: 50px;
 }

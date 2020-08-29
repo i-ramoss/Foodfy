@@ -11,10 +11,13 @@ const routes = express.Router()
 .get('/recipes/:index', page.show)
 
 // admin
+.get('/admin', recipes.redirect)
 .get('/admin/recipes', recipes.index)
 .get('/admin/recipes/create', recipes.create)
-.get('/admin/recipes/:index', recipes.show)
+.get('/admin/recipes/:id', recipes.show)
 .get('/admin/recipes/:id/edit', recipes.edit)
+
+.post('/admin/recipes', recipes.post)
 
 
 

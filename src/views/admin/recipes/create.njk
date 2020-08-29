@@ -1,0 +1,63 @@
+{% extends 'layout.njk' %}
+
+{% block head %}
+  <link rel='stylesheet' href='/styles/admin/create.css'>
+
+  <title>Criar receita - Admin</title>
+{% endblock %}
+
+{% block header %}
+  <a href="/"><img src="/assets/logo_white.png" alt="foodfy"></a>
+{% endblock %}
+
+
+{% block content%}
+
+  <form class="content" action="/admin/recipes" method="post">
+
+    <div class="title">
+      <h3>{{info.create}}</h3>
+      <button type="submit">{{info.save}}</button>
+    </div>
+  
+    <section class="details">
+      <div class="item">
+        <h2>{{info.img}}</h2>
+        <div>
+          <input type="url" name="image" value="" placeholder="http://" required>
+        </div>
+      </div>
+
+      <div class="item">
+        <h2>{{info.ingredients}}</h2>
+        <div id="ingredients">
+          <div class="ingredient">
+            <input type="text" name="ingredients[]" required>
+          </div>
+        </div>
+        <button type="button" class="add-input" name="ingredient">{{info.addIng}}</button>
+      </div>
+
+      <div class="item">
+        <h2>{{info.preparation}}</h2>
+        <div id="steps">
+          <div class="step">
+            <input type="text" name="preparation[]" required>
+          </div>
+        </div>
+        <button type="button" class="add-input" name="step">{{info.addStep}}</button>
+      </div>
+
+      <div class="item">
+        <h2>{{info.info}}</h2>
+        <div>
+          <input type="text-area" name="information" value="" required>
+        </div>
+      </div>
+    </section>
+
+  </form>
+
+  <script src="/scripts/scripts.js"></script>
+
+{% endblock %}
