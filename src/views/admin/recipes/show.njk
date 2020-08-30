@@ -15,8 +15,8 @@
   <div class='content'>
 
     <div class="title">
-      <h3>{{info.recipe}} {{item.title}}</h3>
-      <a href="#" class="button">{{info.edit}}</a>
+      <h3>Recipe: {{item.title}}</h3>
+      <a href="/admin/recipes/{{ item.id }}/edit" class="button">Edit recipe</a>
     </div>
 
     <div class='image__container'>
@@ -26,7 +26,7 @@
     </div>
     <div class='ingredients__container recipe'>
       <div class='section'>
-        <h3>{{info.ingredients}}</h3>
+        <h3>Ingredients:</h3>
       </div>
       <ul class='data'>
       {% for ingredient in item.ingredients %}
@@ -36,7 +36,7 @@
       </ul>
     <div class='preparation__container recipe'>
       <div class='section'>
-        <h3>{{info.make}}</h3>
+        <h3>Preparation mode:</h3>
       </div>
       <ul class='data'>
         {% for step in item.preparation %}
@@ -47,7 +47,7 @@
     </div>
     <div class='adittional_info__container recipe'>
       <div class='section'>
-        <h3>{{info.adittional}}</h3>
+        <h3>Additional information:</h3>
       </div>
       <p class='data'>{{item.information}}</p>
     </div>

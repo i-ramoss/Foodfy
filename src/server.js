@@ -8,10 +8,7 @@ server.use(express.static('public'))
 server.use(express.urlencoded({ extended: true }))
 server.use(routes)
 server.use( (require, response) => {
-  const error = { name: 'Page not-found!' }
-
-  response.status(404).render('not-found', { error })
-})
+  response.status(404).render('not-found') })
 server.set('view engine', 'njk')
 
 nunjucks.configure('src/views', {

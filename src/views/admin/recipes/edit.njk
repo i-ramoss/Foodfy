@@ -3,7 +3,7 @@
 {% block head %}
   <link rel='stylesheet' href='/styles/admin/create.css'>
 
-  <title>Criar receita - Admin</title>
+  <title>{{item.title}}</title>
 {% endblock %}
 
 {% block header %}
@@ -15,10 +15,10 @@
   <form class="content" action="/admin/recipes" method="post">
 
     <div class="title">
-      <h3>Creating recipe:</h3>
+      <h3>Recipe: {{item.title}}</h3>
       <button type="submit">Save recipe</button>
     </div>
-  
+
     <section class="details">
       <div class="item">
         <h2>Recipe image:</h2>
@@ -30,9 +30,11 @@
       <div class="item">
         <h2>Ingredients:</h2>
         <div id="ingredients">
-          <div class="ingredient">
-            <input type="text" name="ingredients[]" value="{{item.ingredients}}" required>
-          </div>
+          {% for ingredient in item.ingredients %}
+            <div class="ingredient">
+                <input type="text" name="ingredients[]" value="{{ingredient}}" required>
+            </div>
+          {% endfor %}
         </div>
         <button type="button" class="add-input" name="ingredient">Add new ingredient:</button>
       </div>
@@ -40,9 +42,11 @@
       <div class="item">
         <h2>Preparation mode:</h2>
         <div id="steps">
-          <div class="step">
-            <input type="text" name="preparation[]" value="{{item.preparation}}" required>
-          </div>
+          {% for preparation in item.preparation %}
+            <div class="step">
+              <input type="text" name="preparation[]" value="{{preparation}}" required>
+            </div>
+          {% endfor %}
         </div>
         <button type="button" class="add-input" name="step">Add new step:</button>
       </div>
@@ -54,9 +58,9 @@
         </div>
       </div>
     </section>
-    
+
   </form>
 
-  <script src="/scripts/scripts.js"></script>
+  <script src='/scripts/scripts.js'></script>
 
 {% endblock %}

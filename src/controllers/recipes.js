@@ -6,51 +6,11 @@ exports.redirect = (require, response) => {
 }
 
 exports.index = (require, response) => {
-  const info = {
-    title: 'Admin - Recipes'
-  }
-
-  return response.render('admin/recipes/index', { data: data.recipes, info })
+  return response.render('admin/recipes/index', { data: data.recipes })
 }
 
 exports.create = (require, response) => {
-  const info = {
-    save: 'Save recipe',
-    create: 'Creating recipe:',
-    img: 'Recipe image:',
-    ingredients: 'Ingredients:',
-    addIng: 'Add new ingredient:',
-    addStep: 'Add new step:',
-    preparation: 'Preparation mode:',
-    info: 'Additional information:'
-  }
-
-  return response.render('admin/recipes/create', { info })
-}
-
-exports.show = (require, response) => {
-  const recipeIndex = require.params.id
-  const info = {
-    edit: 'Edit recipe',
-    recipe: 'Recipe:',
-    button: 'Edit recipe',
-    ingredients: 'Ingredients:',
-    make: 'Preparation mode:',
-    adittional: 'Additional information:'
-  }
-
-  const item = {
-    id: recipeIndex,
-    ...data.recipes
-  }
-    
-  if(!item[recipeIndex]) {
-    const error = { name: 'Non-existent recipe'}
-
-    return response.status(404).render('admin/recipes/not-found', { error })
-  }
-  
-  return response.render('admin/recipes/show', { item: item[recipeIndex], info})
+  return response.render('admin/recipes/create')
 }
 
 exports.post = (require, response) => {
@@ -70,6 +30,35 @@ exports.post = (require, response) => {
   })
 }
 
+exports.show = (require, response) => {
+  const index = require.params.id
+  const item = {
+    id: index,
+    ...data.recipes[index]
+  }
+
+  if(!data.recipes[index]) {
+    const error = { name: 'Non-existent recipe'}
+
+    return response.status(404).render('admin/recipes/not-found', { error })
+  }
+  
+  return response.render('admin/recipes/show', { item })
+}
+
 exports.edit = (require, response) => {
-  return response.send('everything okay on edit')
+  const index = require.params.id
+  const item = {
+    id: index,
+    ...data.recipes[index]
+  }
+    
+  if(!data.recipes[index]) 
+    return response.status(404).render('admin/recipes/not-found', { error })
+
+  return response.render('admin/recipes/edit', { item })
+}
+
+exports.put = (require, response) => {
+
 }

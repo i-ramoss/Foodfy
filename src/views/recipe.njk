@@ -17,8 +17,8 @@
     </div>
     <div class='ingredients__container recipe'>
       <div class='section'>
-        <h3>{{info.ingredients}}</h3>
-        <a class='hide'>{{info.hide}}</a>
+        <h3>Ingredients</h3>
+        <a class='hide'>HIDE</a>
       </div>
       <ul class='data'>
       {% for ingredient in item.ingredients %}
@@ -28,8 +28,8 @@
       </ul>
     <div class='preparation__container recipe'>
       <div class='section'>
-        <h3>{{info.make}}</h3>
-        <a class='hide'>{{info.hide}}</a>
+        <h3>Preparation mode:</h3>
+        <a class='hide'>HIDE</a>
       </div>
       <ul class='data'>
         {% for step in item.preparation %}
@@ -40,8 +40,8 @@
     </div>
     <div class='adittional_info__container recipe'>
       <div class='section'>
-        <h3>{{info.adittional}}</h3>
-        <a class='hide'>{{info.hide}}</a>
+        <h3>Additional Information:</h3>
+        <a class='hide'>HIDE</a>
       </div>
       <p class='data'>{{item.information}}</p>
     </div>

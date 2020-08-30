@@ -18,6 +18,7 @@ const routes = express.Router()
 .get('/admin/recipes/:id/edit', recipes.edit)
 
 .post('/admin/recipes', recipes.post)
+.put ('/admin/recipes', recipes.put)
 
 
 
