@@ -1,27 +1,27 @@
 const fs = require('fs')
 const data = require('../../data.json')
 
-exports.redirect = (require, response) => {
+exports.redirect = (request, response) => {
   return response.redirect('/admin/recipes')
 }
 
-exports.index = (require, response) => {
+exports.index = (request, response) => {
   return response.render('admin/recipes/index', { data: data.recipes })
 }
 
-exports.create = (require, response) => {
+exports.create = (request, response) => {
   return response.render('admin/recipes/create')
 }
 
-exports.post = (require, response) => {
-  const keys = Object.keys(require.body)
+exports.post = (request, response) => {
+  const keys = Object.keys(request.body)
 
   for (key of keys) {
-    if (require.body[key] == "")
+    if (request.body[key] == "")
       return response.send("Please fill in all fields!")
   }
 
-  data.recipes.push(require.body)
+  data.recipes.push(request.body)
 
   fs.writeFile("data.json", JSON.stringify(data, null, 2), (err) => {
     if (err) return response.send("Write file error!")
@@ -30,8 +30,8 @@ exports.post = (require, response) => {
   })
 }
 
-exports.show = (require, response) => {
-  const index = require.params.id
+exports.show = (request, response) => {
+  const index = request.params.id
   const item = {
     id: index,
     ...data.recipes[index]
@@ -46,19 +46,57 @@ exports.show = (require, response) => {
   return response.render('admin/recipes/show', { item })
 }
 
-exports.edit = (require, response) => {
-  const index = require.params.id
+exports.edit = (request, response) => {
+  const index = request.params.id
   const item = {
     id: index,
     ...data.recipes[index]
   }
     
-  if(!data.recipes[index]) 
-    return response.status(404).render('admin/recipes/not-found', { error })
+  if(!item) 
+    return response.status(404).render('admin/recipes/not-found')
 
   return response.render('admin/recipes/edit', { item })
 }
 
-exports.put = (require, response) => {
+exports.update = (request, response) => {
+  const index = request.body.id
+  const keys = Object.keys(request.body)
 
+  for (key of keys) {
+    if (request.body[key] == "")
+      return response.send("Please fill in all fields!")
+  }
+
+  const item = {
+    ...data.recipes[index],
+    ...request.body
+  }
+
+  if(!item) 
+    return response.status(404).render('admin/recipes/not-found')
+
+  data.recipes[index] = item
+
+  fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
+    if(err) return response.send("Write file error!")
+
+    return response.redirect(`/admin/recipes/${index}`)
+  })
+}
+    
+exports.delete = (request, response) => {
+  const index = request.body.id
+
+  const filteredRecipes = data.recipes.filter((recipe, index) => {
+    return request.body.id != index
+  })
+
+  data.recipes = filteredRecipes
+
+  fs.writeFile("data.json", JSON.stringify(data, null, 2), (err) => {
+    if(err) return response.send("Write file error")
+
+    return response.redirect("/admin/recipes")
+  })
 }

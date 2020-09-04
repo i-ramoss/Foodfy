@@ -3,7 +3,7 @@ const page = require('./controllers/page')
 const recipes = require('./controllers/recipes')
 
 const routes = express.Router()
-
+ 
 // main
 .get('/', page.index)
 .get('/about', page.about)
@@ -18,7 +18,8 @@ const routes = express.Router()
 .get('/admin/recipes/:id/edit', recipes.edit)
 
 .post('/admin/recipes', recipes.post)
-.put ('/admin/recipes', recipes.put)
+.put ('/admin/recipes', recipes.update)
+.delete('/admin/recipes', recipes.delete)
 
 
 

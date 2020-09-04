@@ -12,11 +12,15 @@
 
 {% block content%}
 
-  <form class="content" action="/admin/recipes" method="post">
+  <form class="content" id="form-update" action="/admin/recipes?_method=PUT" method="post">
+    <input type="hidden" name="id" value={{item.id}}>
 
     <div class="title">
       <h3>Recipe: {{item.title}}</h3>
-      <button type="submit">Save recipe</button>
+      <div class="button">
+        <button form="form-delete" type="submit" class="delete">Delete</button>
+        <button type="submit" class="save">Save recipe</button>
+      </div>
     </div>
 
     <section class="details">
@@ -58,7 +62,10 @@
         </div>
       </div>
     </section>
+  </form>
 
+  <form id="form-delete" action="/admin/recipes?_method=DELETE" method="post">
+    <input type="hidden" name="id" value={{item.id}}>
   </form>
 
   <script src='/scripts/scripts.js'></script>

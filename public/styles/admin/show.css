@@ -17,6 +17,7 @@
 
   margin: 0px auto 50px;
   max-width: 940px;
+  width: 100%;
 }
 
 .title {
@@ -46,6 +47,8 @@
 .image__container img {
   border-radius: 15px;
   margin-bottom: 50px;
+  width: 100%;
+  height: 280px;
 }
 
 .image__container h3 {

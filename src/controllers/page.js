@@ -1,19 +1,19 @@
 const data = require('../../data.json')
 
-exports.index = (require, response) => {
+exports.index = (request, response) => {
   return response.render('index', { data: data.recipes })
 }
 
-exports.about = (require, response) => {
+exports.about = (request, response) => {
   return response.render('about')
 }
 
-exports.all = (require, response) => {
+exports.all = (request, response) => {
   return response.render('recipes', { data: data.recipes })
 }
 
-exports.show = (require, response) => {
-  const index = require.params.index
+exports.show = (request, response) => {
+  const index = request.params.index
   const item = data.recipes[index]
   
   if(!item) {
