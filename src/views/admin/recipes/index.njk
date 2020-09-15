@@ -15,10 +15,10 @@
   <div class='cards'>
     {% for recipe in data %}
       <div class='card-admin'>
-        <img id ='{{ data.indexOf(recipe) }}' src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
+        <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
         <h3 class='name'>{{recipe.title}}</h3>
         <p class='cooker'>por {{recipe.author}}</p>
-        <a href="/admin/recipes/{{ recipe.id }}">Visualizar</a>
+        <a id='{{ data.indexOf(recipe) }}'>Visualizar</a>
       </div>
     {% endfor %}
   </div>

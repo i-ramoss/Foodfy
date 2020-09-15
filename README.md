@@ -20,13 +20,13 @@
 
 
 <div align="center">
-  <img src=".github/foodfy_back.gif" alt="Foodfy" height="450px">
+  <img src=".github/foodfy.gif" alt="Foodfy" height="450px">
 </div>
 
 
 ## :interrobang: O que é o Foodfy?
 
-O Foodfy é um site de receitas que foi desenvolvido no Bootcamp LaunchBase
+O Foodfy é um site de receitas que foi desenvolvido no Bootcamp LaunchBase.
 
 ## :rocket: Tecnologias:
 
@@ -37,13 +37,13 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [JavaScript][js]
 - [Node.js][nodejs]
 - [Express][express]
-- [Nodemon][nodemon]
 - [Nunjucks][njk]
 
 ## :construction_worker: Como usar: (Em desenvolvimento)
 
 Para clonar e executar essa aplicação você vai precisar dos seguintes softwares instalados em seu computador: 
 - [Git][git]
+- [Node][nodejs]
 
 ### :electric_plug: Instalar dependências e rodar a aplicação:
 
@@ -88,7 +88,6 @@ Feito por **Ian Ramos** :fire: [Entre em contato!][linkedin]
 [js]: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript
 [nodejs]: https://nodejs.org/en/
 [express]: https://expressjs.com/pt-br/
-[nodemon]: https://nodemon.io/
 [njk]: https://mozilla.github.io/nunjucks/
 [git]: https://git-scm.com
 [license]: https://github.com/i-ramoss/Foodfy/blob/master/LICENSE
