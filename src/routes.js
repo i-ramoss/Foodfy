@@ -1,14 +1,14 @@
 const express = require('express')
-const page = require('./controllers/page')
+const site = require('./controllers/site')
 const recipes = require('./controllers/recipes')
 
 const routes = express.Router()
  
 // main
-.get('/', page.index)
-.get('/about', page.about)
-.get('/recipes', page.all)
-.get('/recipes/:index', page.show)
+.get('/', site.index)
+.get('/about', site.about)
+.get('/recipes', site.all)
+.get('/recipes/:index', site.show)
 
 // admin
 .get('/admin', recipes.redirect)

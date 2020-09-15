@@ -27,6 +27,8 @@ body {
 }
 
 .container-header {
+  background-color: var(--body-color);
+  margin-bottom: 50px;
   width: 100%;
 }
 
@@ -36,23 +38,7 @@ body {
 
   width: 100%;
   max-width: 940px;
-  margin: 30px auto;
-}
-
-.header a img {
-  margin-right: 122.4px;
-}
-
-.header .menu {
-  display: flex;
-  justify-content: start;
-}
-
-.menu a {
-  color: var(--body-color);
-  font-size: 16px;
-  margin-right: 30px;
-  font-weight: 500;
+  margin: 30px auto 20px;
 }
 
 .topic {
@@ -65,17 +51,4 @@ body {
   font-size: 24px;
   font-weight: bold;
   color: var(--body-color);
-}
-
-footer {
-  margin-top: auto;
-  padding: 23px 0;
-  width: 100%;
-  background-color: #EEEEEE;
-  text-align: center;
-}
-
-footer p {
-  font-size: 14px;
-  color: #999999;
 }

@@ -1,15 +1,15 @@
 const data = require('../../data.json')
 
 exports.index = (request, response) => {
-  return response.render('index', { data: data.recipes })
+  return response.render('site/index', { data: data.recipes })
 }
 
 exports.about = (request, response) => {
-  return response.render('about')
+  return response.render('site/about')
 }
 
 exports.all = (request, response) => {
-  return response.render('recipes', { data: data.recipes })
+  return response.render('site/recipes', { data: data.recipes })
 }
 
 exports.show = (request, response) => {
@@ -19,8 +19,8 @@ exports.show = (request, response) => {
   if(!item) {
     const error = { name: 'Receita não existente'}
     
-    return response.status(404).render('not-found', { error })
+    return response.status(404).render('site/not-found', { error })
   }
   
-  return response.render('recipe', { item })
+  return response.render('site/recipe', { item })
 }

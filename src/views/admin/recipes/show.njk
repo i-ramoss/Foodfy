@@ -1,4 +1,4 @@
-{% extends 'layout.njk' %}
+{% extends 'admin/layout.njk' %}
 
 {% block head %}
   <link rel='stylesheet' href='/styles/admin/show.css'>
@@ -49,11 +49,9 @@
       <div class='section'>
         <h3>Additional information:</h3>
       </div>
-      <p class='data'>{{item.information}}</p>
+      <p class='data'>{{item.information | striptags(true) | escape | nl2br }}</p>
     </div>
 
   </div>
-
-  <script src='/scripts/scripts.js'></script>
 
 {% endblock %}

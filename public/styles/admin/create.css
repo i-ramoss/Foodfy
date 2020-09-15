@@ -36,6 +36,7 @@
   font-weight: bold;
 }
 
+button[type="submit"],
 button.save,
 button.delete {
   padding: 8px 20px;
@@ -66,7 +67,8 @@ button + button {
   margin-bottom: 10px;
 }
 
-input {
+input,
+textarea {
   width: 100%;
   padding: 18px 5px;
   border: 1px solid var(--border-color);
@@ -75,6 +77,12 @@ input {
   color: #555;
   font-weight: bold;
   font-size: 14px;
+}
+
+textarea {
+  height: 200px;
+  line-height: 25px;
+  resize: vertical;
 }
 
 .ingredient + .ingredient,

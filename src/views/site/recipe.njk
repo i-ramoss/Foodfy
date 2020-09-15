@@ -1,7 +1,7 @@
-{% extends 'layout.njk' %}
+{% extends 'site/layout.njk' %}
 
 {% block head %}
-  <link rel='stylesheet' href='/styles/recipe.css'>
+  <link rel='stylesheet' href='/styles/site/recipe.css'>
 
   <title>{{item.title}}</title>
 {% endblock %}
@@ -47,7 +47,5 @@
     </div>
 
   </div>
-
-  <script src='/scripts/scripts.js'></script>
 
 {% endblock %}

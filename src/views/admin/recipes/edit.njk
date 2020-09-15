@@ -1,13 +1,9 @@
-{% extends 'layout.njk' %}
+{% extends 'admin/layout.njk' %}
 
 {% block head %}
   <link rel='stylesheet' href='/styles/admin/create.css'>
 
   <title>{{item.title}}</title>
-{% endblock %}
-
-{% block header %}
-  <a href="/"><img src="/assets/logo_white.png" alt="foodfy"></a>
 {% endblock %}
 
 {% block content%}
@@ -23,51 +19,11 @@
       </div>
     </div>
 
-    <section class="details">
-      <div class="item">
-        <h2>Recipe image:</h2>
-        <div>
-          <input type="url" name="image" placeholder="http://" value="{{item.image}}" required>
-        </div>
-      </div>
-
-      <div class="item">
-        <h2>Ingredients:</h2>
-        <div id="ingredients">
-          {% for ingredient in item.ingredients %}
-            <div class="ingredient">
-                <input type="text" name="ingredients[]" value="{{ingredient}}" required>
-            </div>
-          {% endfor %}
-        </div>
-        <button type="button" class="add-input" name="ingredient">Add new ingredient:</button>
-      </div>
-
-      <div class="item">
-        <h2>Preparation mode:</h2>
-        <div id="steps">
-          {% for preparation in item.preparation %}
-            <div class="step">
-              <input type="text" name="preparation[]" value="{{preparation}}" required>
-            </div>
-          {% endfor %}
-        </div>
-        <button type="button" class="add-input" name="step">Add new step:</button>
-      </div>
-
-      <div class="item">
-        <h2>Additional information:</h2>
-        <div>
-          <input type="text-area" name="information" value="{{item.information}}" required>
-        </div>
-      </div>
-    </section>
+    {% include 'admin/recipes/fields.njk' %}
   </form>
 
   <form id="form-delete" action="/admin/recipes?_method=DELETE" method="post">
     <input type="hidden" name="id" value={{item.id}}>
   </form>
-
-  <script src='/scripts/scripts.js'></script>
-
+  
 {% endblock %}

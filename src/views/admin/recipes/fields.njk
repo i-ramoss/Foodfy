@@ -1,0 +1,51 @@
+<section class="details">
+  <div class="item">
+    <h2>Recipe image:</h2>
+    <div>
+      <input type="url" name="image" placeholder="http://" value="{{item.image}}" required>
+    </div>
+  </div>
+
+  <div class="item">
+    <h2>Ingredients:</h2>
+    <div id="ingredients">
+      {% if not item.ingredients %}
+        <div class="ingredient">
+          <input type="text" name="ingredients[]" required>
+        </div>
+      {% else %}
+        {% for ingredient in item.ingredients %}
+          <div class="ingredient">
+              <input type="text" name="ingredients[]" value="{{ingredient}}" required>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <button type="button" class="add-input" name="ingredient">Add new ingredient:</button>
+  </div>
+
+  <div class="item">
+    <h2>Preparation mode:</h2>
+    <div id="steps">
+      {% if not item.preparation %}
+        <div class="step">
+          <input type="text" name="preparation[]" required>
+        </div>
+      {% else %}
+        {% for preparation in item.preparation %}
+          <div class="step">
+            <input type="text" name="preparation[]" value="{{preparation}}" required>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <button type="button" class="add-input" name="step">Add new step:</button>
+  </div>
+
+  <div class="item">
+    <h2>Additional information:</h2>
+    <div>
+      <textarea name="information" required>{{item.information}}</textarea>
+    </div>
+  </div>
+</section>

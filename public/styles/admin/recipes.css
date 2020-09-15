@@ -1,16 +1,3 @@
-.container-header {
-  background-color: var(--body-color);
-  margin-bottom: 50px;
-}
-
-.header {
-  margin-bottom: 20px;
-}
-
-.header a img {
-  margin-right: 0;
-}
-
 .cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -38,7 +25,6 @@
   width: 172px;
   height: 80px;
   border-radius: 15px;
-  cursor: pointer;
 }
 
 .card-admin h3 {
@@ -46,7 +32,6 @@
   font-size: 18px;
   font-weight: 400;
   color: var(--body-color);
-  cursor: pointer;
 }
 
 .card-admin p {

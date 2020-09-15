@@ -1,0 +1,33 @@
+.container-header  {
+  margin-bottom: 20px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+  row-gap: 30px;
+  justify-content: center;
+
+  margin: 0px auto 50px;
+  width: 100%;
+  max-width: 940px;
+}
+
+.card img {
+  width: 300px;
+  height: 140px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--body-color);
+  margin: 20px auto 5px;
+}
+.card p {
+  font-size: 14px;
+  color:var(--p-color);
+}

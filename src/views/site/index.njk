@@ -1,7 +1,7 @@
-{% extends 'layout.njk' %}
+{% extends 'site/layout.njk' %}
 
 {% block head %}
-  <link rel="stylesheet" href="/styles/index.css">
+  <link rel="stylesheet" href="/styles/site/index.css">
 
   <title>Foodfy</title>
 {% endblock %}
@@ -19,15 +19,13 @@
   <div class="cards">
 
     {% for recipe in data %}
-      <div class="card" id = '{{ data.indexOf(recipe) }}' >
-        <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
+      <div class="card">
+        <img id='{{ data.indexOf(recipe) }}' src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
         <h3 class="name">{{recipe.title}}</h3>
         <p class="cooker">by {{recipe.author}}</p>
       </div>
     {% endfor %}
 
   </div>
-
-  <script src="/scripts/scripts.js"></script>
 
 {% endblock%}

@@ -58,9 +58,9 @@ $ cd Foodfy
 $ npm install
 
 # Inicie o servidor
-$ nodemon
+$ npm start
 
-# A aplicação estará rodando na porta 3000 (http://localhost:3000/)
+# A aplicação estará rodando na porta 5000 (http://localhost:5000/)
 ```
 
 ## :confetti_ball: Como contribuir:

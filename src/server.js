@@ -9,8 +9,8 @@ server.use(express.static('public'))
 server.use(express.urlencoded({ extended: true }))
 server.use(methodOverride('_method'))
 server.use(routes)
-server.use( (require, response) => {
-  response.status(404).render('not-found') 
+server.use( (request, response) => {
+  response.status(404).render('site/not-found') 
 })
 server.set('view engine', 'njk')
 

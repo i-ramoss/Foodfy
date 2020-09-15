@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/restaurant-white-18dp.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="/styles/admin/main.css">
+
+    {% block head %}
+    <title>Foodfy</title>
+    {% endblock %}  
+  </head>
+
+  <body>
+    <div class="container-header">
+      <header class="header">
+        <a href="/"><img src="/assets/logo_white.png" alt="foodfy"></a>
+      </header>
+    </div>  
+    
+    {% block content%}{% endblock %}
+
+    <script src='/scripts/admin/recipes.js'></script>
+  </body>
+</html>
