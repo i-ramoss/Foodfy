@@ -1,6 +1,6 @@
 const express = require('express')
-const site = require('./controllers/site')
-const recipes = require('./controllers/recipes')
+const site = require('./app/controllers/site')
+const recipes = require('./app/controllers/recipes')
 
 const routes = express.Router()
  
@@ -20,7 +20,6 @@ const routes = express.Router()
 .post('/admin/recipes', recipes.post)
 .put ('/admin/recipes', recipes.update)
 .delete('/admin/recipes', recipes.delete)
-
 
 
 module.exports = routes
