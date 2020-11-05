@@ -86,7 +86,7 @@
   font-size: 18px;
   color: #444444;
   line-height: 28px;
-  list-style: inside;
+  list-style: "- " inside;
 }
 
 .preparation__container li {

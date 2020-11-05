@@ -41,6 +41,26 @@ body {
   margin: 30px auto 20px;
 }
 
+.header a img {
+  margin-right: 50.4px;
+}
+
+.menu {
+  display: flex;
+  justify-content: start;
+}
+
+.menu a {
+  color: #999999;
+  font-size: 15px;
+  margin-right: 30px;
+  font-weight: 500;
+}
+
+.menu a.active {
+  color: #FFFFFF;
+}
+
 .topic {
   width: 100%;
   max-width: 940px;

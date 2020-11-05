@@ -1,3 +1,13 @@
+// Active menu
+const currentPage = location.pathname
+const menuItems = document.querySelectorAll(".menu a")
+
+for (item of menuItems) {
+  if (currentPage.includes(item.getAttribute("href")))
+    item.classList.add("active")
+}
+
+
 // Show recipe
 const cards = document.querySelectorAll(".card-admin a")
 

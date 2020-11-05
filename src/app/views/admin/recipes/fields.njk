@@ -1,8 +1,25 @@
 <section class="details">
   <div class="item">
+    <h2>Title:</h2>
+    <div>
+      <input type="text" name="title" value="{{recipe.title}}" required>
+    </div>
+  </div>
+
+  <div class="item">
     <h2>Recipe image:</h2>
     <div>
       <input type="url" name="image" placeholder="http://" value="{{recipe.image}}" required>
+    </div>
+  </div>
+
+  <div class="item">
+    <h2>Chef:</h2>
+    <div>
+      <select name="chef" required>
+        <option value="" disable selected>Select a chef</option>
+        {# popular com os chefs #}
+      </select>
     </div>
   </div>
 
