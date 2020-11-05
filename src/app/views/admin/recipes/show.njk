@@ -3,7 +3,7 @@
 {% block head %}
   <link rel='stylesheet' href='/styles/admin/show.css'>
 
-  <title>{{item.title}}</title>
+  <title>{{recipe.title}}</title>
 {% endblock %}
 
 {% block header %}
@@ -15,21 +15,21 @@
   <div class='content'>
 
     <div class="title">
-      <h3>Recipe: {{item.title}}</h3>
-      <a href="/admin/recipes/{{ item.id }}/edit" class="button">Edit recipe</a>
+      <h3>Recipe: {{recipe.title}}</h3>
+      <a href="/admin/recipes/{{ recipe.id }}/edit" class="button">Edit recipe</a>
     </div>
 
     <div class='image__container'>
-      <img src='{{item.image}}' alt='Imagem de {{item.title}}'>
-      <h3>{{item.title}}</h3>
-      <p>by {{item.author}}</p>
+      <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
+      <h3>{{recipe.title}}</h3>
+      <p>by {{recipe.author}}</p>
     </div>
     <div class='ingredients__container recipe'>
       <div class='section'>
         <h3>Ingredients:</h3>
       </div>
       <ul class='data'>
-      {% for ingredient in item.ingredients %}
+      {% for ingredient in recipe.ingredients %}
         <li>{{ingredient}};</li>
       {% endfor %}
     </div>
@@ -39,7 +39,7 @@
         <h3>Preparation mode:</h3>
       </div>
       <ul class='data'>
-        {% for step in item.preparation %}
+        {% for step in recipe.preparation %}
           <li>{{step}}</li>
         {% endfor %}
       </ul>
@@ -49,7 +49,7 @@
       <div class='section'>
         <h3>Additional information:</h3>
       </div>
-      <p class='data'>{{item.information | striptags(true) | escape | nl2br }}</p>
+      <p class='data'>{{recipe.information | striptags(true) | escape | nl2br }}</p>
     </div>
 
   </div>

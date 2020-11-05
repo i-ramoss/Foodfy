@@ -1,5 +1,4 @@
-const db = require('../../config/db');
-const { date } = require("../lib/utils")
+const Recipe = require("../models/Recipe")
 
 module.exports = {
   redirect(request, response) {
@@ -7,7 +6,9 @@ module.exports = {
   },
 
   index(request, response) {
-    return response.render('admin/recipes/index')
+    Recipe.all( recipes => {
+      return response.render('admin/recipes/index', { recipes })
+    })
   },
 
   create(request, response) {
@@ -19,60 +20,29 @@ module.exports = {
 
     for (key of keys) {
       if (request.body[key] == "")
-        return response.json({error: "Please, fill in all fields"})
+        return response.json({ error: "Please, fill in all fields" })
     }
 
-    const query = `
-      INSERT INTO recipes (
-        image,
-        ingredients,
-        preparation,
-        information,
-        created_at
-      ) VALUES ($1, $2, $3, $4, $5)
-      RETURNING id
-    `
-
-    const values = [
-      request.body.image,
-      request.body.ingredients,
-      request.body.preparation,
-      request.body.information,
-      date(Date.now()).iso
-    ]
-
-    db.query(query, values, (err, results) => {
-      console.log(err)
-      console.log(results)
-
-      return
+    Recipe.create(request.body, recipe => {
+      return response.redirect("/admin/recipes")
     })
+
   },
 
   show(request, response) {
-    // const index = request.params.id
-    // const item = {
-    //   id: index,
-    //   ...data.recipes[index]
-    // }
+    Recipe.find(request.params.id, recipe => {
+      if(!recipe) return response.status(404).render("admin/recipes/not-found")
 
-    // if(!data.recipes[index]) 
-    //   return response.status(404).render('admin/recipes/not-found')
-
-    return response.render('admin/recipes/show')
+      return response.render("admin/recipes/show", { recipe })
+    })
   },
 
   edit(request, response) {
-    // const index = request.params.id
-    // const item = {
-    //   id: index,
-    //   ...data.recipes[index]
-    // }
-      
-    // if(!item) 
-    //   return response.status(404).render('admin/recipes/not-found')
-  
-    return response.render('admin/recipes/edit')
+    Recipe.find(request.params.id, recipe => {
+      if(!recipe) return response.status(404).render("admin/recipes/not-found")
+
+      return response.render("admin/recipes/edit", { recipe })
+    })
   },
 
   update(request, response) {
@@ -82,20 +52,15 @@ module.exports = {
       if (request.body[key] == "")
       return response.json({error: "Please, fill in all fields"})
     }
-    
-    // const index = request.body.id
-    // const item = {
-    //   ...data.recipes[index],
-    //   ...request.body
-    // }
-  
-    // if(!item) 
-    //   return response.status(404).render('admin/recipes/not-found')
-
-    return
+   
+    Recipe.update(request.body, () => {
+      response.redirect(`/admin/recipes/${request.body.id}`)
+    })
   },
 
   delete(request, response) {
-    return
+    Recipe.delete(request.body.id, () => {
+      response.redirect("/admin/recipes")
+    })
   }
 }

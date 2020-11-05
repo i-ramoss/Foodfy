@@ -2,19 +2,19 @@
   <div class="item">
     <h2>Recipe image:</h2>
     <div>
-      <input type="url" name="image" placeholder="http://" value="{{item.image}}" required>
+      <input type="url" name="image" placeholder="http://" value="{{recipe.image}}" required>
     </div>
   </div>
 
   <div class="item">
     <h2>Ingredients:</h2>
     <div id="ingredients">
-      {% if not item.ingredients %}
+      {% if not recipe.ingredients %}
         <div class="ingredient">
           <input type="text" name="ingredients[]" required>
         </div>
       {% else %}
-        {% for ingredient in item.ingredients %}
+        {% for ingredient in recipe.ingredients %}
           <div class="ingredient">
               <input type="text" name="ingredients[]" value="{{ingredient}}" required>
           </div>
@@ -27,12 +27,12 @@
   <div class="item">
     <h2>Preparation mode:</h2>
     <div id="steps">
-      {% if not item.preparation %}
+      {% if not recipe.preparation %}
         <div class="step">
           <input type="text" name="preparation[]" required>
         </div>
       {% else %}
-        {% for preparation in item.preparation %}
+        {% for preparation in recipe.preparation %}
           <div class="step">
             <input type="text" name="preparation[]" value="{{preparation}}" required>
           </div>
@@ -45,7 +45,7 @@
   <div class="item">
     <h2>Additional information:</h2>
     <div>
-      <textarea name="information" required>{{item.information}}</textarea>
+      <textarea name="information" required>{{recipe.information}}</textarea>
     </div>
   </div>
 </section>

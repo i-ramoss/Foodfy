@@ -3,16 +3,16 @@
 {% block head %}
   <link rel='stylesheet' href='/styles/admin/create.css'>
 
-  <title>{{item.title}}</title>
+  <title>{{recipe.title}}</title>
 {% endblock %}
 
 {% block content%}
 
   <form class="content" id="form-update" action="/admin/recipes?_method=PUT" method="post">
-    <input type="hidden" name="id" value={{item.id}}>
+    <input type="hidden" name="id" value={{recipe.id}}>
 
     <div class="title">
-      <h3>Recipe: {{item.title}}</h3>
+      <h3>Recipe: {{recipe.title}}</h3>
       <div class="button">
         <button form="form-delete" type="submit" class="delete">Delete</button>
         <button type="submit" class="save">Save recipe</button>
@@ -23,7 +23,7 @@
   </form>
 
   <form id="form-delete" action="/admin/recipes?_method=DELETE" method="post">
-    <input type="hidden" name="id" value={{item.id}}>
+    <input type="hidden" name="id" value={{recipe.id}}>
   </form>
   
 {% endblock %}

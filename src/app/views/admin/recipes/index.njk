@@ -13,12 +13,12 @@
   </div>
 
   <div class='cards'>
-    {% for recipe in data %}
+    {% for recipe in recipes %}
       <div class='card-admin'>
         <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
         <h3 class='name'>{{recipe.title}}</h3>
         <p class='cooker'>por {{recipe.author}}</p>
-        <a id='{{ data.indexOf(recipe) }}'>Visualizar</a>
+        <a id="{{recipe.id}}">Visualizar</a>
       </div>
     {% endfor %}
   </div>
