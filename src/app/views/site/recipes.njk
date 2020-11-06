@@ -9,15 +9,13 @@
 {% block content%}
 
   <div class='cards'>
-
-    {% for recipe in data %}
+    {% for recipe in recipes %}
       <div class='card'>
-        <img id='{{ data.indexOf(recipe) }}' src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
+        <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
         <h3 class='name'>{{recipe.title}}</h3>
         <p class='cooker'>{{recipe.author}}</p>
       </div>
     {% endfor %}
-
   </div>
 
 {% endblock %}

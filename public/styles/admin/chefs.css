@@ -18,12 +18,11 @@
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
   row-gap: 30px;
   justify-content: center;
 
-  margin: 0px auto 50px;
+  margin: 0px auto;
   width: 100%;
   max-width: 940px;
 }
@@ -32,34 +31,32 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-areas: "img name"
-                       "img cooker"
                        "img view"
   ;
-  column-gap: 20px;
+  column-gap: 10px;
 }
 
 .card-admin img {
   grid-area: img;
-  width: 172px;
-  height: 80px;
-  border-radius: 15px;
+
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .card-admin h3 {
   grid-area: name;
+
+  width: 100%;
   font-size: 18px;
   font-weight: 400;
   color: var(--body-color);
 }
 
-.card-admin p {
-  grid-area: cooker;
-  font-size: 14px;
-  color:var(--p-color);
-}
-
 .card-admin a {
   grid-area: view;
+
   font-size: 14px;
   font-weight: bold;
   color: #6558C3;

@@ -1,0 +1,29 @@
+{% extends 'admin/layout.njk' %}
+
+{% block head %}
+  <link rel='stylesheet' href='/styles/admin/create.css'>
+
+  <title>{{chef.name}}</title>
+{% endblock %}
+
+{% block content%}
+
+  <form class="content" id="form-update" action="/admin/chefs?_method=PUT" method="post">
+    <input type="hidden" name="id" value={{chef.id}}>
+
+    <div class="title">
+      <h3>Editing chef:</h3>
+      <div class="button">
+        <button form="form-delete" type="submit" class="delete">Delete</button>
+        <button type="submit" class="save">Save chef</button>
+      </div>
+    </div>
+
+    {% include 'admin/chefs/fields.njk' %}
+  </form>
+
+  <form id="form-delete" action="/admin/chefs?_method=DELETE" method="post">
+    <input type="hidden" name="id" value={{chef.id}}>
+  </form>
+  
+{% endblock %}

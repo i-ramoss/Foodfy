@@ -13,7 +13,6 @@
 {% block content%}
 
   <div class='content'>
-
     <div class="title">
       <h3>Recipe: {{recipe.title}}</h3>
       <a href="/admin/recipes/{{ recipe.id }}/edit" class="button">Edit recipe</a>
@@ -29,11 +28,12 @@
         <h3>Ingredients:</h3>
       </div>
       <ul class='data'>
-      {% for ingredient in recipe.ingredients %}
-        <li>{{ingredient}};</li>
-      {% endfor %}
-    </div>
+        {% for ingredient in recipe.ingredients %}
+          <li>{{ingredient}};</li>
+        {% endfor %}
       </ul>
+    </div>
+
     <div class='preparation__container recipe'>
       <div class='section'>
         <h3>Preparation mode:</h3>
@@ -43,15 +43,14 @@
           <li>{{step}}</li>
         {% endfor %}
       </ul>
-      
     </div>
+
     <div class='adittional_info__container recipe'>
       <div class='section'>
         <h3>Additional information:</h3>
       </div>
       <p class='data'>{{recipe.information | striptags(true) | escape | nl2br }}</p>
     </div>
-
   </div>
 
 {% endblock %}

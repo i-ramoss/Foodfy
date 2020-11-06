@@ -94,9 +94,24 @@
   margin-left: 20px;
 }
 
-
-/* === ESCONDER DADOS === */
+/* HIDE DATA */
 
 .data.active {
   display: none;
 }
+
+/* CHEFS */
+
+.image__container.chef{
+  margin: 50px auto;
+}
+
+.image__container.chef img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 30px;
+
+  object-fit: cover;
+}
+

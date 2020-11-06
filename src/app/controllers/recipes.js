@@ -20,7 +20,7 @@ module.exports = {
     }
 
     Recipe.create(request.body, recipe => {
-      return response.redirect("/admin/recipes")
+      return response.status(201).redirect("/admin/recipes")
     })
 
   },

@@ -1,0 +1,22 @@
+{% extends 'admin/layout.njk' %}
+
+{% block head %}
+  <link rel='stylesheet' href='/styles/admin/create.css'>
+
+  <title>Criar Chef - Admin</title>
+{% endblock %}
+
+{% block content%}
+
+  <form class="content" action="/admin/chefs" method="post">
+
+    <div class="title">
+      <h3>Creating chef:</h3>
+      <button type="submit">Save chef</button>
+    </div>
+  
+    {% include 'admin/chefs/fields.njk' %}
+    
+  </form>
+
+{% endblock %}

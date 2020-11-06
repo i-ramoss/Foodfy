@@ -5,5 +5,53 @@ module.exports = {
     Chef.all( chefs => {
       return response.render("admin/chefs/index", { chefs })
     })
+  },
+
+  create(request, response) {
+    return response.render("admin/chefs/create")
+  }, 
+
+  post(request, response) {
+    const keys = Object.keys(request.body)
+
+    for (key of keys) {
+      if (request.body[key] == "")
+        return response.json({ error: "Please, fill in all fields" })
+    }
+
+    Chef.create(request.body, chef => {
+      return response.status(201).redirect(`/admin/chefs`)
+    })
+  },
+
+  show(request, response) {
+    Chef.find(request.params.id, chef => {
+      return response.render("admin/chefs/show", { chef })
+    })
+  },
+
+  edit(request, response) {
+    Chef.find(request.params.id, chef => {
+      return response.render("admin/chefs/edit", { chef })
+    })
+  },
+
+  update(request, response) {
+    const keys = Object.keys(request.body)
+
+    for (key of keys) {
+      if (request.body[key] == "")
+        return response.json({ error: "Please, fill in all fields" })
+    }
+
+    Chef.update(request.body, () => {
+      response.status(200).redirect(`/admin/chefs/${request.body.id}`)
+    })
+  },
+
+  delete(request, response) {
+    Chef.delete(request.body.id, () => {
+      response.status(200).redirect("/admin/chefs")
+    })
   }
 }

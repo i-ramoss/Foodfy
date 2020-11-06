@@ -1,0 +1,46 @@
+{% extends 'admin/layout.njk' %}
+
+{% block head %}
+  <link rel='stylesheet' href='/styles/admin/show.css'>
+  <link rel='stylesheet' href='/styles/admin/recipes.css'>
+
+  <title>{{chef.name}}</title>
+{% endblock %}
+
+{% block header %}
+  <a href="/"><img src="/assets/logo_white.png" alt="foodfy"></a>
+{% endblock %}
+
+{% block content%}
+
+  <div class='content'>
+
+    <div class="title">
+      <h3>Chef: {{chef.name}}</h3>
+      <a href="/admin/chefs/{{ chef.id }}/edit" class="button">Edit chef</a>
+    </div>
+
+    <div class='image__container chef'>
+      <img src='{{chef.avatar_url}}' alt='Imagem de {{chef.avatar_url}}'>
+      <h3>{{chef.name}}</h3>
+      <p>{{chef.name}}</p>
+    </div>
+
+    <div class='ingredients__container recipe'>
+      <div class='section'>
+        <h3>Recipes:</h3>
+      </div>
+      <div class='cards'>
+        {% for recipe in recipes %}
+          <div class='card-admin'>
+            <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
+            <h3 class='name'>{{recipe.title}}</h3>
+            <p class='cooker'>por {{recipe.author}}</p>
+            <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

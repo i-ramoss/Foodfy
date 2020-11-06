@@ -1,7 +1,7 @@
 {% extends 'admin/layout.njk' %}
 
 {% block head %}
-  <link rel='stylesheet' href='/styles/admin/recipes.css'>
+  <link rel='stylesheet' href='/styles/admin/chefs.css'>
 
   <title>Admin - Chefs</title>
 {% endblock %}
@@ -9,16 +9,16 @@
 {% block content%}
 
   <div class="topic">
-    <h2>Gerenciar Chefs</h2>
+    <h2>Manage Chefs</h2>
+    <a href="/admin/chefs/create" class="button">New</a>
   </div>
 
   <div class='cards'>
     {% for chef in chefs %}
       <div class='card-admin'>
-        <img src='{{chef.image}}' alt='Imagem de {{chef.title}}'>
-        <h3 class='name'>{{chef.title}}</h3>
-        <p class='cooker'>por {{chef.author}}</p>
-        <a id="{{chef.id}}">Visualizar</a>
+        <img src='{{chef.avatar_url}}' alt='Imagem de {{chef.name}}'>
+        <h3 class='name'>{{chef.name}}</h3>
+        <a href="/admin/chefs/{{chef.id}}">Visualize</a>
       </div>
     {% endfor %}
   </div>

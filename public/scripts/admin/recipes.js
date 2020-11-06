@@ -7,19 +7,6 @@ for (item of menuItems) {
     item.classList.add("active")
 }
 
-
-// Show recipe
-const cards = document.querySelectorAll(".card-admin a")
-
-for (let show of cards) {
-  show.addEventListener("click", () => {
-    let index = show.getAttribute("id")
-
-    window.location.href = `/admin/recipes/${index}`
-  })
-}
-
-
 // Add input
 function addInput(event) {
   const buttonName = event.target.name

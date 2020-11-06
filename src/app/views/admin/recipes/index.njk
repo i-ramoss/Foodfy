@@ -9,7 +9,8 @@
 {% block content%}
 
   <div class="topic">
-    <h2>Gerenciar receitas</h2>
+    <h2>Gerenciar Receitas</h2>
+    <a href="/admin/recipes/create" class="button">New</a>
   </div>
 
   <div class='cards'>
@@ -18,7 +19,7 @@
         <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
         <h3 class='name'>{{recipe.title}}</h3>
         <p class='cooker'>por {{recipe.author}}</p>
-        <a id="{{recipe.id}}">Visualizar</a>
+        <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
       </div>
     {% endfor %}
   </div>

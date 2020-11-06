@@ -50,6 +50,10 @@ module.exports = {
     })
   },
 
+  findBy() {
+
+  },
+
   update(data, callback) {
     const query = `
       UPDATE recipes SET
