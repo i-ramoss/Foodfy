@@ -1,49 +1,49 @@
-{% extends 'site/layout.njk' %}
+{% extends "site/layout.njk" %}
 
 {% block head %}
-  <link rel='stylesheet' href='/styles/site/recipe.css'>
+  <link rel="stylesheet" href="/styles/site/recipe.css">
 
-  <title>{{item.title}}</title>
+  <title>{{recipe.title}}</title>
 {% endblock %}
 
 {% block content%}
 
-  <div class='content'>
+  <div class="content">
 
-    <div class='image__container'>
-      <img src='{{item.image}}' alt='Imagem de {{item.title}}'>
-      <h3>{{item.title}}</h3>
-      <p>by {{item.author}}</p>
+    <div class="image__container">
+      <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
+      <h3>{{recipe.title}}</h3>
+      <p>by {{recipe.chef_name}}</p>
     </div>
-    <div class='ingredients__container recipe'>
-      <div class='section'>
+    <div class="ingredients__container recipe">
+      <div class="section">
         <h3>Ingredients</h3>
-        <a class='hide'>HIDE</a>
+        <a class="hide">HIDE</a>
       </div>
-      <ul class='data'>
-      {% for ingredient in item.ingredients %}
+      <ul class="data">
+      {% for ingredient in recipe.ingredients %}
         <li>{{ingredient}};</li>
       {% endfor %}
     </div>
       </ul>
-    <div class='preparation__container recipe'>
-      <div class='section'>
+    <div class="preparation__container recipe">
+      <div class="section">
         <h3>Preparation mode:</h3>
-        <a class='hide'>HIDE</a>
+        <a class="hide">HIDE</a>
       </div>
-      <ul class='data'>
-        {% for step in item.preparation %}
+      <ul class="data">
+        {% for step in recipe.preparation %}
         <li>{{step}}</li>
       {% endfor %}
       </ul>
       
     </div>
-    <div class='adittional_info__container recipe'>
-      <div class='section'>
+    <div class="adittional_info__container recipe">
+      <div class="section">
         <h3>Additional Information:</h3>
-        <a class='hide'>HIDE</a>
+        <a class="hide">HIDE</a>
       </div>
-      <p class='data'>{{item.information}}</p>
+      <p class="data">{{recipe.information}}</p>
     </div>
 
   </div>

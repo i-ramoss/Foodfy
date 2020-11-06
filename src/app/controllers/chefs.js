@@ -25,8 +25,13 @@ module.exports = {
   },
 
   show(request, response) {
-    Chef.find(request.params.id, chef => {
-      return response.render("admin/chefs/show", { chef })
+    const id  = request.params.id
+
+    Chef.find(id, chef => {
+
+      Chef.findRecipesByChef(id, recipes => {
+        return response.render("admin/chefs/show", { chef, recipes })
+      })
     })
   },
 

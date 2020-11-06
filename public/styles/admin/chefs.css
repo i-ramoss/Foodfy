@@ -34,6 +34,7 @@
                        "img view"
   ;
   column-gap: 10px;
+  align-items: center;
 }
 
 .card-admin img {
@@ -61,4 +62,9 @@
   font-weight: bold;
   color: #6558C3;
   cursor: pointer;
+}
+
+.card-admin p {
+  font-size: 14px;
+  color: #666666;
 }

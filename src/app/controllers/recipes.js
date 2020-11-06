@@ -8,7 +8,9 @@ module.exports = {
   },
 
   create(request, response) {
-    return response.render('admin/recipes/create')
+    Recipe.chefSelectOptions( options => {
+      return response.render('admin/recipes/create', { chefsOptions: options })
+    })
   },
 
   post(request, response) {
@@ -37,7 +39,9 @@ module.exports = {
     Recipe.find(request.params.id, recipe => {
       if(!recipe) return response.status(404).render("admin/recipes/not-found")
 
-      return response.render("admin/recipes/edit", { recipe })
+      Recipe.chefSelectOptions( options => {
+        return response.render("admin/recipes/edit", { recipe, chefsOptions: options })
+      })
     })
   },
 

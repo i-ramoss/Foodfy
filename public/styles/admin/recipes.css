@@ -32,7 +32,7 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-areas: "img name"
-                       "img cooker"
+                       "img chef"
                        "img view"
   ;
   column-gap: 20px;
@@ -50,10 +50,11 @@
   font-size: 18px;
   font-weight: 400;
   color: var(--body-color);
+  margin-bottom: 0;
 }
 
 .card-admin p {
-  grid-area: cooker;
+  grid-area: chef;
   font-size: 14px;
   color:var(--p-color);
 }

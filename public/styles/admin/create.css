@@ -64,7 +64,7 @@ select {
   outline: none;
   color: #555;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 textarea {
@@ -79,7 +79,7 @@ textarea {
 }
 
 input::placeholder {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: normal;
 }
 

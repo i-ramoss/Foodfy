@@ -23,7 +23,10 @@
     <div class='image__container chef'>
       <img src='{{chef.avatar_url}}' alt='Imagem de {{chef.avatar_url}}'>
       <h3>{{chef.name}}</h3>
-      <p>{{chef.name}}</p>
+      <p>
+        {% if chef.total_recipes == 1 %} {{chef.total_recipes}} recipe {% endif %}
+        {% if chef.total_recipes >= 0 and chef.total_recipes != 1 %} {{chef.total_recipes}} recipes {% endif %}
+      </p>
     </div>
 
     <div class='ingredients__container recipe'>
@@ -35,7 +38,7 @@
           <div class='card-admin'>
             <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
             <h3 class='name'>{{recipe.title}}</h3>
-            <p class='cooker'>por {{recipe.author}}</p>
+            <p class='chef'>by {{recipe.chef_name}}</p>
             <a href="/admin/recipes/{{recipe.id}}">Visualizar</a>
           </div>
         {% endfor %}

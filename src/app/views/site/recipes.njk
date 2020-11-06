@@ -1,19 +1,19 @@
-{% extends 'site/layout.njk' %}
+{% extends "site/layout.njk" %}
 
 {% block head %}
-  <link rel='stylesheet' href='/styles/site/recipes.css'>
+  <link rel="stylesheet" href="/styles/site/recipes.css">
 
   <title>Recipes - Foodfy</title>
 {% endblock %}
 
 {% block content%}
 
-  <div class='cards'>
+  <div class="cards">
     {% for recipe in recipes %}
-      <div class='card'>
-        <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
-        <h3 class='name'>{{recipe.title}}</h3>
-        <p class='cooker'>{{recipe.author}}</p>
+      <div class="card">
+        <img src="{{recipe.image}}" id="{{recipe.id}}" alt="Imagem de {{recipe.title}}">
+        <h3 class="name">{{recipe.title}}</h3>
+        <p>by {{recipe.chef_name}}</p>
       </div>
     {% endfor %}
   </div>

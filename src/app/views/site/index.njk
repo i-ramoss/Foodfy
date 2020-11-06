@@ -1,4 +1,4 @@
-{% extends 'site/layout.njk' %}
+{% extends "site/layout.njk" %}
 
 {% block head %}
   <link rel="stylesheet" href="/styles/site/index.css">
@@ -30,15 +30,15 @@
   </main>
 
   <div class="topic">
-    <h2>Mais acessadas:</h2>
+    <h2>Most accessed:</h2>
   </div>
 
   <div class="cards">
     {% for recipe in recipes %}
       <div class="card">
-        <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
-        <h3 class="name">{{recipe.title}}</h3>
-        <p class="cooker">by {{recipe.author}}</p>
+        <img src="{{recipe.image}}" id="{{recipe.id}}" alt="Imagem de {{recipe.title}}">
+        <h3  class="name">{{recipe.title}}</h3>
+        <p>by {{recipe.chef_name}}</p>
       </div>
     {% endfor %}
   </div>

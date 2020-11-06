@@ -1,10 +1,19 @@
 const Recipe = require("../models/Recipe")
+const Chef = require("../models/Chef")
 
 module.exports = {
   index(request, response) {
-    Recipe.all( recipes => {
-      return response.render("site/index", { recipes })
-    })
+    const { filter } = request.query
+
+    if (filter) {
+      Recipe.findBy((filter, recipes) => {
+        return response.render("site/results", { recipes, filter })
+      })
+    } else {
+      Recipe.all( recipes => {
+        return response.render("site/index", { recipes })
+      })
+    }
   },
   
   about(request, response) {
@@ -18,16 +27,30 @@ module.exports = {
   },
 
   show(request, response) {
-    Recipe.find(request.paramps.id, recipe => {
-      if(!recipe) return response.status(404).render("site/not_found")
+    Recipe.find(request.params.id, recipe => {
+      if(!recipe) return response.status(404).render("site/not-found")
 
       return response.render("site/recipe", { recipe })
     })
   },
 
-  results(request, response) {
-    Recipe.all( recipes => {
-      return response.render("site/results", { recipes })
+  chefs(request, response) {
+    Chef.all( chefs => {
+      return response.render("site/chefs", { chefs })
     })
+  },
+
+  results(request, response) {
+    const { filter } = request.query
+
+    if (filter) {
+      Recipe.findBy(filter, recipes => {
+        return response.render("site/results", { recipes, filter })
+      })
+    } else {
+      Recipe.all( recipes => {
+        return response.render("site/results", { recipes })
+      })
+    }
   }
 }

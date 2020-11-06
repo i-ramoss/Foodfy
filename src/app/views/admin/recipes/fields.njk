@@ -18,7 +18,12 @@
     <div>
       <select name="chef" required>
         <option value="" disable selected>Select a chef</option>
-        {# popular com os chefs #}
+        {% for chef in chefsOptions %}
+          <option 
+          value="{{ chef.id }}" 
+          {% if recipe.chef_id == chef.id %} selected {% endif %}>{{ chef.name }}
+          </option>
+        {% endfor %}
       </select>
     </div>
   </div>
