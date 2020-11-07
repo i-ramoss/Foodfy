@@ -86,8 +86,8 @@ module.exports = {
 
   delete(id, callback) {
     db.query(`
-      DELETE FROM chefs
-      WHERE id = $1`, [id], (err, results) => {
+    DELETE FROM chefs
+    WHERE id = $1`, [id], (err, results) => {
       if (err) throw `Delete Error! ${err}`
 
       return callback()

@@ -90,15 +90,16 @@
   padding: 6px 8px;
   font-size: 14px;
   color: #999999;
+  outline: none;
 }
 
 .menu form button {
   padding: 6px 20px;
-  background-color: var(--button-color);
+  background-color: var(--primary-color);
   border-radius: 4px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  color: white;
+  color: rgb(66, 58, 58);
 
   font-size: 16px;
   font-weight: bold;
@@ -108,4 +109,24 @@
 
 li:last-child {
   margin-left: 160px;
+}
+
+/* Pagination */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination a,
+.pagination span {
+  color: var(--body-color);
+  font-weight: bold;
+  margin-right: 14px;
+}
+
+.pagination a:hover {
+  color: var(--primary-color);
+  transition: 500ms;
+  border-bottom: 1px solid var(--button-color);
 }

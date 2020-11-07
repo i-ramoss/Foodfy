@@ -14,17 +14,9 @@ module.exports = {
   },
 
   post(request, response) {
-    const keys = Object.keys(request.body)
-
-    for (key of keys) {
-      if (request.body[key] == "")
-        return response.json({ error: "Please, fill in all fields" })
-    }
-
     Recipe.create(request.body, recipe => {
       return response.status(201).redirect("/admin/recipes")
     })
-
   },
 
   show(request, response) {
@@ -46,13 +38,6 @@ module.exports = {
   },
 
   update(request, response) {
-    const keys = Object.keys(request.body)
-    
-    for (key of keys) {
-      if (request.body[key] == "")
-      return response.json({error: "Please, fill in all fields"})
-    }
-   
     Recipe.update(request.body, () => {
       response.redirect(`/admin/recipes/${request.body.id}`)
     })

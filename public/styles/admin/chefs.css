@@ -8,7 +8,7 @@
 
 .button {
   padding: 8px 20px;
-  background-color: #6558C3;
+  background-color: var(--button-color);
   border-radius: 4px;
   color: white;
   font-size: 16px;
@@ -60,7 +60,7 @@
 
   font-size: 14px;
   font-weight: bold;
-  color: #6558C3;
+  color:var(--button-color);
   cursor: pointer;
 }
 

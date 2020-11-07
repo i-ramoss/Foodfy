@@ -29,7 +29,9 @@
     
     {% block content%}{% endblock %}
 
-    <footer><p>All rights reserved, Foodfy recipes</p></footer>
+    {% block footer %}
+    <footer><p>All rights reserved, Foodfy</p></footer>
+    {% endblock %}
 
     <script src="/scripts/site/scripts.js"></script>
   </body>

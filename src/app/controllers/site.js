@@ -21,9 +21,29 @@ module.exports = {
   },
 
   all(request, response) {
-    Recipe.all( recipes => {
-      return response.render("site/recipes", { recipes })
-    })
+    let { page, limit } = request.query
+
+    page = page || 1
+    limit = limit || 3
+    let offset = limit * (page-1)
+
+    const params = {
+      page,
+      limit,
+      offset,
+      callback(recipes) {
+        if (recipes == "") return response.redirect("/recipes")
+
+        const pagination = {
+          total: Math.ceil(recipes[0].total / limit),
+          page
+        }
+
+        return response.render("site/recipes", { recipes, pagination })
+      }
+    }
+
+    Recipe.paginate(params)
   },
 
   show(request, response) {
@@ -41,16 +61,29 @@ module.exports = {
   },
 
   results(request, response) {
-    const { filter } = request.query
+    let { filter, page, limit } = request.query
 
-    if (filter) {
-      Recipe.findBy(filter, recipes => {
-        return response.render("site/results", { recipes, filter })
-      })
-    } else {
-      Recipe.all( recipes => {
-        return response.render("site/results", { recipes })
-      })
+    page = page || 1
+    limit = limit || 2
+    let offset = limit * (page-1)
+
+    const params = {
+      filter,
+      page,
+      limit,
+      offset,
+      callback(recipes) {
+        if (recipes == "") return response.redirect("/results")
+
+        const pagination = {
+          total: Math.ceil(recipes[0].total / limit),
+          page
+        }
+
+        return response.render("site/results", { recipes, pagination, filter })
+      }
     }
+
+    Recipe.paginate(params)
   }
 }

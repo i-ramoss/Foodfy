@@ -55,8 +55,20 @@ module.exports = {
   },
 
   delete(request, response) {
-    Chef.delete(request.body.id, () => {
-      response.status(200).redirect("/admin/chefs")
+    const id = request.body.id
+
+    Chef.find(id, chef => {
+
+      Chef.findRecipesByChef(id, recipes => {
+
+        if (recipes.length == 0) {
+          Chef.delete(id, () => {
+            response.status(200).redirect("/admin/chefs")
+          })
+        }
+        else
+          response.status(401).json({ err: "You cannot delete this user because there is a recipe registered on him"})
+      })
     })
   }
 }
