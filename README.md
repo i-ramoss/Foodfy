@@ -20,7 +20,7 @@
 
 
 <div align="center">
-  <img src=".github/foodfy.gif" alt="Foodfy" height="450px">
+  <img src=".github/foodfy_2.gif" alt="Foodfy" height="450px">
 </div>
 
 
@@ -38,12 +38,15 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Node.js][nodejs]
 - [Express][express]
 - [Nunjucks][njk]
+- [PostgreSQL][postgresql]
+
 
 ## :construction_worker: Como usar: (Em desenvolvimento)
 
 Para clonar e executar essa aplicação você vai precisar dos seguintes softwares instalados em seu computador: 
 - [Git][git]
 - [Node][nodejs]
+- [PostgreSQL][postgresql]
 
 ### :electric_plug: Instalar dependências e rodar a aplicação:
 
@@ -76,7 +79,7 @@ Depois que a sua solicitação for aceita e adicionada ao projeto, você pode ex
 
 Este projeto está sob licença MIT, para mais detalhes verifique em [LICENSE][license].
 
-Feito por **Ian Ramos** :fire: [Entre em contato!][linkedin]
+Feito com :green_heart: por **Ian Ramos** :fire: [Entre em contato!][linkedin]
 
 
 
@@ -89,6 +92,7 @@ Feito por **Ian Ramos** :fire: [Entre em contato!][linkedin]
 [nodejs]: https://nodejs.org/en/
 [express]: https://expressjs.com/pt-br/
 [njk]: https://mozilla.github.io/nunjucks/
+[postgresql]: https://www.postgresql.org/
 [git]: https://git-scm.com
 [license]: https://github.com/i-ramoss/Foodfy/blob/master/LICENSE
 [linkedin]: https://www.linkedin.com/in/ian-ramos/

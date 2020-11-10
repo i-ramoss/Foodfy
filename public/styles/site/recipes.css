@@ -1,7 +1,3 @@
-.container-header  {
-  margin-bottom: 20px;
-}
-
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

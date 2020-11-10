@@ -35,11 +35,13 @@
 
   <div class="cards">
     {% for recipe in recipes %}
-      <div class="card">
-        <img src="{{recipe.image}}" id="{{recipe.id}}" alt="Imagem de {{recipe.title}}">
-        <h3  class="name">{{recipe.title}}</h3>
-        <p>by {{recipe.chef_name}}</p>
-      </div>
+      {% if loop.index <= 6 %}
+        <div class="card">
+          <img src="{{recipe.image}}" id="{{recipe.id}}" alt="Imagem de {{recipe.title}}">
+          <h3  class="name">{{recipe.title}}</h3>
+          <p>by {{recipe.chef_name}}</p>
+        </div>
+      {% endif %}
     {% endfor %}
   </div>
 

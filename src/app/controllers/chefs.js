@@ -67,7 +67,7 @@ module.exports = {
           })
         }
         else
-          response.status(401).json({ err: "You cannot delete this user because there is a recipe registered on him"})
+          response.status(401).json({ err: "You can't delete this user because there is a recipe registered on him"})
       })
     })
   }

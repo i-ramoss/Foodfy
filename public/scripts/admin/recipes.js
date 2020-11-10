@@ -32,12 +32,18 @@ document
 
 
 // Confirm deletion 
+function confirmDelete(formDelete) {
+  formDelete.addEventListener("submit", (event) => {
+    const confirmation = confirm("Do you really want to delete this?")
+    
+    if (!confirmation) {
+      event.preventDefault()
+    }
+  })
+}
+
 const formDelete = document.querySelector("#form-delete")
 
-formDelete.addEventListener("submit", (event) => {
-  const confirmation = confirm("Do you really want to delete your profile?")
-  
-  if (!confirmation) {
-    event.preventDefault()
-  }
-})
+if(formDelete)
+  confirmDelete(formDelete)
+
