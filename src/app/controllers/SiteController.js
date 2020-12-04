@@ -2,17 +2,19 @@ const Recipe = require("../models/Recipe")
 const Chef = require("../models/Chef")
 
 module.exports = {
-  index(request, response) {
+  async index(request, response) {
     const { filter } = request.query
 
     if (filter) {
-      Recipe.findBy((filter, recipes) => {
-        return response.render("site/results", { recipes, filter })
-      })
+      let results =  await Recipe.findBy(filter)
+      const recipes = results.rows
+
+      return response.render("site/results", { recipes, filter })
     } else {
-      Recipe.all( recipes => {
-        return response.render("site/index", { recipes })
-      })
+      let results = await Recipe.all()
+      let recipes = results.rows
+
+      return response.render("site/index", { recipes })
     }
   },
   
@@ -20,7 +22,7 @@ module.exports = {
     return response.render("site/about")
   },
 
-  all(request, response) {
+  async all(request, response) {
     let { page, limit } = request.query
 
     page = page || 1
@@ -30,37 +32,39 @@ module.exports = {
     const params = {
       page,
       limit,
-      offset,
-      callback(recipes) {
-        if (recipes == "") return response.redirect("/recipes")
-
-        const pagination = {
-          total: Math.ceil(recipes[0].total / limit),
-          page
-        }
-
-        return response.render("site/recipes", { recipes, pagination })
-      }
+      offset
     }
 
-    Recipe.paginate(params)
+    let results = await Recipe.paginate(params)
+    const recipes = results.rows
+
+    if (recipes == "") return response.redirect("/recipes")
+
+    const pagination = {
+      total: Math.ceil(recipes[0].total / limit),
+      page
+    }
+   
+    return response.render("site/recipes", { recipes, pagination })
   },
 
-  show(request, response) {
-    Recipe.find(request.params.id, recipe => {
-      if(!recipe) return response.status(404).render("site/not-found")
+  async show(request, response) {
+    const result = await Recipe.find(request.params.id)
+    const recipe = result.rows[0]
 
-      return response.render("site/recipe", { recipe })
-    })
+    if(!recipe) return response.status(404).render("site/not-found")
+    
+    return response.render("site/recipe", { recipe })
   },
 
-  chefs(request, response) {
-    Chef.all( chefs => {
-      return response.render("site/chefs", { chefs })
-    })
+  async chefs(request, response) {
+    const results = await Chef.all()
+    const chefs = results.rows
+
+    return response.render("site/chefs", { chefs })
   },
 
-  results(request, response) {
+  async results(request, response) {
     let { filter, page, limit } = request.query
 
     page = page || 1
@@ -71,19 +75,19 @@ module.exports = {
       filter,
       page,
       limit,
-      offset,
-      callback(recipes) {
-        if (recipes == "") return response.redirect("/results")
-
-        const pagination = {
-          total: Math.ceil(recipes[0].total / limit),
-          page
-        }
-
-        return response.render("site/results", { recipes, pagination, filter })
-      }
+      offset
     }
 
-    Recipe.paginate(params)
+    let results = await Recipe.paginate(params)
+    const recipes = results.rows
+
+    if (recipes == "") return response.redirect("/results")
+
+    const pagination = {
+      total: Math.ceil(recipes[0].total / limit),
+      page
+    }
+
+    return response.render("site/results", { recipes, pagination, filter})
   }
 }

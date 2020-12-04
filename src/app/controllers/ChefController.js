@@ -1,17 +1,18 @@
 const Chef = require("../models/Chef")
 
 module.exports = {
-  index(request, response) {
-    Chef.all( chefs => {
-      return response.render("admin/chefs/index", { chefs })
-    })
+  async index(request, response) {
+    const results = await Chef.all()
+    const chefs = results.rows
+
+    return response.render("admin/chefs/index", { chefs })
   },
 
   create(request, response) {
     return response.render("admin/chefs/create")
   }, 
 
-  post(request, response) {
+  async post(request, response) {
     const keys = Object.keys(request.body)
 
     for (key of keys) {
@@ -19,29 +20,32 @@ module.exports = {
         return response.json({ error: "Please, fill in all fields" })
     }
 
-    Chef.create(request.body, chef => {
-      return response.status(201).redirect(`/admin/chefs`)
-    })
+    const results = await Chef.create(request.body)
+    const chef = results.rows[0]
+
+    return response.status(201).redirect(`/admin/chefs`)
   },
 
-  show(request, response) {
+  async show(request, response) {
     const id  = request.params.id
 
-    Chef.find(id, chef => {
+    let result = await Chef.find(id)
+    const chef = result.rows[0]
 
-      Chef.findRecipesByChef(id, recipes => {
-        return response.render("admin/chefs/show", { chef, recipes })
-      })
-    })
+    result = await Chef.findRecipesByChef(id)
+    const recipes = result.rows
+
+    return response.render("admin/chefs/show", { chef, recipes })
   },
 
-  edit(request, response) {
-    Chef.find(request.params.id, chef => {
-      return response.render("admin/chefs/edit", { chef })
-    })
+  async edit(request, response) {
+    const result = await Chef.find(request.params.id)
+    const chef = result.rows[0]
+
+    return response.render("admin/chefs/edit", { chef })
   },
 
-  update(request, response) {
+  async update(request, response) {
     const keys = Object.keys(request.body)
 
     for (key of keys) {
@@ -49,26 +53,25 @@ module.exports = {
         return response.json({ error: "Please, fill in all fields" })
     }
 
-    Chef.update(request.body, () => {
-      response.status(200).redirect(`/admin/chefs/${request.body.id}`)
-    })
+    await Chef.update(request.body)
+
+    response.status(200).redirect(`/admin/chefs/${request.body.id}`)
   },
 
-  delete(request, response) {
+  async delete(request, response) {
     const id = request.body.id
 
-    Chef.find(id, chef => {
+    let result = await Chef.find(id)
 
-      Chef.findRecipesByChef(id, recipes => {
+    result = await Chef.findRecipesByChef(id)
+    const recipes = result.rows
 
-        if (recipes.length == 0) {
-          Chef.delete(id, () => {
-            response.status(200).redirect("/admin/chefs")
-          })
-        }
-        else
-          response.status(401).json({ err: "You can't delete this user because there is a recipe registered on him"})
-      })
-    })
+    if (recipes.length == 0) {
+      result = await Chef.delete(id)
+
+      response.status(200).redirect("/admin/chefs")
+    }
+    else
+      response.status(401).json({ err: "You can't delete this user because there is a recipe registered on him"})
   }
 }

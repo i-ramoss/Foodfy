@@ -48,9 +48,14 @@ module.exports = {
 
     if(!recipe) return response.status(404).render("admin/recipes/not-found")
 
+    // get chefs
     result = await Recipe.chefSelectOptions()
     const chefsOptions = result.rows
 
+    // get images
+    
+
+    
     return response.render("admin/recipes/edit", { recipe, chefsOptions })
   },
 
