@@ -8,8 +8,25 @@
 
   <div class="item">
     <h2>Recipe image:</h2>
-    <div>
-      <input type="url" name="image" placeholder="http://" value="{{recipe.image}}" required>
+
+    <div class="images-container">
+      <div id="images-upload">
+        <div>
+          <input
+            id="images-input"
+            type="file" 
+            name="images" 
+            value="{{recipe.image}}" 
+            multiple 
+            accept="image/*"
+            onchange="ImagesUpload.handleFileInput(event)"
+            required>
+          <i class="material-icons">add</i>
+        </div>
+      </div>
+
+      <div id="images-preview">
+      </div>
     </div>
   </div>
 

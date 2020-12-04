@@ -39,13 +39,13 @@ module.exports = {
 
   update(request, response) {
     Recipe.update(request.body, () => {
-      response.redirect(`/admin/recipes/${request.body.id}`)
+      response.status(200).redirect(`/admin/recipes/${request.body.id}`)
     })
   },
 
   delete(request, response) {
     Recipe.delete(request.body.id, () => {
-      response.redirect("/admin/recipes")
+      response.status(200).redirect("/admin/recipes")
     })
   }
 }
