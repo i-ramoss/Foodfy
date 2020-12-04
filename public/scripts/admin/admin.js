@@ -49,7 +49,7 @@ if(formDelete)
 
 
 // Image Upload
-const ImagesUpload = {
+const RecipeImagesUpload = {
   preview: document.querySelector("#images-preview"),
 
   uploadLimit: 5,
@@ -60,9 +60,9 @@ const ImagesUpload = {
 
   handleFileInput(event) {
     const { files: fileList } = event.target
-    const { preview, getContainer, hasLimit, files, getAllFiles } = ImagesUpload
+    const { preview, getContainer, hasLimit, files, getAllFiles } = RecipeImagesUpload
 
-    ImagesUpload.input = event.target
+    RecipeImagesUpload.input = event.target
 
     if (hasLimit(event)) return
 
@@ -84,11 +84,11 @@ const ImagesUpload = {
       reader.readAsDataURL(file)
     })
     
-    ImagesUpload.input.files =  getAllFiles()
+    RecipeImagesUpload.input.files =  getAllFiles()
   },
 
   hasLimit(event) {
-    const { uploadLimit, input, preview } = ImagesUpload
+    const { uploadLimit, input, preview } = RecipeImagesUpload
     const { files: fileList } = input
 
     if (fileList.length == 0) {
@@ -127,7 +127,7 @@ const ImagesUpload = {
   },
 
   getAllFiles() {
-    const { files } = ImagesUpload
+    const { files } = RecipeImagesUpload
 
     const dataTransfer = new ClipboardEvent("").clipboardData || new DataTransfer()
    
@@ -137,7 +137,7 @@ const ImagesUpload = {
   },
 
   getContainer(image) {
-    const { getRemoveButton, removeImage } = ImagesUpload
+    const { getRemoveButton, removeImage } = RecipeImagesUpload
     const div = document.createElement("div")
 
     div.classList.add("image")
@@ -160,7 +160,7 @@ const ImagesUpload = {
   },
 
   removeImage(event) {
-    const { preview, files, input, getAllFiles } = ImagesUpload
+    const { preview, files, input, getAllFiles } = RecipeImagesUpload
 
     const imageDiv = event.target.parentNode // div class="image">
     const imagesArray = Array.from(preview.children)
