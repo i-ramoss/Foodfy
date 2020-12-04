@@ -2,35 +2,30 @@ const db = require('../../config/db');
 const { date } = require("../lib/utils")
 
 module.exports = {
-  all(callback) {
-    db.query(`
-    SELECT recipes.*, chefs.name AS chef_name 
-    FROM recipes
-    LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-    ORDER BY recipes.title ASC`, (err, results) => {
-      if (err) throw `Index Error! ${err}`
-
-      callback(results.rows)
-    })
+  all() {
+    return db.query(`
+      SELECT recipes.*, chefs.name AS chef_name 
+      FROM recipes
+      LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+      ORDER BY recipes.title ASC
+    `)
   },
 
-  create(data, callback) {
+  create(data) { 
     const query = `
       INSERT INTO recipes (
         title, 
-        image,
         chef_id,
         ingredients,
         preparation,
         information,
         created_at
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+      ) VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id
     `
 
     const values = [
       data.title,
-      data.image,
       data.chef,
       data.ingredients,
       data.preparation,
@@ -38,39 +33,29 @@ module.exports = {
       date(Date.now()).iso
     ]
 
-    db.query(query, values, (err, results) => {
-      if(err) throw `Create Error! ${err}`
-  
-      callback(results.rows[0])
-    })
+    return db.query(query, values)
   },
 
-  find(id, callback) {
-    db.query(`
-    SELECT recipes.*, chefs.name AS chef_name
-    FROM recipes 
-    LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-    WHERE recipes.id = $1`, [id], (err, results) => {
-      if (err) throw `Find Error! ${err}`
-
-      callback(results.rows[0])
-    })
+  find(id) {
+    return db.query(`
+      SELECT recipes.*, chefs.name AS chef_name
+      FROM recipes 
+      LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+      WHERE recipes.id = $1`, [id]
+    )
   },
 
-  findBy(filter, callback) {
-    db.query(`
-    SELECT recipes.*, chefs.name AS chef_name 
-    FROM recipes
-    LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-    WHERE recipes.title ILIKE '%${filter}%'
-    ORDER BY recipes.title ASC`, (err, results) => {
-      if (err) throw `Filter Error! ${err}`
-
-      callback(results.rows)
-    })
+  findBy(filter) {
+    return db.query(`
+      SELECT recipes.*, chefs.name AS chef_name 
+      FROM recipes
+      LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+      WHERE recipes.title ILIKE '%${filter}%'
+      ORDER BY recipes.title ASC
+    `)
   },
 
-  update(data, callback) {
+  update(data) {
     const query = `
       UPDATE recipes SET
         title=($1),
@@ -91,30 +76,18 @@ module.exports = {
       data.id
     ]
   
-    db.query(query, values, (err, results) => {
-      if(err) throw `Update Error! ${err}`
-
-      callback()
-    })
+    return db.query(query, values)
   },
 
-  delete(id, callback) {
-    db.query(`
+  delete(id) {
+    return db.query(`
       DELETE FROM recipes 
-      WHERE id = $1`, [id], (err, results) => {
-      if (err) throw `Delete Error! ${err}`
-
-      return callback()
-    })
+      WHERE id = $1`, [id]
+    )
   },
 
-  chefSelectOptions(callback) {
-    db.query(`
-    SELECT name, id FROM chefs`, (err, results) => {
-      if (err) throw `Select Chef Error! ${err}`
-
-      callback(results.rows)
-    })
+  chefSelectOptions() {
+    return db.query(`SELECT name, id FROM chefs`)
   },
 
   paginate(params) {
@@ -143,10 +116,6 @@ module.exports = {
     LIMIT $1 OFFSET $2
     `
 
-    db.query(query, [limit, offset], (err, results) => {
-      if(err) throw `Paginate Error! ${err}`
-
-      callback(results.rows)
-    })
+    return db.query(query, [limit, offset])
   }
 }

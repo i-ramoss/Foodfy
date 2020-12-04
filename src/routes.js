@@ -1,37 +1,37 @@
 const express = require("express")
 const multer = require("./app/middlewares/multer")
-const site = require("./app/controllers/site")
-const recipes = require("./app/controllers/recipes")
-const chefs = require("./app/controllers/chefs");
+const SiteController = require("./app/controllers/SiteController")
+const RecipeController = require("./app/controllers/RecipeController")
+const ChefController = require("./app/controllers/ChefController");
 
 const routes = express.Router()
  
 // site
-.get("/", site.index)
-.get("/about", site.about)
-.get("/recipes", site.all)
-.get("/recipes/:id", site.show)
-.get("/chefs", site.chefs)
-.get("/results", site.results)
+.get("/", SiteController.index)
+.get("/about", SiteController.about)
+.get("/recipes", SiteController.all)
+.get("/recipes/:id", SiteController.show)
+.get("/chefs", SiteController.chefs)
+.get("/results", SiteController.results)
 
 // recipes
-.get("/admin/recipes", recipes.index)
-.get("/admin/recipes/create", recipes.create)
-.get("/admin/recipes/:id", recipes.show)
-.get("/admin/recipes/:id/edit", recipes.edit)
+.get("/admin/recipes", RecipeController.index)
+.get("/admin/recipes/create", RecipeController.create)
+.get("/admin/recipes/:id", RecipeController.show)
+.get("/admin/recipes/:id/edit", RecipeController.edit)
 
-.post("/admin/recipes", multer.array("images", 5), recipes.post)
-.put ("/admin/recipes", multer.array("images", 5), recipes.update)
-.delete("/admin/recipes", recipes.delete)
+.post("/admin/recipes", multer.array("images", 5), RecipeController.post)
+.put ("/admin/recipes", multer.array("images", 5), RecipeController.update)
+.delete("/admin/recipes", RecipeController.delete)
 
 // chefs
-.get("/admin/chefs", chefs.index)
-.get("/admin/chefs/create", chefs.create)
-.get("/admin/chefs/:id", chefs.show)
-.get("/admin/chefs/:id/edit", chefs.edit)
+.get("/admin/chefs", ChefController.index)
+.get("/admin/chefs/create", ChefController.create)
+.get("/admin/chefs/:id", ChefController.show)
+.get("/admin/chefs/:id/edit", ChefController.edit)
 
-.post("/admin/chefs", multer.array("avatar", 1), chefs.post)
-.put("/admin/chefs", multer.array("avatar", 1), chefs.update)
-.delete("/admin/chefs", chefs.delete)
+.post("/admin/chefs", multer.array("avatar", 1), ChefController.post)
+.put("/admin/chefs", multer.array("avatar", 1), ChefController.update)
+.delete("/admin/chefs", ChefController.delete)
 
 module.exports = routes
