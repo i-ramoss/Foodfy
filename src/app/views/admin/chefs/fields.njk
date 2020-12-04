@@ -6,10 +6,18 @@
     </div>
   </div>
 
-  <div class="item">
+  <div class="item chef-avatar">
     <h2>Avatar:</h2>
-    <div>
-      <input type="url" name="avatar_url" placeholder="http://" value="{{chef.avatar_url}}" required>
+    <div id="photo-upload">
+      <input 
+        id="photo-input" 
+        type="file" 
+        name="avatar" 
+        value="{{chef.avatar}}"
+        accept="image/*"
+        required
+      >
+      <p>Send Avatar</p>
     </div>
   </div>
 </section>

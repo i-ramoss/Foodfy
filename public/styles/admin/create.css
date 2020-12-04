@@ -158,6 +158,45 @@ button + button {
   opacity: 1;
 }
 
+.item #photo-upload {
+  position: relative;
+
+  display: block;
+  overflow: hidden;
+
+  width: 140px;
+  padding-bottom: 0;
+}
+
+.item #photo-upload p {
+  padding: 8px 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px -6px #333;
+  background-color: var(--button-color);
+  color: white;
+
+  width: 100%;
+  text-align: center;
+
+  font-size: 16px;
+}
+
+.item #photo-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: block;
+  overflow: hidden;
+
+  width: 100%;
+  height: 100%;
+  
+  opacity: 0;
+  
+  cursor: pointer;
+}
+
 input,
 textarea,
 select {
