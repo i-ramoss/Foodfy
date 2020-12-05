@@ -1,7 +1,7 @@
-{% extends 'admin/layout.njk' %}
+{% extends "admin/layout.njk" %}
 
 {% block head %}
-  <link rel='stylesheet' href='/styles/admin/show.css'>
+  <link rel="stylesheet" href="/styles/admin/show.css">
 
   <title>{{recipe.title}}</title>
 {% endblock %}
@@ -12,44 +12,82 @@
 
 {% block content%}
 
-  <div class='content'>
+  <div class="content">
     <div class="title">
       <h3>Recipe: {{recipe.title}}</h3>
       <a href="/admin/recipes/{{ recipe.id }}/edit" class="button">Edit recipe</a>
     </div>
 
-    <div class='image__container'>
-      <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
+    <div class="image__container">
+      <div class="gallery">
+
+        <div class="highlight">
+          {% if not files[0] %}
+            <img src="http://placehold.it/940x280?text=RECIPE WITHOUT IMAGE">
+          
+            {% else %}
+              <img 
+                src="{{files[0].src}}" 
+                alt="Image of {{ files[0].name }}"
+                onclick="LightBox.open()"
+              >
+
+          {% endif %}
+
+          <div class="lightbox-target">
+            <img src="{{ files[0].src }}" alt="{{ files[0].name }}"/>
+            <a href="#" class="lightbox-close">
+              <i class="material-icons" onclick="LightBox.close()">close</i>
+            </a>
+          </div>
+        </div>
+
+        <div class="gallery-preview">
+          {% for image in files %}
+            <img 
+              src="{{ image.src }}" 
+              alt="Image of {{ image.name }}"
+              {% if loop.index0 == 0 %}
+                class="active" 
+              {% endif %}
+              onclick="ImageGallery.setImage(event)"
+            >
+
+          {% endfor %}
+        </div>
+      </div>
+
       <h3>{{recipe.title}}</h3>
       <p>by {{recipe.chef_name}}</p>
     </div>
-    <div class='ingredients__container recipe'>
-      <div class='section'>
+
+    <div class="ingredients__container recipe">
+      <div class="section">
         <h3>Ingredients:</h3>
       </div>
-      <ul class='data'>
+      <ul class="data">
         {% for ingredient in recipe.ingredients %}
           <li>{{ingredient}};</li>
         {% endfor %}
       </ul>
     </div>
 
-    <div class='preparation__container recipe'>
-      <div class='section'>
+    <div class="preparation__container recipe">
+      <div class="section">
         <h3>Preparation mode:</h3>
       </div>
-      <ul class='data'>
+      <ul class="data">
         {% for step in recipe.preparation %}
           <li>{{step}}</li>
         {% endfor %}
       </ul>
     </div>
 
-    <div class='adittional_info__container recipe'>
-      <div class='section'>
+    <div class="adittional_info__container recipe">
+      <div class="section">
         <h3>Additional information:</h3>
       </div>
-      <p class='data'>{{recipe.information | striptags(true) | escape | nl2br }}</p>
+      <p class="data">{{recipe.information | striptags(true) | escape | nl2br }}</p>
     </div>
   </div>
 

@@ -39,12 +39,18 @@ module.exports = {
   },
 
   async show(request, response) {
-    const result = await Recipe.find(request.params.id)
+    let result = await Recipe.find(request.params.id)
     const recipe = result.rows[0]
 
     if(!recipe) return response.status(404).render("admin/recipes/not-found")
 
-    return response.render("admin/recipes/show", { recipe })
+    result = await Recipe.files(recipe.id)
+    const files = result.rows.map( file => ({
+      ...file,
+      src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
+    }))
+
+    return response.render("admin/recipes/show", { recipe, files })
   },
 
   async edit(request, response) {

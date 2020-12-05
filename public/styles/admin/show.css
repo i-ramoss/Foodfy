@@ -31,11 +31,107 @@
   margin-bottom: 50px;
 }
 
-.image__container img {
+/* gallery */
+
+.image__container .gallery {
+  width: 100%;
+}
+
+.image__container .highlight > img {
   border-radius: 15px;
-  margin-bottom: 50px;
+
+  /* margin-bottom: 50px; */
   width: 100%;
   height: 280px;
+
+  object-fit: cover;
+  object-position: 50% 50%;
+
+  cursor: zoom-in;
+}
+
+.image__container .gallery-preview {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.image__container .gallery-preview img {
+  height: 50px;
+  width: 50px;
+
+  border: 1px solid #dddddd;
+
+  object-fit: cover;
+
+  opacity: 0.6;
+
+  cursor: pointer;
+
+  transition: 600ms;
+}
+
+.image__container .gallery-preview img + img {
+  margin-left: 2px;
+}
+
+.image__container .gallery-preview img:hover,
+.image__container .gallery-preview img.active {
+  opacity: 1;
+}
+
+/* lightbox recipe gallery*/
+
+.image__container .highlight .lightbox-target {
+  position: fixed;
+  left: 0;
+  top: -100%;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0, .7);
+
+  overflow: hidden;
+  z-index: 100;
+
+  opacity: 0;
+
+  transition: opacity 400ms;
+}
+
+.image__container .highlight .lightbox-target img {
+  margin: auto;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  background-color: white;
+  box-shadow: 0px 0px 8px rgba(0,0,0, .3);
+
+  width: 90%;
+  height: 90%;
+
+  object-fit: contain;
+}
+
+.image__container .highlight a.lightbox-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 50px;
+  height: 50px;
+
+  background: white;
+
+  position: absolute;
+  top: -80px;
+  right: 0;
+
+  transition: 400ms;
 }
 
 .image__container h3 {

@@ -186,3 +186,54 @@ const RecipeImagesUpload = {
     imageDiv.remove()
   }
 }
+
+
+// Gallery
+const ImageGallery = {
+  highlight: document.querySelector(".gallery .highlight > img"),
+
+  previews: document.querySelectorAll(".gallery-preview img"),
+
+  setImage(e) {
+    const { target } = e
+    const { previews, highlight } = ImageGallery
+    const { image } = LightBox
+    
+    previews.forEach( preview => preview.classList.remove("active"))
+
+    target.classList.add("active")
+
+    highlight.src = target.src
+
+    image.src = target.src
+  }
+}
+
+// LightBox
+const LightBox = {
+  target: document.querySelector(".lightbox-target"),
+
+  image: document.querySelector(".lightbox-target img"),
+
+  closeButton: document.querySelector(".lightbox-target a.lightbox-close"),
+
+  open() {
+    const { target, closeButton } = LightBox
+
+    target.style.opacity = 1
+    target.style.top = 0
+    target.style.bottom = 0
+
+    closeButton.style.top = 0
+  },
+
+  close() {
+    const { target, closeButton } = LightBox
+
+    target.style.opacity = 0
+    target.style.top = "-100%"
+    target.style.bottom = "initial"
+
+    closeButton.style.top = "-80px"
+  },
+}
