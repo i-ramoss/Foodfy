@@ -19,18 +19,23 @@ module.exports = {
   async post(request, response) {
     if(request.files.lenght === 0) 
       return response.json("Please, send at least one image")
+    
+    try {
+      let results = await Recipe.create(request.body)
+      const recipeId = results.rows[0].id
 
-    let results = await Recipe.create(request.body)
-    const recipeId = results.rows[0].id
+      const filesPromise = request.files.map( file => File.createRecipeFile({
+        ...file,
+        recipe_id: recipeId
+      }))
 
-    const filesPromise = request.files.map( file => File.createRecipeFile({
-      ...file,
-      recipe_id: recipeId
-    }))
+      await Promise.all(filesPromise)
 
-    await Promise.all(filesPromise)
-
-    return response.status(201).redirect("/admin/recipes")
+      return response.status(201).redirect("/admin/recipes")
+    } 
+    catch (err) {
+      console.err(err)
+    }
   },
 
   async show(request, response) {
@@ -65,14 +70,14 @@ module.exports = {
   },
 
   async update(request, response) {
-    try {
-      const keys = Object.keys(request.body)
+    const keys = Object.keys(request.body)
 
-      for (key of keys) {
-        if (request.body[key] == "" && key != "removed_files")
-          return response.json({ err: "Please, fill all fields!" })
-      }
-  
+    for (key of keys) {
+      if (request.body[key] == "" && key != "removed_files")
+        return response.json({ err: "Please, fill all fields!" })
+    }
+
+    try {
       if (request.files.length != 0) {
         const newFilesPromise = request.files.map( file => 
           File.createRecipeFile({
@@ -96,17 +101,22 @@ module.exports = {
       }
   
       await Recipe.update(request.body)
-
+  
       return response.status(200).redirect(`/admin/recipes/${request.body.id}`)
-    }
-    catch(err) {
-      console.log(err)
+    } 
+    catch (err) {
+      console.error(err)
     }
   },
 
   async delete(request, response) {
-    await Recipe.delete(request.body.id)
+    try {
+      await Recipe.delete(request.body.id)
 
-    return response.status(200).redirect("/admin/recipes")
+      return response.status(200).redirect("/admin/recipes")
+    } 
+    catch(err) {
+      console.err(err)
+    }
   }
 }

@@ -1,4 +1,5 @@
 const db = require('../../config/db');
+const fs = require("fs")
 const { date } = require("../lib/utils")
 
 module.exports = {
@@ -77,11 +78,28 @@ module.exports = {
     return db.query(query, values)
   },
 
-  delete(id) {
-    return db.query(`
-      DELETE FROM recipes 
-      WHERE id = $1`, [id]
+  async delete(id) {
+    const results = await db.query(`
+      SELECT * FROM files
+      INNER JOIN recipe_files ON (files.id = recipe_files.file_id)
+      WHERE recipe_files.recipe_id = $1`, [id]
     )
+
+    try{
+      const removedFiles = results.rows.map( async file => {
+        fs.unlinkSync(file.path)
+  
+        await db.query(`
+          DELETE FROM recipe_files WHERE recipe_files.file_id = $1`, [file.file_id]
+        )
+        await db.query(`DELETE FROM files WHERE id = $1`, [file.file_id])
+      })
+  
+      return db.query(`DELETE FROM recipes WHERE id = $1`, [id])
+    }
+    catch(err){
+      console.error(err)
+    }
   },
 
   chefSelectOptions() {
@@ -119,7 +137,7 @@ module.exports = {
 
   files(id) {
     return db.query(`
-      SELECT * FROM files
+      SELECT files.* FROM files
       LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
       WHERE recipe_files.recipe_id = $1`, [id]
     )
