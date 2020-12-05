@@ -59,16 +59,14 @@ module.exports = {
     const query = `
       UPDATE recipes SET
         title=($1),
-        image=($2),
-        chef_id=($3),
-        ingredients=($4),
-        preparation=($5),
-        information=($6)
-      WHERE id = $7
+        chef_id=($2),
+        ingredients=($3),
+        preparation=($4),
+        information=($5)
+      WHERE id = $6
     `
     const values = [
       data.title,
-      data.image,
       data.chef,
       data.ingredients,
       data.preparation,
@@ -117,5 +115,13 @@ module.exports = {
     `
 
     return db.query(query, [limit, offset])
+  },
+
+  files(id) {
+    return db.query(`
+      SELECT * FROM files
+      LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
+      WHERE recipe_files.recipe_id = $1`, [id]
+    )
   }
 }

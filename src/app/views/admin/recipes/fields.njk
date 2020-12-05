@@ -15,18 +15,31 @@
           <input
             id="images-input"
             type="file" 
-            name="images" 
-            value="{{recipe.image}}" 
-            multiple 
+            name="images"
+            multiple
             accept="image/*"
             onchange="RecipeImagesUpload.handleFileInput(event)"
-            required
           >
           <i class="material-icons">add</i>
         </div>
       </div>
 
       <div id="images-preview">
+        {% if files %}
+
+          {% for image in files %}
+            <div id="{{image.id}}" class="image">
+              <img src="{{image.src}}" alt="{{ image.name }}">
+              <i 
+                class="material-icons" 
+                onclick="RecipeImagesUpload.removeOldImage(event)"
+                >delete
+              </i>
+            </div>
+          {% endfor %}
+
+          <input type="hidden" name="removed_files">
+        {% endif %}
       </div>
     </div>
   </div>

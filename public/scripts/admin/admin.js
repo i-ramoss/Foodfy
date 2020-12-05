@@ -60,13 +60,15 @@ const RecipeImagesUpload = {
 
   handleFileInput(event) {
     const { files: fileList } = event.target
-    const { preview, getContainer, hasLimit, files, getAllFiles } = RecipeImagesUpload
+    const { preview, getContainer, hasLimit, getAllFiles } = RecipeImagesUpload
 
     RecipeImagesUpload.input = event.target
 
     if (hasLimit(event)) return
 
     Array.from(fileList).forEach( file => {
+      const { files } = RecipeImagesUpload
+
       files.push(file)
 
       const reader = new FileReader()
@@ -84,7 +86,7 @@ const RecipeImagesUpload = {
       reader.readAsDataURL(file)
     })
     
-    RecipeImagesUpload.input.files =  getAllFiles()
+    RecipeImagesUpload.input.files = getAllFiles()
   },
 
   hasLimit(event) {
@@ -107,7 +109,7 @@ const RecipeImagesUpload = {
       return true
     }
 
-    const imagesDiv = []
+    let imagesDiv = []
     
     preview.childNodes.forEach( item => {
       if (item.classList && item.classList.value == "image") imagesDiv.push(item)
@@ -154,7 +156,7 @@ const RecipeImagesUpload = {
     const button = document.createElement("i")
 
     button.classList.add("material-icons")
-    button.innerHTML = "close"
+    button.innerHTML = "delete"
 
     return button
   },
@@ -168,6 +170,18 @@ const RecipeImagesUpload = {
 
     files.splice(index, 1)
     input.files = getAllFiles()
+
+    imageDiv.remove()
+  },
+
+  removeOldImage(event) {
+    const imageDiv = event.target.parentNode
+
+    if (imageDiv.id) {
+      const removedFiles = document.querySelector("input[name='removed_files']")
+
+      if (removedFiles) removedFiles.value += `${imageDiv.id},`
+    }
 
     imageDiv.remove()
   }

@@ -43,26 +43,65 @@ module.exports = {
   },
 
   async edit(request, response) {
-    let result = await Recipe.find(request.params.id)
-    const recipe = result.rows[0]
+    let results = await Recipe.find(request.params.id)
+    const recipe = results.rows[0]
 
     if(!recipe) return response.status(404).render("admin/recipes/not-found")
 
     // get chefs
-    result = await Recipe.chefSelectOptions()
-    const chefsOptions = result.rows
+    results = await Recipe.chefSelectOptions()
+    const chefsOptions = results.rows
 
     // get images
-    
+    results = await Recipe.files(recipe.id)
+    let files = results.rows
 
+    files = files.map( file => ({
+      ...file,
+      src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
+    }))
     
-    return response.render("admin/recipes/edit", { recipe, chefsOptions })
+    return response.render("admin/recipes/edit", { recipe, chefsOptions, files })
   },
 
   async update(request, response) {
-    await Recipe.update(request.body)
-     
-    return response.status(200).redirect(`/admin/recipes/${request.body.id}`)
+    try {
+      const keys = Object.keys(request.body)
+
+      for (key of keys) {
+        if (request.body[key] == "" && key != "removed_files")
+          return response.json({ err: "Please, fill all fields!" })
+      }
+  
+      if (request.files.length != 0) {
+        const newFilesPromise = request.files.map( file => 
+          File.createRecipeFile({
+            ...file, 
+            recipe_id: request.body.id
+          })
+        )
+  
+        await Promise.all(newFilesPromise)
+      }
+  
+      if (request.body.removed_files) {
+        const removedFiles = request.body.removed_files.split(",")
+        const lastIndex = removedFiles.length - 1
+  
+        removedFiles.splice(lastIndex, 1)
+  
+        const removedFilesPromise = removedFiles.map( id => File.delete(id))
+  
+        await Promise.all(removedFilesPromise)
+      }
+  
+      await Recipe.update(request.body)
+
+      return response.status(200).redirect(`/admin/recipes/${request.body.id}`)
+    }
+    catch(err) {
+      console.log(err)
+    }
   },
 
   async delete(request, response) {
