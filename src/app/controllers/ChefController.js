@@ -1,4 +1,5 @@
 const Chef = require("../models/Chef")
+const File = require("../models/File")
 
 module.exports = {
   async index(request, response) {
@@ -20,10 +21,22 @@ module.exports = {
         return response.json({ error: "Please, fill in all fields" })
     }
 
-    const results = await Chef.create(request.body)
-    const chef = results.rows[0]
+    if (request.files.length === 0) 
+      return response.json("Please, send at least one image")
 
-    return response.status(201).redirect(`/admin/chefs`)
+    try {
+      const filePromise = request.files.map( file => File.createChefFile({...file}))
+
+      let results = await filePromise[0]
+      const fileId = results.rows[0].id
+
+      results = await Chef.create(request.body, fileId)
+  
+      return response.status(201).redirect(`/admin/chefs`)
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   async show(request, response) {
@@ -39,10 +52,22 @@ module.exports = {
   },
 
   async edit(request, response) {
-    const result = await Chef.find(request.params.id)
-    const chef = result.rows[0]
+    let results = await Chef.find(request.params.id)
+    const chef = results.rows[0]
 
-    return response.render("admin/chefs/edit", { chef })
+    console.log(chef)
+    
+    results = await Chef.files(chef.file_id)
+    let files = results.rows
+
+    files = files.map( file => ({
+      ...file,
+      src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
+    }))
+
+    console.log(files)
+
+    return response.render("admin/chefs/edit", { chef, files })
   },
 
   async update(request, response) {

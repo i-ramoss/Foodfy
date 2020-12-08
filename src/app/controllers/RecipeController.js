@@ -17,7 +17,14 @@ module.exports = {
   },
 
   async post(request, response) {
-    if(request.files.lenght === 0) 
+    const keys = Object.keys(request.body)
+
+    for (key of keys) {
+      if (request.body[key] == "")
+        return response.json({ error: "Please, fill in all fields" })
+    }
+
+    if(request.files.length === 0) 
       return response.json("Please, send at least one image")
     
     try {

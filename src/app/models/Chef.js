@@ -12,11 +12,11 @@ module.exports = {
     )
   },
 
-  create(data) {
+  create(data, file_id) {
     const query = `
       INSERT INTO chefs (
         name,
-        avatar_url,
+        file_id,
         created_at
       ) VALUES ($1, $2, $3)
       RETURNING id
@@ -24,7 +24,7 @@ module.exports = {
 
     const values = [
       data.name,
-      data.avatar_url,
+      file_id,
       date(Date.now()).iso
     ]
 
@@ -50,17 +50,17 @@ module.exports = {
     )
   },
 
-  update(data) {
+  update(data, file_id) {
     const query = `
       UPDATE chefs SET
         name=($1),
-        avatar_url=($2)
+        file_id=($2)
       WHERE id = $3
     `
 
     const values = [
       data.name,
-      data.avatar_url,
+      file_id,
       data.id
     ]
 
@@ -72,5 +72,18 @@ module.exports = {
       DELETE FROM chefs
       WHERE id = $1`, [id]
     )
+  },
+
+  files(id) {
+    try {
+      return db.query(`
+        SELECT files.* FROM files
+        LEFT JOIN chefs on (files.id = chefs.file_id)
+        WHERE chefs.file_id = $1`, [id]
+      )
+    } 
+    catch (err) {
+      console.error(err)
+    }
   }
 }

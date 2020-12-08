@@ -52,17 +52,18 @@ if(formDelete)
 const RecipeImagesUpload = {
   preview: document.querySelector("#images-preview"),
 
-  uploadLimit: 5,
+  uploadLimit: "",
 
   files: [],
 
   input: "",
 
-  handleFileInput(event) {
+  handleFileInput(event, limit) {
     const { files: fileList } = event.target
     const { preview, getContainer, hasLimit, getAllFiles } = RecipeImagesUpload
 
     RecipeImagesUpload.input = event.target
+    RecipeImagesUpload.uploadLimit = limit
 
     if (hasLimit(event)) return
 
@@ -110,7 +111,7 @@ const RecipeImagesUpload = {
     }
 
     let imagesDiv = []
-    
+
     preview.childNodes.forEach( item => {
       if (item.classList && item.classList.value == "image") imagesDiv.push(item)
     })
@@ -176,6 +177,8 @@ const RecipeImagesUpload = {
 
   removeOldImage(event) {
     const imageDiv = event.target.parentNode
+
+    console.log(imageDiv)
 
     if (imageDiv.id) {
       const removedFiles = document.querySelector("input[name='removed_files']")

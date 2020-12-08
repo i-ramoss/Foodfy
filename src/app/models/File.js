@@ -3,54 +3,64 @@ const fs = require("fs")
 
 
 module.exports = {
-  create({ filename, path }) {
-    const query = `
-      INSERT INTO files (
-        name,
+  createChefFile({ filename, path }) {
+    try {
+      const query = `
+        INSERT INTO files (
+          name,
+          path
+        ) VALUES ($1, $2)
+        RETURNING id
+      `
+
+      const values = [
+        filename,
         path
-      ) VALUES ($1, $2)
-      RETURNING id
-    `
+      ]
 
-    const values = [
-      filename,
-      path
-    ]
-
-    return db.query(query, values)
+      return db.query(query, values)
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   async createRecipeFile({ filename, path, recipe_id}) {
-    let query = `
-      INSERT INTO files (
-        name,
+    try {
+      let query = `
+        INSERT INTO files (
+          name,
+          path
+        ) VALUES ($1, $2)
+        RETURNING id
+      `
+
+      let values = [
+        filename,
         path
-      ) VALUES ($1, $2)
-      RETURNING id
-    `
+      ]
 
-    let values = [
-      filename,
-      path
-    ]
+      const results = await db.query(query, values)
+      const fileId = results.rows[0].id
 
-    const results = await db.query(query, values)
-    const fileId = results.rows[0].id
+      query = `
+        INSERT into recipe_files (
+          recipe_id,
+          file_id
+        ) VALUES ($1, $2)
+        RETURNING id
+      `
 
-    query = `
-      INSERT into recipe_files (
+      values = [
         recipe_id,
-        file_id
-      ) VALUES ($1, $2)
-      RETURNING id
-    `
+        fileId
+      ]
 
-    values = [
-      recipe_id,
-      fileId
-    ]
-
-    return db.query(query, values)
+      return db.query(query, values)   
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   async delete(id) {
