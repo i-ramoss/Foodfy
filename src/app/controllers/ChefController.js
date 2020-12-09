@@ -48,7 +48,13 @@ module.exports = {
     result = await Chef.findRecipesByChef(id)
     const recipes = result.rows
 
-    return response.render("admin/chefs/show", { chef, recipes })
+    result = await Chef.files(chef.id)
+    const files = result.rows.map( file => ({
+      ...file,
+      src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
+    }))
+
+    return response.render("admin/chefs/show", { chef, recipes, files })
   },
 
   async edit(request, response) {
@@ -85,38 +91,46 @@ module.exports = {
         id = results.rows[0].id
       }
 
+      await Chef.update(request.body, id)
+
       if (request.body.removed_files) {
         const removedFiles = request.body.removed_files.split(",")
-        const file = removedFiles[0]
-
-        console.log(file)
-
-        await File.delete(file)
+        const lastIndex = removedFiles.length - 1
+  
+        removedFiles.splice(lastIndex, 1)
+  
+        const removedFilesPromise = removedFiles.map( id => File.delete(id))
+  
+        await Promise.all(removedFilesPromise)
       }
-
-      await Chef.update(request.body, id)
 
       return response.status(200).redirect(`/admin/chefs/${request.body.id}`)  
     } 
-    catch (error) {
-      console.error(error)
+    catch (err) {
+      console.error(err)
     }
   },
 
   async delete(request, response) {
-    const id = request.body.id
+    try {
+      const id = request.body.id
 
-    let result = await Chef.find(id)
+      let result = await Chef.find(id)
 
-    result = await Chef.findRecipesByChef(id)
-    const recipes = result.rows
+      result = await Chef.findRecipesByChef(id)
+      const recipes = result.rows
 
-    if (recipes.length == 0) {
-      result = await Chef.delete(id)
+      if (recipes.length == 0) {
+        result = await Chef.delete(id)
 
-      response.status(200).redirect("/admin/chefs")
+        response.status(200).redirect("/admin/chefs")
+      }
+      else
+        response.status(401).json({ err: "You can't delete this user because there is a recipe registered on him"})
     }
-    else
-      response.status(401).json({ err: "You can't delete this user because there is a recipe registered on him"})
+    catch (err) {
+      console.error(err)
+    }
   }
+  
 }

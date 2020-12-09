@@ -79,19 +79,17 @@ module.exports = {
   },
 
   async delete(id) {
-    const results = await db.query(`
-      SELECT * FROM files
-      INNER JOIN recipe_files ON (files.id = recipe_files.file_id)
-      WHERE recipe_files.recipe_id = $1`, [id]
-    )
-
     try{
+      const results = await db.query(`
+        SELECT * FROM files
+        INNER JOIN recipe_files ON (files.id = recipe_files.file_id)
+        WHERE recipe_files.recipe_id = $1`, [id]
+      )
+      
       const removedFiles = results.rows.map( async file => {
         fs.unlinkSync(file.path)
   
-        await db.query(`
-          DELETE FROM recipe_files WHERE recipe_files.file_id = $1`, [file.file_id]
-        )
+        await db.query(`DELETE FROM recipe_files WHERE recipe_files.file_id = $1`, [file.file_id])
         await db.query(`DELETE FROM files WHERE id = $1`, [file.file_id])
       })
   
