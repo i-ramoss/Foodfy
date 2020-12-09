@@ -51,20 +51,27 @@ module.exports = {
   },
 
   update(data, file_id) {
-    const query = `
-      UPDATE chefs SET
-        name=($1),
-        file_id=($2)
-      WHERE id = $3
-    `
+    try {
+      const query = `
+        UPDATE chefs SET
+          name=($1),
+          file_id=($2)
+        WHERE id = $3
+      `
 
-    const values = [
-      data.name,
-      file_id,
-      data.id
-    ]
+      const values = [
+        data.name,
+        file_id,
+        data.id
+      ]
 
-    return db.query(query, values)
+      console.log(values)
+
+      return db.query(query, values)   
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   delete(id) {
@@ -78,8 +85,8 @@ module.exports = {
     try {
       return db.query(`
         SELECT files.* FROM files
-        LEFT JOIN chefs on (files.id = chefs.file_id)
-        WHERE chefs.file_id = $1`, [id]
+        LEFT JOIN chefs ON (files.id = chefs.file_id)
+        WHERE chefs.id = $1`, [id]
       )
     } 
     catch (err) {

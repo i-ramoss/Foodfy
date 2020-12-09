@@ -178,8 +178,6 @@ const RecipeImagesUpload = {
   removeOldImage(event) {
     const imageDiv = event.target.parentNode
 
-    console.log(imageDiv)
-
     if (imageDiv.id) {
       const removedFiles = document.querySelector("input[name='removed_files']")
 

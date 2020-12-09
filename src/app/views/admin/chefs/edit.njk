@@ -8,7 +8,7 @@
 
 {% block content%}
 
-  <form class="content" id="form-update" action="/admin/chefs?_method=PUT" method="post">
+  <form class="content" id="form-update" action="/admin/chefs?_method=PUT" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value={{chef.id}}>
 
     <div class="title">

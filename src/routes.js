@@ -30,8 +30,8 @@ const routes = express.Router()
 .get("/admin/chefs/:id", ChefController.show)
 .get("/admin/chefs/:id/edit", ChefController.edit)
 
-.post("/admin/chefs", multer.array("avatar", 1), ChefController.post)
-.put("/admin/chefs", multer.array("avatar", 1), ChefController.update)
+.post("/admin/chefs", multer.array("images", 1), ChefController.post)
+.put("/admin/chefs", multer.array("images", 1), ChefController.update)
 .delete("/admin/chefs", ChefController.delete)
 
 module.exports = routes

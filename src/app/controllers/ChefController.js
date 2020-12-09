@@ -54,18 +54,14 @@ module.exports = {
   async edit(request, response) {
     let results = await Chef.find(request.params.id)
     const chef = results.rows[0]
-
-    console.log(chef)
     
-    results = await Chef.files(chef.file_id)
+    results = await Chef.files(chef.id)
     let files = results.rows
 
     files = files.map( file => ({
       ...file,
       src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
     }))
-
-    console.log(files)
 
     return response.render("admin/chefs/edit", { chef, files })
   },
@@ -74,13 +70,37 @@ module.exports = {
     const keys = Object.keys(request.body)
 
     for (key of keys) {
-      if (request.body[key] == "")
-        return response.json({ error: "Please, fill in all fields" })
+      if (request.body[key] == "" && key != "removed_files")
+        return response.json({ err: "Please, fill all fields!" })
     }
 
-    await Chef.update(request.body)
+    try {
+      let results = await Chef.find(request.params.id)
+      let id = results.rows[0]
 
-    response.status(200).redirect(`/admin/chefs/${request.body.id}`)
+      if (request.files.length != 0) {
+        const newFilesPromise = request.files.map( file => File.createChefFile({ ...file }))
+        
+        results = await newFilesPromise[0]
+        id = results.rows[0].id
+      }
+
+      if (request.body.removed_files) {
+        const removedFiles = request.body.removed_files.split(",")
+        const file = removedFiles[0]
+
+        console.log(file)
+
+        await File.delete(file)
+      }
+
+      await Chef.update(request.body, id)
+
+      return response.status(200).redirect(`/admin/chefs/${request.body.id}`)  
+    } 
+    catch (error) {
+      console.error(error)
+    }
   },
 
   async delete(request, response) {
