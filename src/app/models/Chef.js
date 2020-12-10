@@ -4,51 +4,71 @@ const { date } = require("../lib/utils")
 
 module.exports = {
   all() {
-    return db.query(`
-      SELECT chefs.*, count(recipes) AS total_recipes
-      FROM chefs
-      LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
-      GROUP BY chefs.id
-      ORDER BY chefs.name ASC`
-    )
+    try {
+      return db.query(`
+        SELECT chefs.*, count(recipes) AS total_recipes
+        FROM chefs
+        LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
+        GROUP BY chefs.id
+        ORDER BY chefs.name ASC`
+      )
+    } 
+    catch (erro) {
+      console.error(err)
+    }
   },
 
   create(data, file_id) {
-    const query = `
-      INSERT INTO chefs (
-        name,
+    try {
+      const query = `
+        INSERT INTO chefs (
+          name,
+          file_id,
+          created_at
+        ) VALUES ($1, $2, $3)
+        RETURNING id
+      `
+
+      const values = [
+        data.name,
         file_id,
-        created_at
-      ) VALUES ($1, $2, $3)
-      RETURNING id
-    `
+        date(Date.now()).iso
+      ]
 
-    const values = [
-      data.name,
-      file_id,
-      date(Date.now()).iso
-    ]
-
-    return db.query(query, values)
+      return db.query(query, values)
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   find(id) {
-    return db.query(`
-      SELECT chefs.*, count(recipes) AS total_recipes
-      FROM chefs
-      LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
-      WHERE chefs.id = $1
-      GROUP BY chefs.id`, [id]
-    )
+    try {
+      return db.query(`
+        SELECT chefs.*, count(recipes) AS total_recipes
+        FROM chefs
+        LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
+        WHERE chefs.id = $1
+        GROUP BY chefs.id`, [id]
+      ) 
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   findRecipesByChef(id) {
-    return db.query(`
-      SELECT recipes.*, chefs.name AS chef_name
-      FROM recipes
-      INNER JOIN chefs ON (recipes.chef_id = chefs.id)
-      WHERE chefs.id = $1`, [id]
-    )
+    try {
+      return db.query(`
+        SELECT recipes.*, chefs.name AS chef_name
+        FROM recipes
+        INNER JOIN chefs ON (recipes.chef_id = chefs.id)
+        WHERE chefs.id = $1`, [id]
+      )
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   update(data, file_id) {

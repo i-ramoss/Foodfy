@@ -210,6 +210,7 @@ const ImageGallery = {
   }
 }
 
+
 // LightBox
 const LightBox = {
   target: document.querySelector(".lightbox-target"),

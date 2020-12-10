@@ -3,10 +3,15 @@ const File = require("../models/File")
 
 module.exports = {
   async index(request, response) {
-    const results = await Chef.all()
-    const chefs = results.rows
-
-    return response.render("admin/chefs/index", { chefs })
+    try {
+      const results = await Chef.all()
+      const chefs = results.rows
+  
+      return response.render("admin/chefs/index", { chefs })
+    }
+    catch (err) {
+      console.error(err)
+    }
   },
 
   create(request, response) {
@@ -40,36 +45,46 @@ module.exports = {
   },
 
   async show(request, response) {
-    const id  = request.params.id
+    try {
+      const id  = request.params.id
 
-    let result = await Chef.find(id)
-    const chef = result.rows[0]
+      let result = await Chef.find(id)
+      const chef = result.rows[0]
 
-    result = await Chef.findRecipesByChef(id)
-    const recipes = result.rows
+      result = await Chef.findRecipesByChef(id)
+      const recipes = result.rows
 
-    result = await Chef.files(chef.id)
-    const files = result.rows.map( file => ({
-      ...file,
-      src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
-    }))
+      result = await Chef.files(chef.id)
+      const files = result.rows.map( file => ({
+        ...file,
+        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
+      }))
 
-    return response.render("admin/chefs/show", { chef, recipes, files })
+      return response.render("admin/chefs/show", { chef, recipes, files })
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   async edit(request, response) {
-    let results = await Chef.find(request.params.id)
-    const chef = results.rows[0]
-    
-    results = await Chef.files(chef.id)
-    let files = results.rows
-
-    files = files.map( file => ({
-      ...file,
-      src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
-    }))
-
-    return response.render("admin/chefs/edit", { chef, files })
+    try {
+      let results = await Chef.find(request.params.id)
+      const chef = results.rows[0]
+      
+      results = await Chef.files(chef.id)
+      let files = results.rows
+  
+      files = files.map( file => ({
+        ...file,
+        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
+      }))
+  
+      return response.render("admin/chefs/edit", { chef, files }) 
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   async update(request, response) {
@@ -132,5 +147,4 @@ module.exports = {
       console.error(err)
     }
   }
-  
 }
