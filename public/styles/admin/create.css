@@ -158,6 +158,15 @@ button + button {
   opacity: 1;
 }
 
+.item .chef-image-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 40px;
+
+  width: 100%;
+  max-width: 940px;
+}
+
 .item #photo-upload {
   position: relative;
 
@@ -165,6 +174,7 @@ button + button {
   overflow: hidden;
 
   width: 140px;
+  
   padding-bottom: 0;
 }
 

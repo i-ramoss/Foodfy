@@ -37,20 +37,47 @@ const AddIngredientAndStepPreparation = {
 
 
 // Confirm delete
-function confirmDelete(formDelete) {
-  formDelete.addEventListener("submit", (event) => {
-    const confirmation = confirm("Do you really want to delete this?")
-    
-    if (!confirmation) {
-      event.preventDefault()
-    }
+const confirmDelete = () => {
+  button.addEventListener("submit", event => {
+    event.preventDefault()
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
   })
 }
 
-const formDelete = document.querySelector("#form-delete")
+const button = document.querySelector(".delete")
+if (button) confirmDelete()
 
-if(formDelete)
-  confirmDelete(formDelete)
+
+// function confirmDelete(formDelete) {
+//   formDelete.addEventListener("submit", (event) => {
+//     const confirmation = confirm("Do you really want to delete this?")
+    
+//     if (!confirmation) {
+//       event.preventDefault()
+//     }
+//   })
+// }
+
+// const formDelete = document.querySelector("#form-delete")
+
+// if(formDelete)
+//   confirmDelete(formDelete)
 
 
 // Image Upload
@@ -100,17 +127,21 @@ const ImagesUpload = {
     const { files: fileList } = input
 
     if (fileList.length == 0) {
-      alert("The recipe needs at least one image!")
-
-      event.preventDefault()
+      Swal.fire({
+        icon: "error",
+        title:"Oops...",
+        text:"The recipe needs at least one image!",
+      })
 
       return true
     }
 
     if (fileList.length > uploadLimit) {
-      alert(`Upload a maximum of ${uploadLimit} images!`)
-
-      event.preventDefault()
+      Swal.fire({
+        icon: "error",
+        title:"Oops...",
+        text:`Upload a maximum of ${uploadLimit} images!`,
+      })
 
       return true
     }
@@ -124,9 +155,11 @@ const ImagesUpload = {
     const totalImages = fileList.length + imagesDiv.length
 
     if (totalImages > uploadLimit) {
-      alert("You have reached the maximum image limit!")
-
-      event.preventDefault()
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You have reached the maximum image limit!",
+      })
 
       return true
     }

@@ -9,33 +9,35 @@
   <div class="item">
     <h2>Avatar:</h2>
 
-    <div id="photo-upload">
-      <input 
-        id="images-input" 
-        type="file"
-        name="images" 
-        accept="image/*"
-        onchange="ImagesUpload.handleFileInput(event, 1)"
-      >
-      <p>Send Avatar</p>
-    </div>
+    <div class="chef-image-container">
+      <div id="photo-upload">
+        <input 
+          id="images-input" 
+          type="file"
+          name="images" 
+          accept="image/*"
+          onchange="ImagesUpload.handleFileInput(event, 1)"
+        >
+        <p>Send Avatar</p>
+      </div>
 
-    <div id="images-preview">
-      {% if files %}
+      <div id="images-preview">
+        {% if files %}
 
-        {% for image in files %}
-          <div id="{{image.id}}" class="image">
-            <img src="{{image.src}}" alt="{{image.name}}">
-            <i 
-              class="material-icons"
-              onclick="ImagesUpload.removeOldImage(event)"
-              >delete
-            </i>
-          </div>
-        {% endfor %}
+          {% for image in files %}
+            <div id="{{image.id}}" class="image">
+              <img src="{{image.src}}" alt="{{image.name}}">
+              <i 
+                class="material-icons"
+                onclick="ImagesUpload.removeOldImage(event)"
+                >delete
+              </i>
+            </div>
+          {% endfor %}
 
-        <input type="hidden" name="removed_files">
-      {% endif %}
+          <input type="hidden" name="removed_files">
+        {% endif %}
+      </div>
     </div>
   </div>
 </section>
