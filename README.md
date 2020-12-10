@@ -106,6 +106,7 @@ pg_ctl -D /usr/local/var/postgres stop
 
 Após ligar o Postgres, abra o Postbird e crie um banco de dados, de nome foodfy. *As informações de usuário e senha do postgres estão no arquivo src/config/db.js*. <br>
 Quando conectado, crie um banco de dados com o nome de foodfy. Após isso, importe um arquivo .sql e utilize o que está na raiz deste repositório. <br>
+Se não for possível realizar a importação, abra o arquivo sql e *copie toda a query* para a sessão de Query do Postbird e clique em Run Query<br>
 Caso as tabelas tenham sido criadas, a importação ocorreu com sucesso.
 
 ### Executar a aplicação
@@ -144,7 +145,7 @@ Feito com :green_heart: por **Ian Ramos** :fire: [Entre em contato!][linkedin]
 [express]: https://expressjs.com/pt-br/
 [njk]: https://mozilla.github.io/nunjucks/
 [postgresql]: https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
-[postgre-linux]: https://www.postgresql.org/download/linux/
+[postgres-linux]: https://www.postgresql.org/download/linux/
 [multer]: https://github.com/expressjs/multer
 [pg]: https://github.com/brianc/node-postgres/tree/master/packages/pg
 [git]: https://git-scm.com

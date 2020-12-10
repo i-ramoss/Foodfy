@@ -11,10 +11,20 @@
   <div class="content">
 
     <div class="image__container">
-      <img src="{{recipe.image}}" alt="Imagem de {{recipe.title}}">
+
+      {% if not files[0] %}
+        <img src="http://placehold.it/940x280?text=RECIPE WITHOUT IMAGE">
+      
+        {% else %}
+          <img 
+            src="{{files[0].src}}" 
+            alt="Image of {{ files[0].name }}"
+          >
+      {% endif %}
       <h3>{{recipe.title}}</h3>
       <p>by {{recipe.chef_name}}</p>
     </div>
+
     <div class="ingredients__container recipe">
       <div class="section">
         <h3>Ingredients</h3>
@@ -24,8 +34,9 @@
       {% for ingredient in recipe.ingredients %}
         <li>{{ingredient}};</li>
       {% endfor %}
-    </div>
       </ul>
+    </div>
+
     <div class="preparation__container recipe">
       <div class="section">
         <h3>Preparation mode:</h3>
@@ -38,6 +49,7 @@
       </ul>
       
     </div>
+
     <div class="adittional_info__container recipe">
       <div class="section">
         <h3>Additional Information:</h3>

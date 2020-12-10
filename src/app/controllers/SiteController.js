@@ -61,12 +61,18 @@ module.exports = {
 
   async show(request, response) {
     try {
-      const result = await Recipe.find(request.params.id)
+      let result = await Recipe.find(request.params.id)
       const recipe = result.rows[0]
 
       if(!recipe) return response.status(404).render("site/not-found")
+
+      result = await Recipe.files(recipe.id)
+      const files = result.rows.map( file => ({
+        ...file,
+        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
+      }))
       
-      return response.render("site/recipe", { recipe })
+      return response.render("site/recipe", { recipe, files })
     } 
     catch (err) {
       console.error(err)

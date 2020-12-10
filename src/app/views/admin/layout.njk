@@ -12,22 +12,12 @@
     <link rel="stylesheet" href="/styles/admin/main.css">
 
     {% block head %}
-    <title>Foodfy</title>
+      <title>Foodfy</title>
     {% endblock %}  
   </head>
 
   <body>
-    <div class="container-header">
-      <header class="header">
-        <a href="/"><img src="/assets/logo_white.png" alt="foodfy"></a>
-        <nav>
-          <ul class="menu">
-            <li><a href="/admin/recipes">RECIPES</a></li>
-            <li><a href="/admin/chefs">CHEFS</a></li>
-          </ul>
-        </nav>
-      </header>
-    </div>  
+    {% include "./parts/header.njk" %}
     
     {% block content%}{% endblock %}
 
