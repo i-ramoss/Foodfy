@@ -15,7 +15,7 @@
         type="file"
         name="images" 
         accept="image/*"
-        onchange="RecipeImagesUpload.handleFileInput(event, 1)"
+        onchange="ImagesUpload.handleFileInput(event, 1)"
       >
       <p>Send Avatar</p>
     </div>
@@ -28,7 +28,7 @@
             <img src="{{image.src}}" alt="{{image.name}}">
             <i 
               class="material-icons"
-              onclick="RecipeImagesUpload.removeOldImage(event)"
+              onclick="ImagesUpload.removeOldImage(event)"
               >delete
             </i>
           </div>

@@ -18,7 +18,7 @@
             name="images"
             multiple
             accept="image/*"
-            onchange="RecipeImagesUpload.handleFileInput(event, 5)"
+            onchange="ImagesUpload.handleFileInput(event, 5)"
           >
           <i class="material-icons">add</i>
         </div>
@@ -32,7 +32,7 @@
               <img src="{{image.src}}" alt="{{ image.name }}">
               <i 
                 class="material-icons" 
-                onclick="RecipeImagesUpload.removeOldImage(event)"
+                onclick="ImagesUpload.removeOldImage(event)"
                 >delete
               </i>
             </div>
@@ -74,7 +74,7 @@
         {% endfor %}
       {% endif %}
     </div>
-    <button type="button" class="add-input" name="ingredient">Add new ingredient:</button>
+    <button type="button" class="add-input" name="ingredient" onclick="AddIngredientAndStepPreparation.addInput(event)">Add new ingredient:</button>
   </div>
 
   <div class="item">
@@ -92,7 +92,7 @@
         {% endfor %}
       {% endif %}
     </div>
-    <button type="button" class="add-input" name="step">Add new step:</button>
+    <button type="button" class="add-input" name="step" onclick="AddIngredientAndStepPreparation.addInput(event)">Add new step:</button>
   </div>
 
   <div class="item">

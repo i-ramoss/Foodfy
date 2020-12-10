@@ -1,37 +1,42 @@
 // Active menu
-const currentPage = location.pathname
-const menuItems = document.querySelectorAll(".menu a")
+const ActiveMenu = {
+  active() {
+    const currentPage = location.pathname
+    const menuItems = document.querySelectorAll(".menu a")
 
-for (item of menuItems) {
-  if (currentPage.includes(item.getAttribute("href")))
-    item.classList.add("active")
+    for (item of menuItems) {
+      if (currentPage.includes(item.getAttribute("href")))
+        item.classList.add("active")
+    }
+  }
 }
+
+ActiveMenu.active()
+
 
 // Add input
-function addInput(event) {
-  const buttonName = event.target.name
-  const ingredients = document.querySelector("#ingredients")
-  const steps = document.querySelector("#steps")
-  const fieldContainer = document.querySelectorAll(`.${buttonName}`)
-
-  const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true)
-
-  if (newField.children[0].value == "")
-    return false
+const AddIngredientAndStepPreparation = {
+  addInput(event) {
+    const buttonName = event.target.name
+    const ingredients = document.querySelector("#ingredients")
+    const steps = document.querySelector("#steps")
+    const fieldContainer = document.querySelectorAll(`.${buttonName}`)
   
-  newField.children[0].value = ""
-  if (buttonName == "ingredient")
-    ingredients.appendChild(newField)
-  else  
-    steps.appendChild(newField)
+    const newField = fieldContainer[fieldContainer.length - 1].cloneNode(true)
+  
+    if (newField.children[0].value == "")
+      return false
+    
+    newField.children[0].value = ""
+    if (buttonName == "ingredient")
+      ingredients.appendChild(newField)
+    else  
+      steps.appendChild(newField)
+  }
 }
 
-document
-  .querySelectorAll(".add-input")
-  .forEach(button => button.addEventListener("click", addInput))
 
-
-// Confirm deletion 
+// Confirm delete
 function confirmDelete(formDelete) {
   formDelete.addEventListener("submit", (event) => {
     const confirmation = confirm("Do you really want to delete this?")
@@ -49,7 +54,7 @@ if(formDelete)
 
 
 // Image Upload
-const RecipeImagesUpload = {
+const ImagesUpload = {
   preview: document.querySelector("#images-preview"),
 
   uploadLimit: "",
@@ -60,15 +65,15 @@ const RecipeImagesUpload = {
 
   handleFileInput(event, limit) {
     const { files: fileList } = event.target
-    const { preview, getContainer, hasLimit, getAllFiles } = RecipeImagesUpload
+    const { preview, getContainer, hasLimit, getAllFiles } = ImagesUpload
 
-    RecipeImagesUpload.input = event.target
-    RecipeImagesUpload.uploadLimit = limit
+    ImagesUpload.input = event.target
+    ImagesUpload.uploadLimit = limit
 
     if (hasLimit(event)) return
 
     Array.from(fileList).forEach( file => {
-      const { files } = RecipeImagesUpload
+      const { files } = ImagesUpload
 
       files.push(file)
 
@@ -87,11 +92,11 @@ const RecipeImagesUpload = {
       reader.readAsDataURL(file)
     })
     
-    RecipeImagesUpload.input.files = getAllFiles()
+    ImagesUpload.input.files = getAllFiles()
   },
 
   hasLimit(event) {
-    const { uploadLimit, input, preview } = RecipeImagesUpload
+    const { uploadLimit, input, preview } = ImagesUpload
     const { files: fileList } = input
 
     if (fileList.length == 0) {
@@ -130,7 +135,7 @@ const RecipeImagesUpload = {
   },
 
   getAllFiles() {
-    const { files } = RecipeImagesUpload
+    const { files } = ImagesUpload
 
     const dataTransfer = new ClipboardEvent("").clipboardData || new DataTransfer()
    
@@ -140,7 +145,7 @@ const RecipeImagesUpload = {
   },
 
   getContainer(image) {
-    const { getRemoveButton, removeImage } = RecipeImagesUpload
+    const { getRemoveButton, removeImage } = ImagesUpload
     const div = document.createElement("div")
 
     div.classList.add("image")
@@ -163,7 +168,7 @@ const RecipeImagesUpload = {
   },
 
   removeImage(event) {
-    const { preview, files, input, getAllFiles } = RecipeImagesUpload
+    const { preview, files, input, getAllFiles } = ImagesUpload
 
     const imageDiv = event.target.parentNode // div class="image">
     const imagesArray = Array.from(preview.children)
