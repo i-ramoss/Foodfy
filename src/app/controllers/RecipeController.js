@@ -149,7 +149,7 @@ module.exports = {
       return response.status(200).redirect("/admin/recipes")
     } 
     catch(err) {
-      console.err(err)
+      console.error(err)
     }
   }
 }

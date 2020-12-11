@@ -37,47 +37,42 @@ const AddIngredientAndStepPreparation = {
 
 
 // Confirm delete
+const form = document.getElementById("form-delete")
+const button = document.querySelector(".delete")
+
 const confirmDelete = () => {
-  button.addEventListener("submit", event => {
+  button.addEventListener("click", event => {
     event.preventDefault()
-    Swal.fire({
-      title: 'Are you sure?',
+
+    const alert = Swal.fire({
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
+      confirmButtonColor: "#04f704",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then( result => {
       if (result.isConfirmed) {
         Swal.fire(
           'Deleted!',
           'Your file has been deleted.',
           'success'
         )
+
+        const confirm = document.querySelector(".swal2-confirm.swal2-styled")
+
+        confirm.addEventListener("click", () => {
+          setTimeout(() => {
+            form.submit()
+          }, 200)
+        })
       }
     })
   })
 }
 
-const button = document.querySelector(".delete")
 if (button) confirmDelete()
-
-
-// function confirmDelete(formDelete) {
-//   formDelete.addEventListener("submit", (event) => {
-//     const confirmation = confirm("Do you really want to delete this?")
-    
-//     if (!confirmation) {
-//       event.preventDefault()
-//     }
-//   })
-// }
-
-// const formDelete = document.querySelector("#form-delete")
-
-// if(formDelete)
-//   confirmDelete(formDelete)
 
 
 // Image Upload
