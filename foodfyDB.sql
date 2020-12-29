@@ -13,6 +13,7 @@ CREATE TABLE "recipes" (
   "preparation" text[] NOT NULL,
   "information" text NOT NULL,
   "created_at" timestamp DEFAULT (now())
+  "updated_at" timestamp DEFAULT (now())
 );
 
 CREATE TABLE "files" (

@@ -63,7 +63,8 @@ module.exports = {
         SELECT recipes.*, chefs.name AS chef_name
         FROM recipes
         INNER JOIN chefs ON (recipes.chef_id = chefs.id)
-        WHERE chefs.id = $1`, [id]
+        WHERE chefs.id = $1
+        ORDER BY recipes.title ASC`, [id]
       )
     } 
     catch (err) {
