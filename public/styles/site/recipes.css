@@ -15,6 +15,7 @@
   height: 140px;
   border-radius: 15px;
   cursor: pointer;
+  object-fit: cover;
 }
 
 .card h3 {

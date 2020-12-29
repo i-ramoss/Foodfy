@@ -1,11 +1,28 @@
 const Chef = require("../models/Chef")
+const Recipe = require("../models/Recipe")
 const File = require("../models/File")
 
 module.exports = {
   async index(request, response) {
     try {
       const results = await Chef.all()
-      const chefs = results.rows
+      let chefs = results.rows
+
+      async function getImage(chefId) {
+        let results = await Chef.files(chefId)
+
+        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+
+        return files[0]
+      }
+
+      const chefsPromise = chefs.map( async chef => {
+        chef.avatar = await getImage(chef.id)
+
+        return chef
+      })
+
+      chefs = await Promise.all(chefsPromise)
   
       return response.render("admin/chefs/index", { chefs })
     }
@@ -60,7 +77,23 @@ module.exports = {
         src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
       }))
 
-      return response.render("admin/chefs/show", { chef, recipes, files })
+      async function getImage(recipeId) {
+        let results = await Recipe.files(recipeId)
+
+        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+
+        return files[0]
+      }
+
+      const recipesPromise = recipes.map( async recipe => {
+        recipe.image = await getImage(recipe.id)
+
+        return recipe
+      })
+
+      const lastAdded = await Promise.all(recipesPromise)
+
+      return response.render("admin/chefs/show", { chef, recipes:lastAdded, files })
     } 
     catch (err) {
       console.error(err)

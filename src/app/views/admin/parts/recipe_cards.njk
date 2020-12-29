@@ -1,0 +1,10 @@
+<div class='cards'>
+  {% for recipe in recipes %}
+    <div class='card-admin'>
+      <img src='{{recipe.image}}' alt='Image of {{recipe.title}}'>
+      <h3 class='name'>{{recipe.title}}</h3>
+      <p class='chef'>by {{recipe.chef_name}}</p>
+      <a href="/admin/recipes/{{recipe.id}}">Visualize</a>
+    </div>
+  {% endfor %}
+</div>

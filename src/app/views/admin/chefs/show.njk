@@ -21,7 +21,7 @@
     </div>
 
     <div class='image__container chef'>
-      <img src='{{files[0].src}}' alt='Image of {{files[0].name}}'>
+      <img src='{{files[0].src}}' alt='Image of {{chef.name}}'>
       <h3>{{chef.name}}</h3>
       <p>
         {% if chef.total_recipes == 1 %} {{chef.total_recipes}} recipe {% endif %}
@@ -33,16 +33,8 @@
       <div class='section'>
         <h3>Recipes:</h3>
       </div>
-      <div class='cards'>
-        {% for recipe in recipes %}
-          <div class='card-admin'>
-            <img src='{{recipe.image}}' alt='Image of {{recipe.title}}'>
-            <h3 class='name'>{{recipe.title}}</h3>
-            <p class='chef'>by {{recipe.chef_name}}</p>
-            <a href="/admin/recipes/{{recipe.id}}">Visualize</a>
-          </div>
-        {% endfor %}
-      </div>
+      
+      {% include "admin/parts/recipe_cards.njk" %}
     </div>
   </div>
 

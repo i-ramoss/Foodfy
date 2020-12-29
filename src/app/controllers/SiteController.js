@@ -4,20 +4,26 @@ const Chef = require("../models/Chef")
 module.exports = {
   async index(request, response) {
     try {
-      const { filter } = request.query
+      let results = await Recipe.all()
+      let recipes = results.rows
 
-      if (filter) {
-        let results =  await Recipe.findBy(filter)
-        const recipes = results.rows
+      async function getImage(recipeId) {
+        let results = await Recipe.files(recipeId)
 
-        return response.render("site/results", { recipes, filter })
-      } 
-      else {
-        let results = await Recipe.all()
-        let recipes = results.rows
+        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
 
-        return response.render("site/index", { recipes })
+        return files[0]
       }
+
+      const recipesPromise = recipes.map( async recipe => {
+        recipe.image = await getImage(recipe.id)
+
+        return recipe
+      }).filter((recipe, index) => index > 5 ? false : true)
+
+      recipes = await Promise.all(recipesPromise)
+
+      return response.render("site/index", { recipes })
     } 
     catch (err) {
       console.error(err)
@@ -43,7 +49,7 @@ module.exports = {
       }
 
       let results = await Recipe.paginate(params)
-      const recipes = results.rows
+      let recipes = results.rows
 
       if (recipes == "") return response.redirect("/recipes")
 
@@ -51,6 +57,22 @@ module.exports = {
         total: Math.ceil(recipes[0].total / limit),
         page
       }
+
+      async function getImage(recipeId) {
+        let results = await Recipe.files(recipeId)
+
+        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+
+        return files[0]
+      }
+
+      const recipesPromise = recipes.map( async recipe => {
+        recipe.image = await getImage(recipe.id)
+
+        return recipe
+      })
+
+      recipes = await Promise.all(recipesPromise)
     
       return response.render("site/recipes", { recipes, pagination })
     } 
@@ -82,7 +104,22 @@ module.exports = {
   async chefs(request, response) {
     try {
       const results = await Chef.all()
-      const chefs = results.rows
+      let chefs = results.rows
+
+      async function getImage(chefId) {
+        let results = await Chef.files(chefId)
+        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace('public', '')}`)
+
+        return files[0]
+      }
+
+      const chefsPromise = chefs.map( async chef => {
+        chef.avatar = await getImage(chef.id)
+
+        return chef
+      })
+
+      chefs = await Promise.all(chefsPromise)
 
       return response.render("site/chefs", { chefs })
     } 
@@ -107,7 +144,7 @@ module.exports = {
       }
 
       let results = await Recipe.paginate(params)
-      const recipes = results.rows
+      let recipes = results.rows
 
       if (recipes == "") return response.redirect("/results")
 
@@ -115,6 +152,22 @@ module.exports = {
         total: Math.ceil(recipes[0].total / limit),
         page
       }
+
+      async function getImage(recipeId) {
+        let results = await Recipe.files(recipeId)
+
+        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+
+        return files[0]
+      }
+
+      const recipesPromise = recipes.map( async recipe => {
+        recipe.image = await getImage(recipe.id)
+
+        return recipe
+      })
+
+      recipes = await Promise.all(recipesPromise)
 
       return response.render("site/results", { recipes, pagination, filter})
     } 

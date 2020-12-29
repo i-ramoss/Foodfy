@@ -41,7 +41,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [PostgreSQL][postgresql]
 - [Multer][multer]
 - [PG][pg]
-
+- [SweetAlert2][swal2]
 
 ## :construction_worker: Como usar: (Em desenvolvimento)
 
@@ -65,7 +65,7 @@ $ npm install
 
 ### Após instalar as dependências, deve-se configurar o banco de dados
 
-Além do [PostgreSQL], instale o [Postbird] para gerenciamento e visualização do BD numa interface gráfica. <br>
+Além do [PostgreSQL], instale o [Postbird][postbird] para gerenciamento e visualização do BD numa interface gráfica. <br>
 Após essas instalações, ligue o PostgreSQL.
 
 *Perceba que a versão que estou usando neste projeto, é a versão 13. Caso a sua versão instalada seja outra, atente-se ao número da versão na pasta acima. Troque o 13 pela versão do seu postgres.*
@@ -146,8 +146,10 @@ Feito com :green_heart: por **Ian Ramos** :fire: [Entre em contato!][linkedin]
 [njk]: https://mozilla.github.io/nunjucks/
 [postgresql]: https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 [postgres-linux]: https://www.postgresql.org/download/linux/
-[multer]: https://github.com/expressjs/multer
 [pg]: https://github.com/brianc/node-postgres/tree/master/packages/pg
+[postbird]: https://www.electronjs.org/apps/postbird
+[multer]: https://github.com/expressjs/multer
+[swal2]: https://sweetalert2.github.io/
 [git]: https://git-scm.com
 [license]: https://github.com/i-ramoss/Foodfy/blob/master/LICENSE
 [linkedin]: https://www.linkedin.com/in/ian-ramos/

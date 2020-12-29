@@ -16,7 +16,7 @@
   <div class='cards'>
     {% for chef in chefs %}
       <div class='card-admin'>
-        <img src='{{chef.avatar_url}}' alt='Imagem de {{chef.name}}'>
+        <img src='{{chef.avatar}}' alt='Imagem de {{chef.name}}'>
         <h3 class='name'>{{chef.name}}</h3>
         <a href="/admin/chefs/{{chef.id}}">Visualize</a>
       </div>

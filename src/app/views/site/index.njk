@@ -1,4 +1,5 @@
 {% extends "site/layout.njk" %}
+{% import "site/parts/section-recipes.njk" as section %}
 
 {% block head %}
   <link rel="stylesheet" href="/styles/site/index.css">
@@ -7,16 +8,16 @@
 {% endblock %}
 
 {% block search %}
-<li class="search">
-  <form action="/results" method="get">
-    <input 
-    type="text" 
-    name="filter" 
-    value="{{ filter }}" 
-    placeholder="Search for a recipe:">
-    <button type="submit">Search</button>
-  </form>
-</li>
+  <li class="search">
+    <form action="/results" method="get">
+      <input 
+      type="text" 
+      name="filter" 
+      value="{{ filter }}" 
+      placeholder="Search for a recipe:">
+      <button type="submit">Search</button>
+    </form>
+  </li>
 {% endblock %}
 
 {% block content %}
@@ -29,20 +30,6 @@
     <img src="/assets/chef.png" alt="Chef">
   </main>
 
-  <div class="topic">
-    <h2>Most accessed:</h2>
-  </div>
-
-  <div class="cards">
-    {% for recipe in recipes %}
-      {% if loop.index <= 6 %}
-        <div class="card">
-          <img src="{{recipe.image}}" id="{{recipe.id}}" alt="Imagem de {{recipe.title}}">
-          <h3  class="name">{{recipe.title}}</h3>
-          <p>by {{recipe.chef_name}}</p>
-        </div>
-      {% endif %}
-    {% endfor %}
-  </div>
+  {{section.recipes("Most accessed:", "", recipes)}}
 
 {% endblock%}

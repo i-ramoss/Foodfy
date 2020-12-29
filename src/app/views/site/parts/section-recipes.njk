@@ -1,0 +1,19 @@
+{% macro recipes(name, filter, recipes) %}
+
+  <div class="topic">
+    {% if name %}
+      <h2>{{name}} {% if filter %} "{{filter}}" {% endif %}</h2>
+    {% endif %}
+  </div>
+
+  <div class="cards">
+    {% for recipe in recipes %}
+      <div class="card">
+        <img src="{{recipe.image}}" id="{{recipe.id}}" alt="Image of {{recipe.title}}">
+        <h3  class="name">{{recipe.title}}</h3>
+        <p>by {{recipe.chef_name}}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endmacro %}

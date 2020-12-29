@@ -5,7 +5,23 @@ module.exports = {
   async index(request, response) {
     try {
       const results = await Recipe.all()
-      const recipes = results.rows
+      let recipes = results.rows
+
+      async function getImage(recipeId) {
+        let results = await Recipe.files(recipeId)
+
+        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+
+        return files[0]
+      }
+
+      const recipesPromise = recipes.map( async recipe => {
+        recipe.image = await getImage(recipe.id)
+
+        return recipe
+      })
+
+      recipes = await Promise.all(recipesPromise)
 
       return response.render('admin/recipes/index', { recipes })
     } 

@@ -1,4 +1,4 @@
-{% extends 'admin/layout.njk' %}
+{% extends "admin/layout.njk" %}
 
 {% block head %}
   <link rel='stylesheet' href='/styles/admin/recipes.css'>
@@ -13,15 +13,6 @@
     <a href="/admin/recipes/create" class="button">New</a>
   </div>
 
-  <div class='cards'>
-    {% for recipe in recipes %}
-      <div class='card-admin'>
-        <img src='{{recipe.image}}' alt='Imagem de {{recipe.title}}'>
-        <h3 class='name'>{{recipe.title}}</h3>
-        <p class='chef'>by {{recipe.chef_name}}</p>
-        <a href="/admin/recipes/{{recipe.id}}">Visualize</a>
-      </div>
-    {% endfor %}
-  </div>
+  {% include "admin/parts/recipe_cards.njk" %}
 
 {% endblock %}

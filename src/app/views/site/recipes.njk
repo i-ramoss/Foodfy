@@ -1,4 +1,5 @@
 {% extends "site/layout.njk" %}
+{% import "site/parts/section-recipes.njk" as section %}
 
 {% block head %}
   <link rel="stylesheet" href="/styles/site/recipes.css">
@@ -8,15 +9,7 @@
 
 {% block content%}
 
-  <div class="cards">
-    {% for recipe in recipes %}
-      <div class="card">
-        <img src="{{recipe.image}}" id="{{recipe.id}}" alt="Imagem de {{recipe.title}}">
-        <h3 class="name">{{recipe.title}}</h3>
-        <p>by {{recipe.chef_name}}</p>
-      </div>
-    {% endfor %}
-  </div>
+  {{section.recipes("", "", recipes)}}
 
 {% endblock %}
 

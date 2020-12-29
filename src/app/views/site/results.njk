@@ -1,4 +1,5 @@
 {% extends "site/layout.njk" %}
+{% import "site/parts/section-recipes.njk" as section %}
 
 {% block head %}
   <link rel="stylesheet" href="/styles/site/index.css">
@@ -7,42 +8,30 @@
 {% endblock %}
  
 {% block search %}
-<li>
-  <form action="/results" method="get">
-    <input 
-    type="text" 
-    name="filter" 
-    value="{{ filter }}" 
-    placeholder="Search for a recipe">
-    <button type="submit">Search</button>
-  </form>
-</li>
+  <li>
+    <form action="/results" method="get">
+      <input 
+      type="text" 
+      name="filter" 
+      value="{{ filter }}" 
+      placeholder="Search for a recipe:">
+      <button type="submit">Search</button>
+    </form>
+  </li>
 {% endblock %}
 
 {% block content %}
 
-  <div class="topic">
-    <h2>Searching for "{{filter}}"</h2>
-  </div>
-
-  <div class="cards">
-    {% for recipe in recipes %}
-      <div class="card">
-        <img src="{{recipe.image}}" id="{{recipe.id}}" alt="Imagem de {{recipe.title}}">
-        <h3 class="name">{{recipe.title}}</h3>
-        <p>by {{recipe.chef_name}}</p>
-      </div>
-    {% endfor %}
-  </div>
+  {{section.recipes('Searching for: ', filter, recipes)}}
 
 {% endblock%}
 
 {% block footer %}
   <div 
-  class="pagination"
-  data-page={{pagination.page}}
-  data-total={{pagination.total}}
-  data-filter={{filter}}
+    class="pagination"
+    data-page={{pagination.page}}
+    data-total={{pagination.total}}
+    data-filter={{filter}}
   ></div>
   <footer><p>All rights reserved, Foodfy</p></footer>
 {% endblock %}
