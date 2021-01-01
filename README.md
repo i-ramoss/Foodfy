@@ -32,16 +32,20 @@ O Foodfy é um site de receitas que foi desenvolvido no Bootcamp LaunchBase.
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
+### Frontend:
 - [HTML][html]
 - [CSS][css]
 - [JavaScript][js]
+- [Nunjucks][njk]
+- [SweetAlert2][swal2]
+
+### Backend:
 - [Node.js][nodejs]
 - [Express][express]
-- [Nunjucks][njk]
 - [PostgreSQL][postgresql]
-- [Multer][multer]
 - [PG][pg]
-- [SweetAlert2][swal2]
+- [Multer][multer]
+
 
 ## :construction_worker: Como usar: (Em desenvolvimento)
 
@@ -79,7 +83,7 @@ $ cd "C:\Program Files\PostgreSQL\13\bin\"
 
 2. Inicie o postgres com o comando abaixo:
 ```bash
-$ .\pg_ctl.exe -D "C:\Program Files\PostgreSQL\13\data" star
+$ .\pg_ctl.exe -D "C:\Program Files\PostgreSQL\13\data" start
 ```
 
 3. Após o uso, o comando para desligá-lo é:
