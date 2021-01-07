@@ -51,7 +51,11 @@ module.exports = {
       let results = await Recipe.paginate(params)
       let recipes = results.rows
 
-      if (recipes == "") return response.redirect("/recipes")
+      if (recipes == "") {
+        const pagination = { page }
+
+        return response.render("site/recipes", { recipes, pagination })
+      }
 
       const pagination = {
         total: Math.ceil(recipes[0].total / limit),
@@ -146,7 +150,11 @@ module.exports = {
       let results = await Recipe.paginate(params)
       let recipes = results.rows
 
-      if (recipes == "") return response.redirect("/results")
+      if (recipes == "") {
+        const pagination = { page }
+
+        return response.render("site/results", { recipes, pagination })
+      }
 
       const pagination = {
         total: Math.ceil(recipes[0].total / limit),
