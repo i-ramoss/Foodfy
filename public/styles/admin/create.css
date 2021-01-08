@@ -24,7 +24,8 @@
 
 button[type="submit"],
 button.save,
-button.delete {
+button.delete,
+.buttons a {
   padding: 8px 20px;
   background-color: var(--button-color);
   border-radius: 4px;
@@ -245,4 +246,40 @@ button[type="button"] {
   text-align: right;
   outline: none;
   cursor: pointer;
+}
+
+/* create user */
+
+.buttons a {
+  padding: 8px 30px;
+
+  background-color: #8A8A8A;
+
+  margin-left: 12px;
+}
+
+.user.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0 40px;
+}
+
+.user.details .admin-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.user.details .admin-checkbox input {
+  margin: 0;
+  margin-right: 10px;
+
+  width: 15px;
+  height: 15px;
+}
+
+.user.details .admin-checkbox p {
+  font-size: 16px;
+  color: #111111;
+
+  font-weight: bold;
 }

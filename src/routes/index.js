@@ -8,7 +8,7 @@ const chefs = require("./chefs")
 const recipes = require("./recipes")
 
 routes.use(site)
-routes.use("/users", users)
+routes.use("/admin", users)
 routes.use("/admin/chefs", chefs)
 routes.use("/admin/recipes", recipes)
 

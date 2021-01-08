@@ -72,3 +72,17 @@ body {
   font-weight: bold;
   color: var(--body-color);
 }
+
+/* Validate errors */
+
+.error {
+  background-color: #dc4747;
+  border-radius: 4px;
+
+  margin-top: 3px;
+  padding: 4px;
+
+  color: white;
+
+  max-width: 100%;
+}

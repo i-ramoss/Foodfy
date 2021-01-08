@@ -1,0 +1,22 @@
+<section class="user details">
+  <div class="item">
+    <h2>Name:</h2>
+    <div>
+      <input type="text" name="name" value="{{user.name}}" placeholder="Enter the full name" required>
+    </div>
+  </div>
+
+  <div class="item">
+    <h2>Email:</h2>
+    <div>
+      <input type="email" name="email" value="{{user.email}}" placeholder="Enter the email" onblur="Validate.apply(this, 'isEmail')" required>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="admin-checkbox">
+      <input type="checkbox" name="is_admin" value="{{user.is_admin}}">
+      <p>Admin</p>
+    </div>
+  </div>
+</section>
