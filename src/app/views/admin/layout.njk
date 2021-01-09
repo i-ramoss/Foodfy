@@ -7,11 +7,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <link rel="icon" href="/assets/restaurant-white-18dp.svg" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-      
-    <link rel="stylesheet" href="/styles/admin/main.css">
+    {% include "./parts/styles.njk"%}
 
     {% block head %}
       <title>Foodfy</title>
@@ -19,6 +15,8 @@
   </head>
 
   <body>
+    {% include "./parts/messages.njk" %}
+
     {% include "./parts/header.njk" %}
     
     {% block content%}{% endblock %}

@@ -2,21 +2,21 @@
   <div class="item">
     <h2>Name:</h2>
     <div>
-      <input type="text" name="name" value="{{user.name}}" placeholder="Enter the full name" required>
+      <input type="text" name="name" value="{{user.name}}" placeholder="Enter the full name">
     </div>
   </div>
 
   <div class="item">
     <h2>Email:</h2>
-    <div>
-      <input type="email" name="email" value="{{user.email}}" placeholder="Enter the email" onblur="Validate.apply(this, 'isEmail')" required>
+    <div class="input">
+      <input type="email" name="email" value="{{user.email}}" placeholder="Enter the email" onblur="Validate.apply(this, 'isEmail')">
     </div>
   </div>
 
   <div class="item">
     <div class="admin-checkbox">
-      <input type="checkbox" name="is_admin" value="{{user.is_admin}}">
-      <p>Admin</p>
+      <input type="checkbox" name="is_admin" value="{{user.is_admin}}" id="admin">
+      <label for="admin">Admin</label>
     </div>
   </div>
 </section>

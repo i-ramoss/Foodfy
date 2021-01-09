@@ -277,7 +277,7 @@ button[type="button"] {
   height: 15px;
 }
 
-.user.details .admin-checkbox p {
+.user.details .admin-checkbox label {
   font-size: 16px;
   color: #111111;
 

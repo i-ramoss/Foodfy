@@ -104,7 +104,7 @@ module.exports = {
     try {
       let results = await Chef.find(request.params.id)
       const chef = results.rows[0]
-      
+
       results = await Chef.files(chef.id)
       let files = results.rows
   
@@ -129,8 +129,8 @@ module.exports = {
     }
 
     try {
-      let results = await Chef.find(request.params.id)
-      let id = results.rows[0]
+      let results = await Chef.files(request.body.id)
+      let id = results.rows[0].id
 
       if (request.files.length != 0) {
         const newFilesPromise = request.files.map( file => File.createChefFile({ ...file }))
@@ -142,6 +142,9 @@ module.exports = {
       await Chef.update(request.body, id)
 
       if (request.body.removed_files) {
+        if (request.files.length === 0) 
+          return response.json("Please, send at least one image")
+
         const removedFiles = request.body.removed_files.split(",")
         const lastIndex = removedFiles.length - 1
   

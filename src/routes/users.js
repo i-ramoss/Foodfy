@@ -4,6 +4,8 @@ const SessionController = require("../app/controllers/SessionController")
 const ProfileController = require("../app/controllers/ProfileController")
 const UserController = require("../app/controllers/UserController")
 
+const UserValidator = require("../app/validators/user")
+
 const routes = express.Router()
 
 // // login / logout
@@ -24,7 +26,7 @@ const routes = express.Router()
 // // Admin
 // .get("/users", UserController.list)
 .get("/users/register", UserController.registerForm)
-// .post("/users", UserController.create)
+.post("/users/register", UserValidator.create, UserController.create)
 // .put("/users", UserController.update)
 // .delete("/users", UserController.delete)
 
