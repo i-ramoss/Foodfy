@@ -3,21 +3,14 @@
 
 {% block head %}
   <link rel="stylesheet" href="/styles/site/index.css">
+  <link rel="stylesheet" href="/styles/site/filter.css">
+  <link rel="stylesheet" href="/styles/site/recipes.css">
 
   <title>Foodfy</title>
 {% endblock %}
 
 {% block search %}
-  <li class="search">
-    <form action="/results" method="get">
-      <input 
-      type="text" 
-      name="filter" 
-      value="{{ filter }}" 
-      placeholder="Search for a recipe:">
-      <button type="submit">Search</button>
-    </form>
-  </li>
+  {% include "./parts/search.njk" %}
 {% endblock %}
 
 {% block content %}

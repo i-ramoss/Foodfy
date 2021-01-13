@@ -4,34 +4,23 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/assets/restaurant-white-18dp.svg" type="image/x-icon" />
-    <link rel="stylesheet" href="/styles/site/main.css">
+
+    {% include "./parts/styles.njk"%}
 
     {% block head %}
-    <title>Foodfy</title>
+      <title>Foodfy</title>
     {% endblock %}  
   </head>
 
   <body>
-    <div class="container-header">
-      <header class="header">
-        <a href="/"><img src="/assets/logo_black.png" alt="foodfy"></a>
-        <nav>
-          <ul class="menu">
-            <li><a href="/about">About</a></li>
-            <li><a href="/recipes">Recipes</a></li>
-            <li><a href="/chefs">Chefs</a></li>
-            {% block search %}{% endblock %}
-          </ul>
-        </nav> 
-      </header>
-    </div>  
+    <header class="header">
+      {% include "./parts/header.njk" %}
+      {% block search %}{% endblock %}
+    </header> 
     
     {% block content%}{% endblock %}
 
-    {% block footer %}
-    <footer><p>All rights reserved, Foodfy</p></footer>
-    {% endblock %}
+    {% include "./parts/footer.njk" %}
 
     <script src="/scripts/site/scripts.js"></script>
   </body>

@@ -59,7 +59,7 @@
 
 .ingredients__container h3, 
 .preparation__container h3,
-.adittional_info__container h3 {
+.additional_info__container h3 {
   font-weight: bold;
   font-size: 24px;
   color: var(--body-color);
@@ -68,7 +68,7 @@
 
 .ingredients__container li, 
 .preparation__container li,
-.adittional_info__container p {
+.additional_info__container p {
   font-size: 18px;
   color: #444444;
   line-height: 28px;
@@ -79,7 +79,6 @@
   list-style: decimal;
   margin-left: 20px;
 }
-
 
 /* === Hide data === */
 

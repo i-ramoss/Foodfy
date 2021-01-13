@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
 
-  background-color: #FBDFDB;
+  background-color: var(--primary-color);
   border-radius: 30px;
   width: 100%;
   max-width: 940px;
@@ -30,7 +30,7 @@
   font-size: 18px;
   line-height: 28px;
   font-weight: 500;
-  color: #000000;
+  color: var(--body-color);
   opacity: 0.7;
   margin-top: 10px;
   max-width: 330px;
@@ -42,92 +42,4 @@
   height: 300px;
   margin-right: 100px;
   margin-top: 66px;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
-  row-gap: 30px;
-  justify-content: center;
-
-  margin: 0px auto 50px;
-  width: 100%;
-  max-width: 940px;
-}
-
-.card img {
-  width: 300px;
-  height: 140px;
-  border-radius: 15px;
-  cursor: pointer;
-  object-fit: cover;
-}
-
-.card h3 {
-  font-size: 18px;
-  font-weight: 500;
-  color: var(--body-color);
-  margin: 20px auto 5px;
-}
-.card p {
-  font-size: 14px;
-  color: var(--p-color);
-}
-
-/* Filter */
-
-.menu form {
-  display: grid;
-  grid-template-columns: 1fr 90px;
-  align-items: center;
-}
-
-.menu form input {
-  width: 245px;
-  border: 1px solid #dddddd;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  padding: 6px 8px;
-  font-size: 14px;
-  color: #999999;
-  outline: none;
-}
-
-.menu form button {
-  padding: 6px 20px;
-  background-color: var(--primary-color);
-  border-radius: 4px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  color: rgb(66, 58, 58);
-
-  font-size: 16px;
-  font-weight: bold;
-
-  cursor: pointer;
-}
-
-li:last-child {
-  margin-left: 160px;
-}
-
-/* Pagination */
-
-.pagination {
-  display: flex;
-  justify-content: center;
-}
-
-.pagination a,
-.pagination span {
-  color: var(--body-color);
-  font-weight: bold;
-  margin-right: 14px;
-}
-
-.pagination a:hover {
-  color: var(--primary-color);
-  transition: 500ms;
-  border-bottom: 1px solid var(--button-color);
 }

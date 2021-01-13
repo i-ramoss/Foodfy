@@ -3,21 +3,13 @@
 
 {% block head %}
   <link rel="stylesheet" href="/styles/site/index.css">
+  <link rel="stylesheet" href="/styles/site/filter.css">
 
   <title>Foodfy</title>
 {% endblock %}
  
 {% block search %}
-  <li>
-    <form action="/results" method="get">
-      <input 
-      type="text" 
-      name="filter" 
-      value="{{ filter }}" 
-      placeholder="Search for a recipe:">
-      <button type="submit">Search</button>
-    </form>
-  </li>
+  {% include "./parts/search.njk" %}
 {% endblock %}
 
 {% block content %}
@@ -25,13 +17,3 @@
   {{section.recipes('Searching for: ', filter, recipes)}}
 
 {% endblock%}
-
-{% block footer %}
-  <div 
-    class="pagination"
-    data-page={{pagination.page}}
-    data-total={{pagination.total}}
-    data-filter={{filter}}
-  ></div>
-  <footer><p>All rights reserved, Foodfy</p></footer>
-{% endblock %}
