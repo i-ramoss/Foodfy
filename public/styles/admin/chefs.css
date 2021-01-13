@@ -1,21 +1,3 @@
-.topic {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-bottom: 30px;
-}
-
-.button {
-  padding: 8px 20px;
-  background-color: var(--button-color);
-  border-radius: 4px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 .cards.chefs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -27,7 +9,7 @@
   max-width: 940px;
 }
 
-.card-admin {
+.cards.chefs .card-admin {
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-areas: "img name"
@@ -37,7 +19,7 @@
   align-items: center;
 }
 
-.card-admin img {
+.cards.chefs .card-admin img {
   grid-area: img;
 
   width: 64px;
@@ -46,7 +28,7 @@
   object-fit: cover;
 }
 
-.card-admin h3 {
+.cards.chefs .card-admin h3 {
   grid-area: name;
 
   width: 100%;
@@ -55,7 +37,7 @@
   color: var(--body-color);
 }
 
-.card-admin a {
+.cards.chefs .card-admin a {
   grid-area: view;
 
   font-size: 14px;
@@ -64,7 +46,58 @@
   cursor: pointer;
 }
 
-.card-admin p {
+.cards.chefs .card-admin p {
   font-size: 14px;
   color: #666666;
+}
+
+/* Upload Chef image profile */
+
+.chef-image-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 40px;
+
+  width: 100%;
+  max-width: 940px;
+}
+
+#photo-upload {
+  position: relative;
+
+  display: block;
+  overflow: hidden;
+
+  width: 140px;
+  
+  padding-bottom: 0;
+}
+
+#photo-upload p {
+  padding: 8px 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px -6px #333;
+  background-color: var(--button-color);
+  color: white;
+
+  width: 100%;
+  text-align: center;
+
+  font-size: 16px;
+}
+
+#photo-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: block;
+  overflow: hidden;
+
+  width: 100%;
+  height: 100%;
+  
+  opacity: 0;
+  
+  cursor: pointer;
 }

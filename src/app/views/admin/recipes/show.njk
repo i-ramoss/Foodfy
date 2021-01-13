@@ -1,8 +1,6 @@
 {% extends "admin/layout.njk" %}
 
 {% block head %}
-  <link rel="stylesheet" href="/styles/admin/show.css">
-
   <title>{{recipe.title}}</title>
 {% endblock %}
 
@@ -12,9 +10,9 @@
 
 {% block content%}
 
-  <div class="content">
-    <div class="title">
-      <h3>Recipe: {{recipe.title}}</h3>
+  <div class="content recipe">
+    <div class="topic">
+      <h2>Recipe: {{recipe.title}}</h2>
       <a href="/admin/recipes/{{ recipe.id }}/edit" class="button">Edit recipe</a>
     </div>
 

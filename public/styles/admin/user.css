@@ -1,0 +1,27 @@
+/* create user */
+
+.user.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0 40px;
+}
+
+.user.details .admin-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.user.details .admin-checkbox input {
+  margin: 0;
+  margin-right: 10px;
+
+  width: 15px;
+  height: 15px;
+}
+
+.user.details .admin-checkbox label {
+  font-size: 16px;
+  color: #111111;
+
+  font-weight: bold;
+}

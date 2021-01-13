@@ -1,8 +1,6 @@
 {% extends 'admin/layout.njk' %}
 
 {% block head %}
-  <link rel='stylesheet' href='/styles/admin/create.css'>
-
   <title>{{recipe.title}}</title>
 {% endblock %}
 
@@ -11,9 +9,9 @@
   <form class="content" id="form-update" action="/admin/recipes?_method=PUT" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value={{recipe.id}}>
 
-    <div class="title">
-      <h3>Editing recipe:</h3>
-      <div class="button">
+    <div class="topic">
+      <h2>Editing recipe:</h2>
+      <div class="buttons">
         <button form="form-delete" type="submit" class="delete">Delete</button>
         <button type="submit" class="save">Save recipe</button>
       </div>

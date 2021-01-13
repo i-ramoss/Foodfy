@@ -1,22 +1,4 @@
-.topic {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-bottom: 30px;
-}
-
-.button {
-  padding: 8px 20px;
-  background-color: #6558C3;
-  border-radius: 4px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.cards {
+.cards.recipes {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 20px;
@@ -28,7 +10,7 @@
   max-width: 940px;
 }
 
-.card-admin {
+.cards.recipes .card-admin {
   display: grid;
   grid-template-columns: 1fr 2fr;
   grid-template-areas: "img name"
@@ -38,7 +20,7 @@
   column-gap: 20px;
 }
 
-.card-admin img {
+.cards.recipes .card-admin img {
   grid-area: img;
   width: 172px;
   height: 80px;
@@ -46,7 +28,7 @@
   object-fit: cover;
 }
 
-.card-admin h3 {
+.cards.recipes .card-admin h3 {
   grid-area: name;
   font-size: 18px;
   font-weight: 400;
@@ -54,16 +36,128 @@
   margin-bottom: 0;
 }
 
-.card-admin p {
+.cards.recipes .card-admin p {
   grid-area: chef;
   font-size: 14px;
   color:var(--p-color);
 }
 
-.card-admin a {
+.cards.recipes .card-admin a {
   grid-area: view;
   font-size: 14px;
   font-weight: bold;
-  color: #6558C3;
+  color: var(--button-color);
   cursor: pointer;
+}
+
+/* Images upload */
+
+.images-container {
+  display: grid;
+  grid-template-columns: 150px 2fr;
+  grid-gap: 10px;
+
+  width: 100%;
+  max-width: 940px;
+}
+
+#images-upload {
+  position: relative;
+
+  overflow: hidden;
+
+  width: 150px;
+  height: 150px;
+}
+
+#images-upload i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  z-index: -100;
+
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid var(--border-color);
+  border-radius: 3.5px;
+
+  color: #999999;
+
+  font-size: 300%;
+}
+
+#images-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  overflow: hidden;
+
+  width: 100%;
+  height: 100%;
+
+  cursor: pointer;
+
+  opacity: 0;
+}
+
+#images-preview {
+  display: grid;
+  grid-template-columns: repeat(5, 148px);
+  grid-gap: 10px;
+
+  width: 100%;
+}
+
+#images-preview img {
+  width: 100%;
+  height: 150px;
+
+  object-fit: cover;
+}
+
+#images-preview .image {
+  position: relative;
+}
+
+#images-preview .image i {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background: rgba(255,255,255, 0.8);
+
+  color: red;
+  
+  width: 100%;
+  height: 100%;
+
+  font-size: 500%;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  transition: opacity 600ms;
+}
+
+#images-preview .image:hover i {
+  opacity: 1;
+}
+
+/* Fields */
+
+.ingredient + .ingredient,
+.step + .step {
+  margin-top: 10px;
 }

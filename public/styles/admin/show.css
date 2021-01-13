@@ -1,26 +1,10 @@
-.content {
+.content.recipe {
   display: flex;
   flex-direction: column;
 
   margin: 0px auto 50px;
   max-width: 940px;
   width: 100%;
-}
-
-.title {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.button {
-  padding: 8px 20px;
-  background-color: #6558C3;
-  border-radius: 4px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 .image__container {
@@ -59,7 +43,7 @@
   height: 50px;
   width: 50px;
 
-  border: 1px solid #dddddd;
+  border: 1px solid var(--border-color);
 
   object-fit: cover;
 
@@ -180,7 +164,7 @@
 .preparation__container li,
 .adittional_info__container p {
   font-size: 18px;
-  color: #444444;
+  color: var(--li-color);
   line-height: 28px;
   list-style: "- " inside;
 }

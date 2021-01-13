@@ -1,17 +1,15 @@
 {% extends 'admin/layout.njk' %}
 
 {% block head %}
-  <link rel='stylesheet' href='/styles/admin/create.css'>
-
-  <title>Criar receita - Admin</title>
+  <title>Create Recipe - Admin</title>
 {% endblock %}
 
 {% block content%}
 
   <form class="content" action="/admin/recipes" method="post" enctype="multipart/form-data">
 
-    <div class="title">
-      <h3>Register recipe:</h3>
+    <div class="topic">
+      <h2>Register recipe:</h2>
       <button type="submit">Save recipe</button>
     </div>
   

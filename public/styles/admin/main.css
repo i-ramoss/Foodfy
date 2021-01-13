@@ -1,6 +1,7 @@
 :root {
   --body-color: #111111 ;
   --p-color: #777777;
+  --li-color: #444444;
   --button-color: #6558C3;
   --border-color: #DDDDDD;
 }
@@ -23,6 +24,55 @@ body {
   background-color: white;
   color: var(--body-color);
 }
+
+/* Buttons */
+
+button[type="button"],
+button[type="submit"],
+button.save,
+button.delete,
+.buttons a,
+.button {
+  padding: 8px 20px;
+
+  background-color: var(--button-color);
+  border-radius: 4px;
+  color: white;
+
+  font-size: 16px;
+  font-weight: bold;
+  
+  cursor: pointer;
+}
+
+button.delete {
+  background-color: #DC4747;
+}
+
+button[type="button"] {
+  text-align: right;
+
+  margin-top: 15px;
+  padding: 0;
+
+  background-color: white;
+  color: var(--button-color);
+  outline: none;
+}
+
+button + button {
+  margin-left: 10px;
+}
+
+.buttons a {
+  padding: 8px 30px;
+
+  background-color: #8A8A8A;
+
+  margin-left: 12px;
+}
+
+/* Header */
 
 .container-header {
   background-color: var(--body-color);
@@ -59,14 +109,22 @@ body {
   color: #FFFFFF;
 }
 
+/* Topics  */
+
 .topic {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   width: 100%;
   max-width: 940px;
-  margin: 0px auto 20px;
+
+  margin: 0px auto 30px;
 }
 
 .topic h2{
   font-size: 24px;
+  line-height: 34px;
   font-weight: bold;
   color: var(--body-color);
 }
