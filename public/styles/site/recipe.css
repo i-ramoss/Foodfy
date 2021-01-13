@@ -1,7 +1,6 @@
-.content {
+.content.recipe {
   display: flex;
   flex-direction: column;
-  align-items: left;
 
   margin: 0px auto 50px;
   max-width: 940px;

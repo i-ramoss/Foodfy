@@ -1,10 +1,17 @@
-.txt {
+article {
   width: 100%;
   max-width: 940px;
-  margin: 0px auto 30px;
+
+  margin: 0px auto 50px;
 }
 
-.txt p {
+article h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--body-color);
+}
+
+article p {
   color: #444444;
   font-size: 18px;
   line-height: 28px;

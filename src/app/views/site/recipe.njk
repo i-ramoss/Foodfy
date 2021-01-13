@@ -1,14 +1,12 @@
 {% extends "site/layout.njk" %}
 
 {% block head %}
-  <link rel="stylesheet" href="/styles/site/recipe.css">
-
   <title>{{recipe.title}}</title>
 {% endblock %}
 
 {% block content%}
 
-  <div class="content">
+  <div class="content recipe">
 
     <div class="image__container">
       {% if not files[0] %}

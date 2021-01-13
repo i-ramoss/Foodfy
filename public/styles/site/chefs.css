@@ -1,0 +1,52 @@
+.cards.chefs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 30px;
+  justify-content: center;
+
+  margin: 0px auto;
+  width: 100%;
+  max-width: 940px;
+}
+
+.card-admin {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas: "img name"
+                       "img view"
+  ;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.card-admin img {
+  grid-area: img;
+
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card-admin h3 {
+  grid-area: name;
+
+  width: 100%;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--body-color);
+}
+
+.card-admin a {
+  grid-area: view;
+
+  font-size: 14px;
+  font-weight: bold;
+  color:var(--button-color);
+  cursor: pointer;
+}
+
+.card-admin p {
+  font-size: 14px;
+  color: #666666;
+}

@@ -67,20 +67,6 @@ body {
   margin-right: 0;
 }
 
-/* Content */
-
-.topic {
-  width: 100%;
-  max-width: 940px;
-  margin: 0px auto 20px;
-}
-
-.topic h2{
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--body-color);
-}
-
 /* Footer */
 
 footer {
