@@ -27,10 +27,10 @@ body {
 
 /* Buttons */
 
-button[type="button"],
 button[type="submit"],
 button.save,
 button.delete,
+button.add-input,
 .buttons a,
 .button {
   padding: 8px 20px;
@@ -49,7 +49,7 @@ button.delete {
   background-color: #DC4747;
 }
 
-button[type="button"] {
+button.add-input {
   text-align: right;
 
   margin-top: 15px;

@@ -9,8 +9,9 @@ module.exports = {
     try {
       const userId = await User.create(request.body)
 
+      request.session.userId = userId
 
-      return response.render("/admin/users/register", {
+      return response.render("admin/users/register", {
         user: request.body,
         success: "User registered with success!"
       })

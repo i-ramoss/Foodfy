@@ -11,7 +11,7 @@ CREATE TABLE "users" (
   "password" text NOT NULL,
   "reset_token" text,
   "reset_token_expires" text,
-  "is_admin" BOOLEAN DEFAULT false,
+  "is_admin" BOOLEAN DEFAULT false NOT NULL,
   "created_at" timestamp DEFAULT(now()),
   "updated_at" timestamp DEFAULT(now())
 );
@@ -75,3 +75,13 @@ CREATE TRIGGER set_timestamp
 BEFORE UPDATE ON recipes
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
+
+-- Create session table
+CREATE TABLE "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+	"sess" json NOT NULL,
+	"expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;

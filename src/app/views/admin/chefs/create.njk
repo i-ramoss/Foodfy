@@ -1,4 +1,4 @@
-{% extends 'admin/layout.njk' %}
+{% extends "admin/layout.njk" %}
 
 {% block head %}
   <title>Create Chef - Admin</title>
@@ -13,7 +13,7 @@
       <button type="submit">Save chef</button>
     </div>
   
-    {% include 'admin/chefs/fields.njk' %}
+    {% include "admin/chefs/fields.njk" %}
     
   </form>
 
