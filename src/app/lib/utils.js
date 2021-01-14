@@ -9,5 +9,9 @@ module.exports = {
     return {
       iso: `${year}-${month}-${day}`
     }
+  },
+
+  formatName(name) {
+    return name.split(" ")[0]
   }
 }

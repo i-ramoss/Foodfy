@@ -24,10 +24,11 @@ const routes = express.Router()
 // .put("/profile", ProfileController.update)
 
 // // Admin
-// .get("/users", UserController.list)
+.get("/users", UserController.list)
 .get("/users/register", UserController.registerForm)
-.post("/users/register", UserValidator.create, UserController.create)
-// .put("/users", UserController.update)
+.get("/users/:id/edit", UserValidator.edit, UserController.edit)
+.post("/users", UserValidator.create, UserController.create)
+.put("/users", UserValidator.update, UserController.update)
 // .delete("/users", UserController.delete)
 
 
