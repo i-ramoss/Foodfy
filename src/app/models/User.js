@@ -18,7 +18,7 @@ module.exports = {
           email,
           is_admin
         ) VALUES ($1, $2, $3)
-        RETURNING id
+        RETURNING *
       `
 
       const values = [
@@ -28,7 +28,7 @@ module.exports = {
       ]
 
       const results = await db.query(query, values)
-      return results.rows[0].id
+      return results.rows[0]
     } 
     catch (err) {
       console.error(err)

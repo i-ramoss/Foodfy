@@ -1,0 +1,45 @@
+.session-header {
+  margin: 30px auto 150px;
+}
+
+/* login form */ 
+
+.login.container,
+.password.container {
+  width: 100%;
+  max-width: 500px;
+
+  margin: 0 auto;
+}
+
+.login.container .topic,
+.password.container .topic {
+  justify-content: center;
+}
+
+.login.container .fields {
+  margin-bottom: 35px;
+}
+
+.login.container .footer ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login.container .footer ul li a {
+  font-size: 16px;
+  color: #969696;
+
+  transition: 500ms;
+}
+
+.login.container .footer ul li a:hover {
+  color: black;
+  font-weight: bold;
+}
+
+/* forgot form */
+
+.password.container button {
+  margin-left: 376px;
+}

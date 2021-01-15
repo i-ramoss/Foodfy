@@ -5,25 +5,26 @@ const ProfileController = require("../app/controllers/ProfileController")
 const UserController = require("../app/controllers/UserController")
 
 const UserValidator = require("../app/validators/user")
+const SessionValidator = require("../app/validators/session")
 
 const routes = express.Router()
 
-// // login / logout
-// .get("/login". SessionController.loginForm)
-// .post("/login". SessionController.login)
-// .post("/logout". SessionController.logout)
+// login / logout
+.get("/login", SessionController.loginForm)
+.post("/login", SessionValidator.login, SessionController.login)
+.post("/logout", SessionController.logout)
 
-// // reset / forgot password
-// .get("/forgot-password". SessionController.forgotForm)
-// .get("/password-reset". SessionController.resetForm)
-// .post("/forgot-password". SessionController.forgot)
-// .post("/password-reset". SessionController.reset)
+// reset / forgot password
+.get("/forgot-password", SessionController.forgotForm)
+.get("/reset-password", SessionController.resetForm)
+.post("/forgot-password", SessionValidator.forgot,  SessionController.forgot)
+.post("/reset-password", SessionValidator.reset, SessionController.reset)
 
-// // Profile
+// Profile
 // .get("/profile", ProfileController.index)
 // .put("/profile", ProfileController.update)
 
-// // Admin
+// Admin
 .get("/users", UserController.list)
 .get("/users/register", UserController.registerForm)
 .get("/users/:id/edit", UserValidator.edit, UserController.edit)

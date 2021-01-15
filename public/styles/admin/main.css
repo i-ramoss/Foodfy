@@ -107,11 +107,30 @@ button + button {
   justify-content: start;
 }
 
-.menu a {
+
+.menu a,
+.menu form button {
   color: #999999;
   font-size: 15px;
   margin-right: 30px;
   font-weight: 500;
+}
+
+.menu form button {
+  background-color: var(--body-color);
+
+  margin-left: 500px;
+  margin-right: 0;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+.menu form button:hover {
+  color: white;
+  
+  transition: color 400ms;
 }
 
 .menu a.active {

@@ -1,0 +1,50 @@
+{% extends "admin/session/layout.njk" %}
+
+{% block content %}
+
+  <section class="login container form">
+    <form action="/admin/login" method="post">
+
+      <div class="topic">
+        <h2>Begin Session</h2>
+      </div> 
+
+      <div class="fields">
+        <div class="item">
+          <h2>Email:</h2>
+          <div class="input">
+            <input 
+              type="email" 
+              name="email" 
+              value="{{user.email}}" 
+              placeholder="Enter the email" 
+              onblur="Validate.apply(this, 'isEmail')"
+            >
+          </div>
+        </div>
+
+        <div class="item">
+          <h2>Password:</h2>
+          <div class="input">
+            <input 
+              type="password" 
+              name="password" 
+              placeholder="Enter your password" 
+              >
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <ul>
+          <li><a href="/admin/forgot-password">Forgot password?</a></li>
+          <li>
+            <button class="button" type="submit">Access</button>
+          </li>
+        </ul>
+      </div>
+
+    </form>
+  </section>
+
+{% endblock %}
