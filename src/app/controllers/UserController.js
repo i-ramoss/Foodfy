@@ -10,6 +10,11 @@ module.exports = {
       const results = await User.all()
       let users = results.rows
 
+      const { userId: id } = request.session
+      const user = await User.findOne({ where: { id } })
+
+      request.session.isAdmin = user.is_admin
+
       return response.render("admin/users/index", { users })
     } 
     catch (err) {
@@ -99,6 +104,7 @@ module.exports = {
     } 
     catch (err) {
       console.error(err)
+      
       return response.render("admin/users/edit", {
         user: request.body,
         error: "Something went wrong!"

@@ -1,0 +1,47 @@
+{% extends 'admin/layout.njk' %}
+
+{% block head %}
+  <title>{{user.name}}</title>
+{% endblock %}
+
+{% block content%}
+
+  <form class="user content" id="form-update" action="/admin/profile?_method=PUT" method="post">
+    <input type="hidden" name="id" value={{user.id}}>
+
+    <div class="topic">
+      <h2>Welcome {{ user.name }}</h2>
+      <div class="buttons">
+        <button type="submit" class="save">Save</button>
+      </div>
+    </div>
+
+    <section class="user details">
+      <div class="item">
+        <h2>Name:</h2>
+        <div>
+          <input type="text" name="name" value="{{user.name}}" placeholder="Enter the full name">
+        </div>
+      </div>
+
+      <div class="item">
+        <h2>Email:</h2>
+        <div class="input">
+          <input type="email" name="email" value="{{user.email}}" placeholder="Enter the email" onblur="Validate.apply(this, 'isEmail')">
+        </div>
+      </div>
+
+      <div class="item">
+        <h2>Password:</h2>
+        <div class="input">
+          <input 
+            type="password" 
+            name="password" 
+            placeholder="Enter your password to confirm changes" 
+            >
+        </div>
+      </div>
+    </section>
+  </form>
+  
+{% endblock %}

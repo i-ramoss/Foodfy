@@ -119,7 +119,7 @@ button + button {
 .menu form button {
   background-color: var(--body-color);
 
-  margin-left: 500px;
+  margin-left: 405px;
   margin-right: 0;
 
   outline: none;

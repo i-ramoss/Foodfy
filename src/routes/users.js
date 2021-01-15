@@ -7,10 +7,12 @@ const UserController = require("../app/controllers/UserController")
 const UserValidator = require("../app/validators/user")
 const SessionValidator = require("../app/validators/session")
 
+const { onlyUsers, userIsLogged, userIsAdmin } = require("../app/middlewares/session")
+
 const routes = express.Router()
 
 // login / logout
-.get("/login", SessionController.loginForm)
+.get("/login", userIsLogged, SessionController.loginForm)
 .post("/login", SessionValidator.login, SessionController.login)
 .post("/logout", SessionController.logout)
 
@@ -21,16 +23,16 @@ const routes = express.Router()
 .post("/reset-password", SessionValidator.reset, SessionController.reset)
 
 // Profile
-// .get("/profile", ProfileController.index)
-// .put("/profile", ProfileController.update)
+.get("/profile", onlyUsers, UserValidator.profile, ProfileController.index)
+.put("/profile", onlyUsers, UserValidator.profileUpdate, ProfileController.update)
 
 // Admin
-.get("/users", UserController.list)
-.get("/users/register", UserController.registerForm)
-.get("/users/:id/edit", UserValidator.edit, UserController.edit)
-.post("/users", UserValidator.create, UserController.create)
-.put("/users", UserValidator.update, UserController.update)
-// .delete("/users", UserController.delete)
+.get("/users", onlyUsers, UserController.list)
+.get("/users/register", userIsAdmin, UserController.registerForm)
+.get("/users/:id/edit", userIsAdmin, UserValidator.edit, UserController.edit)
+.post("/users", userIsAdmin, UserValidator.create, UserController.create)
+.put("/users", userIsAdmin, UserValidator.update, UserController.update)
+// .delete("/users", onlyUsers, UserController.delete)
 
 
 module.exports = routes

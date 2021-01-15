@@ -1,3 +1,5 @@
+const { compare } = require("bcryptjs")
+
 const User = require("../models/User")
 
 function checkAllFields(body) {
@@ -36,7 +38,7 @@ async function edit(request, response, next) {
 
   if (!user) return response.status(404).render("admin/users/edit", {
     error: "User not found!"
-  }) // change for login
+  })
 
   request.user = user
 
@@ -56,8 +58,48 @@ async function update(request, response, next) {
   next()
 }
 
+async function profile(request, response, next) {
+  const { userId: id } = request.session
+  const user = await User.findOne({ where: { id } })
+
+  if (!user) return response.render("admin/users/register", {
+    error: "User not found!"
+  })
+
+  request.user = user
+
+  next()
+}
+
+async function profileUpdate(request, response, next) {
+  const fillAllFields = checkAllFields(request.body)
+  const { password } = request.body
+  const { userId: id } = request.session
+
+  if (fillAllFields) return response.render("admin/users/profile", fillAllFields)
+
+  if (!password) return response.render("admin/users/profile", {
+    user: request.body,
+    error: "Please, enter your password to confirm changes"
+  })
+
+  const user = await User.findOne({ where: { id } })
+  const passed = await compare(password, user.password)
+
+  if (!passed) return response.render("admin/users/profile", {
+    user: request.body,
+    err: "Incorrect Password"
+  })
+
+  request.user = user
+
+  next()
+}
+
 module.exports = {
   create,
   edit,
-  update
+  update,
+  profile,
+  profileUpdate
 }

@@ -1,5 +1,7 @@
 const express = require("express")
 
+const { onlyUsers } = require("../app/middlewares/session")
+
 const routes = express.Router()
 
 const site = require("./site")
@@ -9,7 +11,7 @@ const recipes = require("./recipes")
 
 routes.use(site)
 routes.use("/admin", users)
-routes.use("/admin/chefs", chefs)
-routes.use("/admin/recipes", recipes)
+routes.use("/admin/chefs", onlyUsers, chefs)
+routes.use("/admin/recipes", onlyUsers, recipes)
 
 module.exports = routes

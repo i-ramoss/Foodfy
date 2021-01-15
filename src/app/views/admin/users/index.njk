@@ -8,7 +8,10 @@
 
   <div class="topic">
     <h2>Users</h2>
-    <a href="/admin/users/register" class="button">New</a>
+
+    {% if session.isAdmin %}
+      <a href="/admin/users/register" class="button">New</a>
+    {% endif %}
   </div>
 
   <div class='cards users'>
@@ -16,10 +19,13 @@
       <div class='card-admin'>
         <h3 class='name'>{{user.name}}</h3>
         <p class="email">{{user.email}}</p>
-        <div class="buttons">
-          <a class="user edit" href="/admin/users/{{user.id}}/edit">Edit</a>
-          <button class="user delete">Remove</button>
-        </div>
+
+        {% if session.isAdmin %}
+          <div class="buttons">
+            <a class="user edit" href="/admin/users/{{user.id}}/edit">Edit</a>
+            <button class="user delete">Remove</button>
+          </div>
+        {% endif %}
       </div>
     {% endfor %}
   </div>
