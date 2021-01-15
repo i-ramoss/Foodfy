@@ -25,3 +25,34 @@
 
   font-weight: bold;
 }
+
+/* list users */
+
+.cards.users {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  row-gap: 52px;
+  column-gap: 200px;
+
+  margin: 0px auto;
+  width: 100%;
+  max-width: 940px;
+}
+
+.cards.users .card-admin {
+  display: grid;
+  row-gap: 4px;
+}
+
+.cards.users .card-admin h3 {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--body-color);
+}
+
+.cards.users .card-admin p {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--p-color);
+}

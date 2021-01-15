@@ -1,6 +1,15 @@
 const db = require('../../config/db');
 
 module.exports = {
+  all() {
+    try {
+      return db.query(`SELECT * FROM  users ORDER BY users.name ASC`)
+    } 
+    catch (err) { 
+      console.error(err)
+    }
+  },
+
   async create({ name, email, is_admin }) {
     try {
       const query = `

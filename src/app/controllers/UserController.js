@@ -1,8 +1,16 @@
 const User = require("../models/User")
 
 module.exports = {
-  list(request, response) {
-    return response.render("admin/users/register")
+  async list(request, response) {
+    try {
+      const results = await User.all()
+      let users = results.rows
+
+      return response.render("admin/users/index", { users })
+    } 
+    catch (err) {
+      console.error(err)
+    }
   },
 
   registerForm(request, response) {
@@ -13,10 +21,13 @@ module.exports = {
     try {
       const userId = await User.create(request.body)
 
+      const results = await User.all()
+      let users = results.rows
+
       request.session.userId = userId
 
-      return response.status(200).render("admin/users/register", {
-        user: request.body,
+      return response.status(200).render("admin/users/index", {
+        users,
         success: "User registered with success!"
       })
     } 
@@ -42,13 +53,14 @@ module.exports = {
         is_admin: request.body.is_admin || false
       }) 
       
-      return response.status(200).render("admin/users/register", {
+      return response.status(200).render("admin/users/edit", {
+        user: request.body,
         success: "Account updated successfully!"
       })
     } 
     catch (err) {
       console.error(err)
-      return response.render("admin/users/register", {
+      return response.render("admin/users/edit", {
         user: request.body,
         error: "Something went wrong!"
       })

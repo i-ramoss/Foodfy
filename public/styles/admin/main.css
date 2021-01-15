@@ -49,6 +49,8 @@ button.delete {
   background-color: #DC4747;
 }
 
+.buttons a.user.edit,
+button.user.delete,
 button.add-input {
   text-align: right;
 
@@ -60,14 +62,23 @@ button.add-input {
   outline: none;
 }
 
-button + button {
-  margin-left: 10px;
+button.user.delete {
+  color: #F55A5A;
 }
 
 .buttons a {
   background-color: #8A8A8A;
 
   margin-left: 12px;
+}
+
+.buttons a.user.edit {
+  margin-left: 0;
+  margin-right: 12px;
+}
+
+button + button {
+  margin-left: 10px;
 }
 
 /* Header */

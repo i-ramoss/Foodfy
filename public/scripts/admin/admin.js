@@ -38,41 +38,43 @@ const AddIngredientAndStepPreparation = {
 
 // Confirm delete
 const form = document.getElementById("form-delete")
-const button = document.querySelector(".delete")
+const buttons = document.querySelectorAll(".delete")
 
 const confirmDelete = () => {
-  button.addEventListener("click", event => {
-    event.preventDefault()
-
-    const alert = Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#04f704",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
-    }).then( result => {
-      if (result.isConfirmed) {
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
-
-        const confirm = document.querySelector(".swal2-confirm.swal2-styled")
-
-        confirm.addEventListener("click", () => {
-          setTimeout(() => {
-            form.submit()
-          }, 200)
-        })
-      }
+  for (button of buttons) {
+    button.addEventListener("click", event => {
+      event.preventDefault()
+  
+      const alert = Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#04f704",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then( result => {
+        if (result.isConfirmed) {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+  
+          const confirm = document.querySelector(".swal2-confirm.swal2-styled")
+  
+          confirm.addEventListener("click", () => {
+            setTimeout(() => {
+              form.submit()
+            }, 200)
+          })
+        }
+      })
     })
-  })
+  }
 }
 
-if (button) confirmDelete()
+if (buttons || button) confirmDelete()
 
 
 // Image Upload
