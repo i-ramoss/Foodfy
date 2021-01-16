@@ -96,6 +96,8 @@ button + button {
   width: 100%;
   max-width: 940px;
   margin: 30px auto 20px;
+
+  position: relative;
 }
 
 .header a img {
@@ -119,12 +121,14 @@ button + button {
 .menu form button {
   background-color: var(--body-color);
 
-  margin-left: 405px;
   margin-right: 0;
 
   outline: none;
 
   cursor: pointer;
+
+  position: absolute;
+  right: 0;
 }
 
 .menu form button:hover {

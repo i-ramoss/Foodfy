@@ -11,7 +11,7 @@ function userIsLogged(request, response, next) {
 }
 
 function userIsAdmin(request, response, next) {
-  if (!request.session.isAdmin && request.session.userId) return response.redirect("/admin/users")
+  if (!request.session.isAdmin) return response.redirect("/admin/profile")
 
   next()
 }

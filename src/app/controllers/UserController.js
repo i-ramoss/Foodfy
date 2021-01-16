@@ -10,11 +10,6 @@ module.exports = {
       const results = await User.all()
       let users = results.rows
 
-      const { userId: id } = request.session
-      const user = await User.findOne({ where: { id } })
-
-      request.session.isAdmin = user.is_admin
-
       return response.render("admin/users/index", { users })
     } 
     catch (err) {
@@ -88,13 +83,13 @@ module.exports = {
 
   async update(request, response) {
     try {
-      let { name, email } = request.body
+      let { name, email, is_admin } = request.body
       const { user } = request
 
       await User.update(user.id, {
         name,
         email,
-        is_admin: request.body.is_admin || false
+        is_admin: is_admin || false
       }) 
       
       return response.status(200).render("admin/users/edit", {

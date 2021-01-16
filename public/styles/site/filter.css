@@ -3,7 +3,8 @@ form {
   grid-template-columns: 1fr 90px;
   align-items: center;
 
-  margin-left: 140px;
+  position: absolute;
+  right: 0;
 }
 
 form input {

@@ -14,7 +14,10 @@
 
     <div class="topic">
       <h2>Chef: {{chef.name}}</h2>
-      <a href="/admin/chefs/{{ chef.id }}/edit" class="button">Edit chef</a>
+
+      {% if session.isAdmin %}
+        <a href="/admin/chefs/{{ chef.id }}/edit" class="button">Edit chef</a>
+      {% endif %}
     </div>
 
     <div class='image__container chef'>

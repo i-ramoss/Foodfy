@@ -5,7 +5,9 @@
       <ul class="menu">
         <li><a href="/admin/recipes">RECIPES</a></li>
         <li><a href="/admin/chefs">CHEFS</a></li>
-        <li><a href="/admin/users">USERS</a></li>
+        {% if session.isAdmin %}
+          <li><a href="/admin/users">USERS</a></li>
+        {% endif %}
         <li><a href="/admin/profile">ACCOUNT</a></li>
         <li>
           <form action="/admin/logout" method="post">

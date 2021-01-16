@@ -7,8 +7,14 @@
 {% block content%}
 
   <div class="topic">
-    <h2>Manage Chefs</h2>
-    <a href="/admin/chefs/create" class="button">New</a>
+    {% if session.isAdmin %}
+      <h2>Manage Chefs</h2>
+
+      <a href="/admin/chefs/create" class="button">New</a>
+    
+    {% else %}
+      <h2>Chefs:</h2>
+    {% endif %}
   </div>
 
   <div class='cards chefs'>

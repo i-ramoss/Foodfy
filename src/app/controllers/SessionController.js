@@ -11,8 +11,9 @@ module.exports = {
 
   login(request, response) {
     request.session.userId = request.user.id
+    request.session.isAdmin = request.user.is_admin
 
-    return response.redirect("/admin/users")
+    return response.redirect("/admin/profile")
   },
 
   logout(request, response) {

@@ -23,7 +23,10 @@
         {% if session.isAdmin %}
           <div class="buttons">
             <a class="user edit" href="/admin/users/{{user.id}}/edit">Edit</a>
-            <button class="user delete">Remove</button>
+            {% if session.isAdmin == user.is_admin%}
+            {% else %}
+              <button class="user delete">Remove</button>
+            {% endif %}
           </div>
         {% endif %}
       </div>

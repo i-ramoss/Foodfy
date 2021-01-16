@@ -35,6 +35,8 @@ body {
   width: 100%;
   max-width: 940px;
   margin: 30px auto 50px;
+
+  position: relative;
 }
 
 .header a.logo {
