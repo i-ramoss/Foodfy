@@ -1,6 +1,8 @@
 const express = require("express")
 const multer = require("../app/middlewares/multer")
 
+const RecipeValidator = require("../app/validators/recipe")
+
 const RecipeController = require("../app/controllers/RecipeController")
 
 const routes = express.Router()

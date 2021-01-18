@@ -4,8 +4,7 @@ const Chef = require("../models/Chef")
 module.exports = {
   async index(request, response) {
     try {
-      let results = await Recipe.all()
-      let recipes = results.rows
+      let recipes = await Recipe.all()
 
       async function getImage(recipeId) {
         let results = await Recipe.files(recipeId)

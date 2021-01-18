@@ -4,8 +4,9 @@ const File = require("../models/File")
 module.exports = {
   async index(request, response) {
     try {
-      const results = await Recipe.all()
-      let recipes = results.rows
+      const { userId: id, isAdmin } = request.session
+
+      isAdmin ? recipes = await Recipe.all() : recipes = await Recipe.userRecipes(id)
 
       async function getImage(recipeId) {
         let results = await Recipe.files(recipeId)
@@ -46,15 +47,24 @@ module.exports = {
     try {
       const keys = Object.keys(request.body)
 
+      let results = await Recipe.chefSelectOptions()
+      const chefsOptions = results.rows
+    
       for (key of keys) {
-        if (request.body[key] == "")
-          return response.json({ error: "Please, fill in all fields" })
+        if (request.body[key] === "" && key !== "removed_files")
+          return response.render("admin/recipes/create", {
+            recipe: request.body,
+            chefsOptions,
+            error: "Please, fill all fields!  "
+          })
       }
 
-      if(request.files.length === 0) 
-        return response.json("Please, send at least one image")
-    
-      let results = await Recipe.create(request.body)
+      if(request.files.length === 0) return response.render("admin/recipes/create", {
+        recipe: request.body,
+        error: "Please, send at least one image"
+      })
+
+      results = await Recipe.create(request.body)
       const recipeId = results.rows[0].id
 
       const filesPromise = request.files.map( file => File.createRecipeFile({

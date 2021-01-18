@@ -5,7 +5,7 @@ function onlyUsers(request, response, next) {
 }
 
 function userIsLogged(request, response, next) {
-  if (request.session.userId) return response.redirect("/admin/users")
+  if (request.session.userId) return response.redirect("/admin/profile")
 
   next()
 }

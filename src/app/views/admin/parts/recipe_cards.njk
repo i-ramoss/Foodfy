@@ -4,7 +4,10 @@
       <img src='{{recipe.image}}' alt='Image of {{recipe.title}}'>
       <h3 class='name'>{{recipe.title}}</h3>
       <p class='chef'>by {{recipe.chef_name}}</p>
-      <a href="/admin/recipes/{{recipe.id}}">Visualize</a>
+
+      {% if recipe.user_id == session.userId or session.isAdmin %}
+        <a href="/admin/recipes/{{recipe.id}}">Visualize</a>
+      {% endif %}
     </div>
   {% endfor %}
 </div>

@@ -2,7 +2,7 @@
   <div class="item">
     <h2>Title:</h2>
     <div>
-      <input type="text" name="title" value="{{recipe.title}}" required>
+      <input type="text" name="title" value="{{recipe.title}}">
     </div>
   </div>
 
@@ -47,7 +47,7 @@
   <div class="item">
     <h2>Chef:</h2>
     <div>
-      <select name="chef" required>
+      <select name="chef" >
         <option value="" disable selected>Select a chef</option>
         {% for chef in chefsOptions %}
           <option 
@@ -64,12 +64,12 @@
     <div id="ingredients">
       {% if not recipe.ingredients %}
         <div class="ingredient">
-          <input type="text" name="ingredients[]" required>
+          <input type="text" name="ingredients[]" >
         </div>
       {% else %}
         {% for ingredient in recipe.ingredients %}
           <div class="ingredient">
-              <input type="text" name="ingredients[]" value="{{ingredient}}" required>
+              <input type="text" name="ingredients[]" value="{{ingredient}}" >
           </div>
         {% endfor %}
       {% endif %}
@@ -82,12 +82,12 @@
     <div id="steps">
       {% if not recipe.preparation %}
         <div class="step">
-          <input type="text" name="preparation[]" required>
+          <input type="text" name="preparation[]" >
         </div>
       {% else %}
         {% for preparation in recipe.preparation %}
           <div class="step">
-            <input type="text" name="preparation[]" value="{{preparation}}" required>
+            <input type="text" name="preparation[]" value="{{preparation}}" >
           </div>
         {% endfor %}
       {% endif %}

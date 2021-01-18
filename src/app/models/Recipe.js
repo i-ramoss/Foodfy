@@ -3,14 +3,16 @@ const fs = require("fs")
 const { date } = require("../lib/utils")
 
 module.exports = {
-  all() {
+  async all() {
     try {
-      return db.query(`
+      const results = await db.query(`
         SELECT recipes.*, chefs.name AS chef_name 
         FROM recipes
         LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
         ORDER BY created_at DESC
       `) 
+
+      return results.rows
     } 
     catch (err) {
       console.error(err)
@@ -79,14 +81,16 @@ module.exports = {
         UPDATE recipes SET
           title=($1),
           chef_id=($2),
-          ingredients=($3),
-          preparation=($4),
-          information=($5)
-        WHERE id = $6
+          user_id=($3),
+          ingredients=($4),
+          preparation=($5),
+          information=($6)
+        WHERE id = $7
       `
       const values = [
         data.title,
         data.chef,
+        data.user_id,
         data.ingredients,
         data.preparation,
         data.information,
@@ -174,6 +178,23 @@ module.exports = {
       )
     } catch (err) {
       console.error(err)
+    }
+  },
+
+  async userRecipes(userId) {
+    try {
+      const results = await db.query(`
+        SELECT recipes.*, chefs.name AS chef_name
+        FROM recipes
+        LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+        LEFT JOIN users ON (recipes.user_id = users.id)
+        WHERE users.id = $1`, [userId]
+      )
+
+      return results.rows
+    } 
+    catch (err) {
+      console.error(err)  
     }
   }
 }
