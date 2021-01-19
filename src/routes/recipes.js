@@ -7,13 +7,13 @@ const RecipeController = require("../app/controllers/RecipeController")
 
 const routes = express.Router()
 
-.get("/", RecipeController.index)
+.get("/", RecipeValidator.index, RecipeController.index)
 .get("/create", RecipeController.create)
-.get("/:id", RecipeController.show)
-.get("/:id/edit", RecipeController.edit)
+.get("/:id", RecipeValidator.permission, RecipeController.show)
+.get("/:id/edit", RecipeValidator.permission, RecipeController.edit)
 
-.post("/", multer.array("images", 5), RecipeController.post)
-.put ("/", multer.array("images", 5), RecipeController.update)
+.post("/", multer.array("images", 5), RecipeValidator.create, RecipeController.post)
+.put ("/", multer.array("images", 5), RecipeValidator.update, RecipeController.update)
 .delete("/", RecipeController.delete)
 
 

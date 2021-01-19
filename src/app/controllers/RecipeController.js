@@ -4,10 +4,6 @@ const File = require("../models/File")
 module.exports = {
   async index(request, response) {
     try {
-      const { userId: id, isAdmin } = request.session
-
-      isAdmin ? recipes = await Recipe.all() : recipes = await Recipe.userRecipes(id)
-
       async function getImage(recipeId) {
         let results = await Recipe.files(recipeId)
 
@@ -45,26 +41,7 @@ module.exports = {
 
   async post(request, response) {
     try {
-      const keys = Object.keys(request.body)
-
-      let results = await Recipe.chefSelectOptions()
-      const chefsOptions = results.rows
-    
-      for (key of keys) {
-        if (request.body[key] === "" && key !== "removed_files")
-          return response.render("admin/recipes/create", {
-            recipe: request.body,
-            chefsOptions,
-            error: "Please, fill all fields!  "
-          })
-      }
-
-      if(request.files.length === 0) return response.render("admin/recipes/create", {
-        recipe: request.body,
-        error: "Please, send at least one image"
-      })
-
-      results = await Recipe.create(request.body)
+      const results = await Recipe.create(request.body)
       const recipeId = results.rows[0].id
 
       const filesPromise = request.files.map( file => File.createRecipeFile({
@@ -130,36 +107,20 @@ module.exports = {
 
   async update(request, response) {
     try {
-      const keys = Object.keys(request.body)
+      let { title, chef, ingredients, preparation, information } = request.body
 
-      for (key of keys) {
-        if (request.body[key] == "" && key != "removed_files")
-          return response.json({ err: "Please, fill all fields!" })
-      }
-    
-      if (request.files.length != 0) {
-        const newFilesPromise = request.files.map( file => 
-          File.createRecipeFile({
-            ...file, 
-            recipe_id: request.body.id
-          })
-        )
-  
-        await Promise.all(newFilesPromise)
-      }
-  
-      if (request.body.removed_files) {
-        const removedFiles = request.body.removed_files.split(",")
-        const lastIndex = removedFiles.length - 1
-  
-        removedFiles.splice(lastIndex, 1)
-  
-        const removedFilesPromise = removedFiles.map( id => File.delete(id))
-  
-        await Promise.all(removedFilesPromise)
-      }
-  
-      await Recipe.update(request.body)
+      const results = await Recipe.find(request.body.id)
+      const recipeId = results.rows[0].id
+
+      await Recipe.update(recipeId, {
+        title,
+        chef_id: chef,
+        ingredients: `{${ingredients}}`,
+        preparation: `{${preparation}}`,
+        information
+      })
+
+      request.session.success = "Recipe successfully updated!"
   
       return response.status(200).redirect(`/admin/recipes/${request.body.id}`)
     } 
