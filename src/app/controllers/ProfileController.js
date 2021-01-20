@@ -2,9 +2,11 @@ const User = require("../models/User")
 
 module.exports = {
   index(request, response) {
-    const { user } = request
+    const { user, session: { success, error } } = request
 
-    return response.render("admin/users/profile", { user })
+    request.session.success = "", request.session.error = ""
+
+    return response.render("admin/users/profile", { user, success, error })
   },
 
   async update(request, response) {
@@ -17,17 +19,14 @@ module.exports = {
        email
      })
 
-     return response.render("admin/users/profile", {
-       user: request.body,
-       success: "Account updated successfully!"
-     })
+     request.session.success = "User updated successfully!"
+
+     return response.redirect(`/admin/profile`)
     } 
     catch (err) {
       console.error(err)
-
-      return response.render("admin/users/profile", {
-        error: "Something went wrong. Try Again!"
-      })
+      request.session.error = "Something went wrong!"
+      return response.redirect(`/admin/profile`) 
     }
   }
 }

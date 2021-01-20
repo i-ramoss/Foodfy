@@ -4,6 +4,9 @@ const File = require("../models/File")
 module.exports = {
   async index(request, response) {
     try {
+      let { success, error } = request.session
+      request.session.success = "", request.session.error = ""
+
       async function getImage(recipeId) {
         let results = await Recipe.files(recipeId)
 
@@ -20,7 +23,7 @@ module.exports = {
 
       recipes = await Promise.all(recipesPromise)
 
-      return response.render('admin/recipes/index', { recipes })
+      return response.render('admin/recipes/index', { recipes, success, error })
     } 
     catch (err) {
       console.error(err)
@@ -51,15 +54,22 @@ module.exports = {
 
       await Promise.all(filesPromise)
 
+      request.session.success = "Recipe successfully created!"
+
       return response.status(201).redirect("/admin/recipes")
     } 
     catch (err) {
       console.error(err)
+      request.session.error = "Something went wrong!"
+      return response.redirect("/admin/recipes/create")
     }
   },
 
   async show(request, response) {
     try {
+      let { success, error } = request.session
+      request.session.success = "", request.session.error = ""
+
       let result = await Recipe.find(request.params.id)
       const recipe = result.rows[0]
 
@@ -71,7 +81,7 @@ module.exports = {
         src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
       }))
 
-      return response.render("admin/recipes/show", { recipe, files })
+      return response.render("admin/recipes/show", { recipe, files, success, error })
     } 
     catch (err) {
       console.error(err)
@@ -126,6 +136,8 @@ module.exports = {
     } 
     catch (err) {
       console.error(err)
+      request.session.error = "Something went wrong!"
+      return response.redirect(`/admin/recipes/${recipeId}/edit`)
     }
   },
 
@@ -133,10 +145,14 @@ module.exports = {
     try {
       await Recipe.delete(request.body.id)
 
+      request.session.success = "Recipe deleted successfully!"
+
       return response.status(200).redirect("/admin/recipes")
     } 
     catch(err) {
       console.error(err)
+      request.session.error = "Something went wrong!"
+      return response.redirect(`/admin/recipes/${id}`)
     }
   }
 }

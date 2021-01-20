@@ -36,7 +36,8 @@ const AddIngredientAndStepPreparation = {
 }
 
 
-// Confirm delete
+// Confirm delete (Sweet Alert)
+/*
 const form = document.getElementById("form-delete")
 const buttons = document.querySelectorAll(".delete")
 
@@ -74,7 +75,24 @@ const confirmDelete = () => {
   }
 }
 
-if (buttons || button) confirmDelete()
+// if (buttons || button) confirmDelete()
+*/
+
+
+// Delete own accont (admin)
+function adminDelete(form) {	
+  form.addEventListener("submit", (event) => {	
+    const confirmation = confirm("Do you really want to delete this?")	
+
+    if (!confirmation) {	
+      event.preventDefault()	
+    }	
+  })	
+}	
+
+const formDelete = document.querySelector("#form-delete")	
+
+if(formDelete) adminDelete(formDelete) 
 
 
 // Image Upload

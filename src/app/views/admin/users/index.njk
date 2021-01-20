@@ -25,7 +25,10 @@
             <a class="user edit" href="/admin/users/{{user.id}}/edit">Edit</a>
             {% if session.isAdmin == user.is_admin%}
             {% else %}
-              <button class="user delete">Remove</button>
+              <form class="users" id="form-delete" action="/admin/users?_method=DELETE" method="post">
+                <input type="hidden" name="id" value={{user.id}}>
+                <button type="submit" class="user delete">Remove</button>
+              </form>
             {% endif %}
           </div>
         {% endif %}

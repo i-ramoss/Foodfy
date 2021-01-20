@@ -74,5 +74,9 @@ module.exports = {
 
     await db.query(query)
     return
+  },
+
+  delete(id) {
+    return db.query(`DELETE FROM users WHERE id = $1`, [id])
   }
 }

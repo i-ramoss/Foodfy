@@ -32,7 +32,6 @@ const routes = express.Router()
 .get("/users/:id/edit", userIsAdmin, UserValidator.edit, UserController.edit)
 .post("/users", userIsAdmin, UserValidator.create, UserController.create)
 .put("/users", userIsAdmin, UserValidator.update, UserController.update)
-// .delete("/users", userIsAdmin, UserController.delete)
-
+.delete("/users", userIsAdmin, UserValidator.adminDeletesOwnAccount, UserController.delete)
 
 module.exports = routes

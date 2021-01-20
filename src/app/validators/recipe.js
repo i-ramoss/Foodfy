@@ -32,7 +32,7 @@ async function create(request, response, next) {
       return response.render("admin/recipes/create", {
         recipe: request.body,
         chefsOptions,
-        error: "Please, fill all fields!  "
+        error: "Please, fill all fields!"
       })
   }
 
@@ -74,6 +74,14 @@ async function update(request, response, next) {
   }
 
   if (request.body.removed_files) {
+    if(request.files.length === 0) {
+      return response.render("admin/recipes/edit", {
+        recipe: request.body,
+        chefsOptions,
+        error: "Please, send at least one image!"
+      })
+    }
+  
     const removedFiles = request.body.removed_files.split(",")
     const lastIndex = removedFiles.length - 1
 

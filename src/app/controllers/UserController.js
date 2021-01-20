@@ -7,10 +7,13 @@ const User = require("../models/User")
 module.exports = {
   async list(request, response) {
     try {
+      let { success, error } = request.session
+      request.session.success = "", request.session.error = ""
+
       const results = await User.all()
       let users = results.rows
 
-      return response.render("admin/users/index", { users })
+      return response.render("admin/users/index", { users, success, error })
     } 
     catch (err) {
       console.error(err)
@@ -60,25 +63,22 @@ module.exports = {
         `
       })
 
-      const results = await User.all()
-      let users = results.rows
+      request.session.success = "User successfully created!"
 
-      request.session.userId = id
-
-      return response.status(200).render("admin/users/index", {
-        users,
-        success: "User registered with success!"
-      })
+      return response.status(200).redirect("/admin/users")
     } 
     catch (err) {
       console.error(err)
+      request.session.error = "Something went wrong!"
+      return response.redirect("/admin/users/register")
     }
   },
 
   async edit(request, response) {
-    const { user } = request
-
-    return response.render("admin/users/edit", { user })
+    const { user, session: { success, error } } = request
+    request.session.success = "", request.session.error = ""
+    
+    return response.render("admin/users/edit", { user, success, error })
   },
 
   async update(request, response) {
@@ -91,19 +91,30 @@ module.exports = {
         email,
         is_admin: is_admin || false
       }) 
-      
-      return response.status(200).render("admin/users/edit", {
-        user: request.body,
-        success: "Account updated successfully!"
-      })
+
+      request.session.success = "Account updated successfully!"
+
+      return response.status(200).redirect(`/admin/users/${user.id}/edit`)
     } 
     catch (err) {
       console.error(err)
-      
-      return response.render("admin/users/edit", {
-        user: request.body,
-        error: "Something went wrong!"
-      })
+
+      request.session.error = "Something went wrong!"
+
+      return response.redirect(`/admin/users/${user.id}/edit`)
+    }
+  },
+
+  async delete(request, response) {
+    try {
+      await User.delete(request.body.id)
+
+      request.session.success = "User deleted successfully!"
+
+      return response.status(204).redirect("/admin/users")
+    } 
+    catch (err) {
+      console.error(err)  
     }
   }
 }

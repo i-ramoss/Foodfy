@@ -13,6 +13,8 @@ module.exports = {
     request.session.userId = request.user.id
     request.session.isAdmin = request.user.is_admin
 
+    request.session.success = "Login successfully!"
+
     return response.redirect("/admin/profile")
   },
 
@@ -83,7 +85,7 @@ module.exports = {
       await User.update(user.id, {
         password: newPassword,
         reset_token: "",
-        reset_token: ""
+        reset_token_expires: ""
       })
 
       return response.render("admin/session/login", {

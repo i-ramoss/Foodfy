@@ -51,7 +51,7 @@ async function update(request, response, next) {
 
   if (fillAllFields) return response.render("admin/users/edit", fillAllFields)
 
-  const user = await User.findOne({ where: {id} })
+  const user = await User.findOne({ where: { id } })
 
   request.user = user
 
@@ -96,10 +96,27 @@ async function profileUpdate(request, response, next) {
   next()
 }
 
+async function adminDeletesOwnAccount(request, response, next) {
+  const { userId } = request.session
+  const { id } = request.body
+
+  const user = await User.findOne({ where: { id } })
+
+  if(userId == id) {
+    return response.render("admin/users/profile", {
+      user,
+      error: "Sorry you can't delete your own account!"
+    })
+  }
+
+  next()
+}
+
 module.exports = {
   create,
   edit,
   update,
   profile,
-  profileUpdate
+  profileUpdate,
+  adminDeletesOwnAccount
 }

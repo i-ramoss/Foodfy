@@ -5,6 +5,9 @@ const File = require("../models/File")
 module.exports = {
   async index(request, response) {
     try {
+      let { success, error } = request.session
+      request.session.success = "", request.session.error = ""
+
       const results = await Chef.all()
       let chefs = results.rows
 
@@ -24,7 +27,7 @@ module.exports = {
 
       chefs = await Promise.all(chefsPromise)
   
-      return response.render("admin/chefs/index", { chefs })
+      return response.render("admin/chefs/index", { chefs, success, error })
     }
     catch (err) {
       console.error(err)
@@ -36,16 +39,6 @@ module.exports = {
   }, 
 
   async post(request, response) {
-    const keys = Object.keys(request.body)
-
-    for (key of keys) {
-      if (request.body[key] == "")
-        return response.json({ error: "Please, fill in all fields" })
-    }
-
-    if (request.files.length === 0) 
-      return response.json("Please, send at least one image")
-
     try {
       const filePromise = request.files.map( file => File.createChefFile({...file}))
 
@@ -53,16 +46,23 @@ module.exports = {
       const fileId = results.rows[0].id
 
       results = await Chef.create(request.body, fileId)
+
+      request.session.success = "Chef successfully created!"
   
       return response.status(201).redirect(`/admin/chefs`)
     } 
     catch (err) {
       console.error(err)
+      request.session.error = "Something went wrong!"
+      return response.redirect(`/admin/chefs`)
     }
   },
 
   async show(request, response) {
     try {
+      let { success, error } = request.session
+      request.session.success = "", request.session.error = ""
+
       const id  = request.params.id
 
       let result = await Chef.find(id)
@@ -93,7 +93,7 @@ module.exports = {
 
       const lastAdded = await Promise.all(recipesPromise)
 
-      return response.render("admin/chefs/show", { chef, recipes:lastAdded, files })
+      return response.render("admin/chefs/show", { chef, recipes:lastAdded, files, success, error })
     } 
     catch (err) {
       console.error(err)
@@ -121,29 +121,18 @@ module.exports = {
   },
 
   async update(request, response) {
-    const keys = Object.keys(request.body)
-
-    for (key of keys) {
-      if (request.body[key] == "" && key != "removed_files")
-        return response.json({ err: "Please, fill all fields!" })
-    }
-
     try {
-      let results = await Chef.files(request.body.id)
-      let id = results.rows[0].id
-
-      if (request.files.length != 0) {
-        const newFilesPromise = request.files.map( file => File.createChefFile({ ...file }))
-        
-        results = await newFilesPromise[0]
-        id = results.rows[0].id
-      }
+      let { chef_id: id } = request
 
       await Chef.update(request.body, id)
 
       if (request.body.removed_files) {
-        if (request.files.length === 0) 
-          return response.json("Please, send at least one image")
+        if (request.files.length === 0 ) {
+          return response.render("admin/chefs/edit", {
+            chef: request.body,
+            error: "Please, sendo at least one image!"
+          })
+        }
 
         const removedFiles = request.body.removed_files.split(",")
         const lastIndex = removedFiles.length - 1
@@ -155,10 +144,14 @@ module.exports = {
         await Promise.all(removedFilesPromise)
       }
 
-      return response.status(200).redirect(`/admin/chefs/${request.body.id}`)  
+      request.session.success = "Chef updated successfully!"
+
+      return response.status(200).redirect(`/admin/chefs/${id}`)  
     } 
     catch (err) {
       console.error(err)
+      request.session.error = "Something went wrong!"
+      return response.redirect(`/admin/chefs/${id}`) 
     }
   },
 
@@ -174,13 +167,20 @@ module.exports = {
       if (recipes.length == 0) {
         result = await Chef.delete(id)
 
+        request.session.success = "Chef deleted successfully!"
+
         response.status(200).redirect("/admin/chefs")
       }
-      else
-        response.status(401).json({ err: "You can't delete this user because there is a recipe registered on him"})
+      else {
+        request.session.error = "You can't delete this Chef because there is a recipe registered on him"
+
+        return response.status(401).redirect(`/admin/chefs/${id}/edit`)
+      }
     }
     catch (err) {
       console.error(err)
+      request.session.error = "Something went wrong!"
+      return response.redirect(`/admin/chefs/${id}/edit`)
     }
   }
 }

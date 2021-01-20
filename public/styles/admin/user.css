@@ -56,3 +56,7 @@
   font-weight: 300;
   color: var(--p-color);
 }
+
+.cards.users .card-admin form.users {
+  display: inline;
+}
