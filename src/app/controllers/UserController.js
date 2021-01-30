@@ -26,16 +26,11 @@ module.exports = {
 
   async create(request, response) {
     try {
-      const user = await User.create(request.body)
-      const { name, email, id } = user
+      const { name, email, is_admin } = request.body
 
-      let firstPassword = crypto.randomBytes(20).toString("hex")
+      const firstPassword = crypto.randomBytes(20).toString("hex")
 
       const encryptedPassword = await hash(firstPassword, 8)
-
-      await User.update( id, {
-        password: encryptedPassword
-      })
       
       await mailer.sendMail({
         to: email,
@@ -61,6 +56,13 @@ module.exports = {
             </a>
           </h2>
         `
+      })
+
+      await User.create({
+        name,
+        email,
+        is_admin: is_admin || 0,
+        password: encryptedPassword
       })
 
       request.session.success = "User successfully created!"

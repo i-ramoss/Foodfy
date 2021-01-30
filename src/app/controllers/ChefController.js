@@ -2,6 +2,8 @@ const Chef = require("../models/Chef")
 const Recipe = require("../models/Recipe")
 const File = require("../models/File")
 
+const { date } = require("../lib/utils")
+
 module.exports = {
   async index(request, response) {
     try {
@@ -40,12 +42,15 @@ module.exports = {
 
   async post(request, response) {
     try {
-      const filePromise = request.files.map( file => File.createChefFile({...file}))
-
-      let results = await filePromise[0]
-      const fileId = results.rows[0].id
-
-      results = await Chef.create(request.body, fileId)
+      const { file } = request
+      
+      const file_id = await File.create({name: file.filename, path: file.path})
+    
+      await Chef.create({
+        name: request.body.name,
+        file_id,
+        created_at: date(Date.now()).iso
+      })
 
       request.session.success = "Chef successfully created!"
   

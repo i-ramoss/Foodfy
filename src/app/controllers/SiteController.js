@@ -86,8 +86,7 @@ module.exports = {
 
   async show(request, response) {
     try {
-      let result = await Recipe.find(request.params.id)
-      const recipe = result.rows[0]
+      const recipe = await Recipe.findOne({ where: { id: request.params.id } })
 
       if(!recipe) return response.status(404).render("site/not-found")
 

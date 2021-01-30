@@ -1,6 +1,8 @@
 const Recipe = require("../models/Recipe")
 const File = require("../models/File")
 
+const { date } = require("../lib/utils")
+
 module.exports = {
   async index(request, response) {
     try {
@@ -44,13 +46,19 @@ module.exports = {
 
   async post(request, response) {
     try {
-      const results = await Recipe.create(request.body)
-      const recipeId = results.rows[0].id
+      const { title, chef_id, ingredients, preparation, information } = request.body
 
-      const filesPromise = request.files.map( file => File.createRecipeFile({
-        ...file,
-        recipe_id: recipeId
-      }))
+      const recipe_id = await Recipe.create({ 
+        title,
+        chef_id,
+        user_id = request.session.userId,
+        ingredients: `{${ingredients}}`,
+        preparation: `{${preparation}}`,
+        information,
+        created_at: date(Date.now()).iso
+      })
+
+      const filesPromise = request.files.map( file => File.createRecipeFile({ name: file.filename, path: file.path, recipe_id }))
 
       await Promise.all(filesPromise)
 

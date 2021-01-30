@@ -1,8 +1,14 @@
 const db = require("../../config/db")
+
 const fs = require("fs")
-const { date } = require("../lib/utils")
+
+const Base = require("./Base")
+
+Base.init({ table: "chefs" })
 
 module.exports = {
+  ...Base,
+
   all() {
     try {
       return db.query(`
@@ -14,30 +20,6 @@ module.exports = {
       )
     } 
     catch (erro) {
-      console.error(err)
-    }
-  },
-
-  create(data, file_id) {
-    try {
-      const query = `
-        INSERT INTO chefs (
-          name,
-          file_id,
-          created_at
-        ) VALUES ($1, $2, $3)
-        RETURNING id
-      `
-
-      const values = [
-        data.name,
-        file_id,
-        date(Date.now()).iso
-      ]
-
-      return db.query(query, values)
-    } 
-    catch (err) {
       console.error(err)
     }
   },
@@ -66,28 +48,6 @@ module.exports = {
         WHERE chefs.id = $1
         ORDER BY recipes.title ASC`, [id]
       )
-    } 
-    catch (err) {
-      console.error(err)
-    }
-  },
-
-  update(data, file_id) {
-    try {
-      const query = `
-        UPDATE chefs SET
-          name=($1),
-          file_id=($2)
-        WHERE id = $3
-      `
-
-      const values = [
-        data.name,
-        file_id,
-        data.id
-      ]
-
-      return db.query(query, values)   
     } 
     catch (err) {
       console.error(err)
