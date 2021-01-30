@@ -76,19 +76,19 @@ async function profileUpdate(request, response, next) {
   const { password } = request.body
   const { userId: id } = request.session
 
-  if (fillAllFields) return response.render("admin/users/profile", fillAllFields)
-
   if (!password) return response.render("admin/users/profile", {
     user: request.body,
     error: "Please, enter your password to confirm changes"
   })
+
+  if (fillAllFields) return response.render("admin/users/profile", fillAllFields)
 
   const user = await User.findOne({ where: { id } })
   const passed = await compare(password, user.password)
 
   if (!passed) return response.render("admin/users/profile", {
     user: request.body,
-    err: "Incorrect Password"
+    error: "Incorrect Password"
   })
 
   request.user = user

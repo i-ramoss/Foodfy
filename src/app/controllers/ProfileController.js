@@ -3,7 +3,6 @@ const User = require("../models/User")
 module.exports = {
   index(request, response) {
     const { user, session: { success, error } } = request
-
     request.session.success = "", request.session.error = ""
 
     return response.render("admin/users/profile", { user, success, error })
@@ -21,7 +20,7 @@ module.exports = {
 
      request.session.success = "User updated successfully!"
 
-     return response.redirect(`/admin/profile`)
+     return response.status(200).redirect(`/admin/profile`)
     } 
     catch (err) {
       console.error(err)

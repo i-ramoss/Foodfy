@@ -1,5 +1,6 @@
 const Recipe = require("../models/Recipe")
 const File = require("../models/File")
+const Chef = require("../models/Chef")
 
 const { date } = require("../lib/utils")
 
@@ -17,13 +18,21 @@ module.exports = {
         return files[0]
       }
 
+      async function getChef(recipeId) {
+        let chef = await Chef.findOne({ where: { id: recipeId } })
+
+        return chef.name
+      }
+
       const recipesPromise = recipes.map( async recipe => {
         recipe.image = await getImage(recipe.id)
+        recipe.chef_name = await getChef(recipe.chef_id)
 
         return recipe
       })
 
       recipes = await Promise.all(recipesPromise)
+
 
       return response.render('admin/recipes/index', { recipes, success, error })
     } 
@@ -34,8 +43,7 @@ module.exports = {
 
   async create(request, response) {
     try {
-      const results = await Recipe.chefSelectOptions()
-      const chefsOptions = results.rows
+      const chefsOptions = await Chef.findAll()
 
       return response.render('admin/recipes/create', { chefsOptions })
     } 
@@ -51,7 +59,7 @@ module.exports = {
       const recipe_id = await Recipe.create({ 
         title,
         chef_id,
-        user_id = request.session.userId,
+        user_id: request.session.userId,
         ingredients: `{${ingredients}}`,
         preparation: `{${preparation}}`,
         information,
@@ -74,16 +82,17 @@ module.exports = {
   },
 
   async show(request, response) {
-    try {
+    try { 
+      let { recipe } = request
+
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
-      let result = await Recipe.find(request.params.id)
-      const recipe = result.rows[0]
+      let chef = await Chef.findOne({ where: { id: recipe.chef_id } })
 
-      if(!recipe) return response.status(404).render("admin/recipes/not-found")
+      recipe.chef_name = chef.name
 
-      result = await Recipe.files(recipe.id)
+      let result = await Recipe.files(recipe.id)
       const files = result.rows.map( file => ({
         ...file,
         src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
@@ -98,16 +107,10 @@ module.exports = {
 
   async edit(request, response) {
     try {
-      let results = await Recipe.find(request.params.id)
-      const recipe = results.rows[0]
+      const { recipe } = request
 
-      if(!recipe) return response.status(404).render("admin/recipes/not-found")
+      const chefsOptions = await Chef.findAll()
 
-      // get chefs
-      results = await Recipe.chefSelectOptions()
-      const chefsOptions = results.rows
-
-      // get images
       results = await Recipe.files(recipe.id)
       let files = results.rows
 
@@ -125,12 +128,9 @@ module.exports = {
 
   async update(request, response) {
     try {
-      let { title, chef, ingredients, preparation, information } = request.body
+      let { id, title, chef, ingredients, preparation, information } = request.body
 
-      const results = await Recipe.find(request.body.id)
-      const recipeId = results.rows[0].id
-
-      await Recipe.update(recipeId, {
+      await Recipe.update(id, {
         title,
         chef_id: chef,
         ingredients: `{${ingredients}}`,
@@ -140,7 +140,7 @@ module.exports = {
 
       request.session.success = "Recipe successfully updated!"
   
-      return response.status(200).redirect(`/admin/recipes/${request.body.id}`)
+      return response.status(200).redirect(`/admin/recipes/${id}`)
     } 
     catch (err) {
       console.error(err)

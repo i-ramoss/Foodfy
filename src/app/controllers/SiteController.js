@@ -4,7 +4,7 @@ const Chef = require("../models/Chef")
 module.exports = {
   async index(request, response) {
     try {
-      let recipes = await Recipe.all()
+      let recipes = await Recipe.findAll()
 
       async function getImage(recipeId) {
         let results = await Recipe.files(recipeId)
@@ -14,8 +14,15 @@ module.exports = {
         return files[0]
       }
 
+      async function getChef(recipeId) {
+        let chef = await Chef.findOne({ where: { id: recipeId } })
+
+        return chef.name
+      }
+
       const recipesPromise = recipes.map( async recipe => {
         recipe.image = await getImage(recipe.id)
+        recipe.chef_name = await getChef(recipe.chef_id)
 
         return recipe
       }).filter((recipe, index) => index > 5 ? false : true)
@@ -90,6 +97,10 @@ module.exports = {
 
       if(!recipe) return response.status(404).render("site/not-found")
 
+      let chef = await Chef.findOne({ where: { id: recipe.chef_id } })
+
+      recipe.chef_name = chef.name
+
       result = await Recipe.files(recipe.id)
       const files = result.rows.map( file => ({
         ...file,
@@ -105,8 +116,7 @@ module.exports = {
 
   async chefs(request, response) {
     try {
-      const results = await Chef.all()
-      let chefs = results.rows
+      let chefs = await Chef.findAll()
 
       async function getImage(chefId) {
         let results = await Chef.files(chefId)

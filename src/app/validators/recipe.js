@@ -1,12 +1,12 @@
+const Chef = require("../models/Chef")
 const Recipe = require("../models/Recipe")
 const File = require("../models/File")
 
 async function permission(request, response, next) {
-  const { id: recipeId } = request.params
+  const { id } = request.params
   const { userId, isAdmin } = request.session
   
-  let result = await Recipe.find(recipeId)
-  const recipe = result.rows[0]
+  const recipe = await Recipe.findOne({ where: { id }})
 
   if (recipe.user_id != userId && !isAdmin) return response.redirect("/admin/recipes")
 
@@ -16,7 +16,7 @@ async function permission(request, response, next) {
 async function index(request, response, next) {
   const { userId: id, isAdmin } = request.session
 
-  isAdmin ? recipes = await Recipe.all() : recipes = await Recipe.userRecipes(id)
+  isAdmin ? recipes = await Recipe.findAll() : recipes = await Recipe.userRecipes(id)
 
   next()
 }
@@ -47,11 +47,20 @@ async function create(request, response, next) {
   next() 
 }
 
+async function show(request, response, next) {
+  const recipe = await Recipe.findOne({ where: { id: request.params.id }})
+
+  if(!recipe) return response.status(404).render("admin/recipes/not-found")
+
+  request.recipe = recipe
+
+  next()
+}
+
 async function update(request, response, next) {
   const keys = Object.keys(request.body)
 
-  let results = await Recipe.chefSelectOptions()
-  const chefsOptions = results.rows
+  const chefsOptions = await Chef.findAll()
 
   for (key of keys) {
     if (request.body[key] === "" && key !== "removed_files")
@@ -99,5 +108,6 @@ module.exports = {
   permission,
   index,
   create,
+  show,
   update
 }

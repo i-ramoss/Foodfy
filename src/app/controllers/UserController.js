@@ -10,8 +10,7 @@ module.exports = {
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
-      const results = await User.all()
-      let users = results.rows
+      let users = await User.findAll()
 
       return response.render("admin/users/index", { users, success, error })
     } 

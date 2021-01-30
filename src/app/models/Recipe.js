@@ -9,36 +9,6 @@ Base.init({ table: "recipes" })
 module.exports = {
   ...Base,
 
-  async all() {
-    try {
-      const results = await db.query(`
-        SELECT recipes.*, chefs.name AS chef_name 
-        FROM recipes
-        LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-        ORDER BY created_at DESC
-      `) 
-
-      return results.rows
-    } 
-    catch (err) {
-      console.error(err)
-    }
-  },
-
-  find(id) {
-    try {
-      return db.query(`
-        SELECT recipes.*, chefs.name AS chef_name
-        FROM recipes 
-        LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-        WHERE recipes.id = $1`, [id]
-      )
-    } 
-    catch (err) {
-      console.error(err)
-    }
-  },
-
   findBy(filter) {
     return db.query(`
       SELECT recipes.*, chefs.name AS chef_name 
@@ -48,30 +18,7 @@ module.exports = {
       ORDER BY recipes.title ASC
     `)
   },
-
-  async update(recipeId, fields) {
-    let query = "UPDATE recipes SET"
-
-    Object.keys(fields).map( (key, index, array) => {
-      if ((index + 1) < array.length) {
-        query = `
-          ${query}
-          ${key} = '${fields[key]}',
-        `
-      }
-      else {
-        query = `
-          ${query}
-          ${key} = '${fields[key]}'
-          WHERE id = ${recipeId}
-        `
-      }
-    })
-
-    await db.query(query)
-    return
-  },
-
+  
   async delete(id) {
     try{
       const results = await db.query(`
