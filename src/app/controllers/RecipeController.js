@@ -11,9 +11,9 @@ module.exports = {
       request.session.success = "", request.session.error = ""
 
       async function getImage(recipeId) {
-        let results = await Recipe.files(recipeId)
+        let files = await Recipe.files(recipeId)
 
-        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
 
         return files[0]
       }
@@ -32,7 +32,6 @@ module.exports = {
       })
 
       recipes = await Promise.all(recipesPromise)
-
 
       return response.render('admin/recipes/index', { recipes, success, error })
     } 
@@ -92,8 +91,8 @@ module.exports = {
 
       recipe.chef_name = chef.name
 
-      let result = await Recipe.files(recipe.id)
-      const files = result.rows.map( file => ({
+      let files = await Recipe.files(recipe.id)
+      files = files.map( file => ({
         ...file,
         src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
       }))
@@ -111,8 +110,7 @@ module.exports = {
 
       const chefsOptions = await Chef.findAll()
 
-      results = await Recipe.files(recipe.id)
-      let files = results.rows
+      let files = await Recipe.files(recipe.id)
 
       files = files.map( file => ({
         ...file,

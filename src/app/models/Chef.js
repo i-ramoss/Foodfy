@@ -9,51 +9,6 @@ Base.init({ table: "chefs" })
 module.exports = {
   ...Base,
 
-  all() {
-    try {
-      return db.query(`
-        SELECT chefs.*, count(recipes) AS total_recipes
-        FROM chefs
-        LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
-        GROUP BY chefs.id
-        ORDER BY chefs.name ASC`
-      )
-    } 
-    catch (erro) {
-      console.error(err)
-    }
-  },
-
-  find(id) {
-    try {
-      return db.query(`
-        SELECT chefs.*, count(recipes) AS total_recipes
-        FROM chefs
-        LEFT JOIN recipes ON (recipes.chef_id = chefs.id)
-        WHERE chefs.id = $1
-        GROUP BY chefs.id`, [id]
-      ) 
-    } 
-    catch (err) {
-      console.error(err)
-    }
-  },
-
-  findRecipesByChef(id) {
-    try {
-      return db.query(`
-        SELECT recipes.*, chefs.name AS chef_name
-        FROM recipes
-        INNER JOIN chefs ON (recipes.chef_id = chefs.id)
-        WHERE chefs.id = $1
-        ORDER BY recipes.title ASC`, [id]
-      )
-    } 
-    catch (err) {
-      console.error(err)
-    }
-  },
-
   async delete(id) {
     try {
       const results = await db.query(`
@@ -73,13 +28,16 @@ module.exports = {
     }
   },
 
-  files(id) {
+  async files(id) {
     try {
-      return db.query(`
+      const query = `
         SELECT files.* FROM files
         LEFT JOIN chefs ON (files.id = chefs.file_id)
-        WHERE chefs.id = $1`, [id]
-      )
+        WHERE chefs.id = ${id}
+      `
+      
+      const results = await db.query(query)
+      return results.rows[0]
     } 
     catch (err) {
       console.error(err)

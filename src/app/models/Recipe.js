@@ -75,13 +75,16 @@ module.exports = {
     }  
   },
 
-  files(id) {
+  async files(id) {
     try {
-      return db.query(`
+      const query = `
         SELECT files.* FROM files
         LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
-        WHERE recipe_files.recipe_id = $1`, [id]
-      )
+        WHERE recipe_files.recipe_id = ${id}
+      `
+      
+      const results = await db.query(query)
+      return results.rows
     } catch (err) {
       console.error(err)
     }

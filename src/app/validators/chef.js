@@ -34,7 +34,7 @@ async function update(request, response, next) {
   }
 
   let results = await Chef.files(request.body.id)
-  let id = results.rows[0].id
+  let id = results.id
 
   if (request.files.length != 0) {
     const newFilesPromise = request.files.map( file => File.createChefFile({ ...file }))

@@ -21,7 +21,7 @@
     </div>
 
     <div class='image__container chef'>
-      <img src='{{files[0].src}}' alt='Image of {{chef.name}}'>
+      <img src='{{files.src}}' alt='Image of {{chef.name}}'>
       <h3>{{chef.name}}</h3>
       <p>
         {% if chef.total_recipes == 1 %} {{chef.total_recipes}} recipe {% endif %}

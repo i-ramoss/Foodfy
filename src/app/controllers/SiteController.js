@@ -7,9 +7,9 @@ module.exports = {
       let recipes = await Recipe.findAll()
 
       async function getImage(recipeId) {
-        let results = await Recipe.files(recipeId)
+        let files = await Recipe.files(recipeId)
 
-        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
 
         return files[0]
       }
@@ -69,9 +69,9 @@ module.exports = {
       }
 
       async function getImage(recipeId) {
-        let results = await Recipe.files(recipeId)
+        let files = await Recipe.files(recipeId)
 
-        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
 
         return files[0]
       }
@@ -101,8 +101,8 @@ module.exports = {
 
       recipe.chef_name = chef.name
 
-      result = await Recipe.files(recipe.id)
-      const files = result.rows.map( file => ({
+      let files = await Recipe.files(recipe.id)
+      files = files.map( file => ({
         ...file,
         src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
       }))
@@ -119,14 +119,17 @@ module.exports = {
       let chefs = await Chef.findAll()
 
       async function getImage(chefId) {
-        let results = await Chef.files(chefId)
-        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace('public', '')}`)
+        let files =  await Chef.files(chefId)
+        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace('public', '')}`)
 
         return files[0]
       }
 
       const chefsPromise = chefs.map( async chef => {
+        const totalChefRecipe = await Recipe.findAll({ where: { chef_id: chef.id } })
+
         chef.avatar = await getImage(chef.id)
+        chef.total_recipes = totalChefRecipe.length
 
         return chef
       })

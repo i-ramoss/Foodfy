@@ -14,9 +14,9 @@ async function permission(request, response, next) {
 }
 
 async function index(request, response, next) {
-  const { userId: id, isAdmin } = request.session
+  const { userId, isAdmin } = request.session
 
-  isAdmin ? recipes = await Recipe.findAll() : recipes = await Recipe.userRecipes(id)
+  isAdmin ? recipes = await Recipe.findAll() : recipes = await Recipe.userRecipes(userId)
 
   next()
 }

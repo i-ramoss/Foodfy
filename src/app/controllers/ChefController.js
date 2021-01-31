@@ -10,13 +10,12 @@ module.exports = {
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
-      const results = await Chef.all()
-      let chefs = results.rows
+      let chefs = await Chef.findAll()
 
       async function getImage(chefId) {
-        let results = await Chef.files(chefId)
+        let files = await Chef.files(chefId)
 
-        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
 
         return files[0]
       }
@@ -53,7 +52,7 @@ module.exports = {
       })
 
       request.session.success = "Chef successfully created!"
-  
+      
       return response.status(201).redirect(`/admin/chefs`)
     } 
     catch (err) {
@@ -65,27 +64,23 @@ module.exports = {
 
   async show(request, response) {
     try {
+      const { id }  = request.params
+
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
-      const id  = request.params.id
+      let chef = await Chef.findOne({ where: { id } })
 
-      let result = await Chef.find(id)
-      const chef = result.rows[0]
+      let files = await Chef.files(id)
 
-      result = await Chef.findRecipesByChef(id)
-      const recipes = result.rows
+      files.src = `${request.protocol}://${request.headers.host}${files.path.replace("public", "")}`
 
-      result = await Chef.files(chef.id)
-      const files = result.rows.map( file => ({
-        ...file,
-        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
-      }))
+      let recipes = await Recipe.findAll({ where: { chef_id: chef.id } })
 
       async function getImage(recipeId) {
-        let results = await Recipe.files(recipeId)
+        let files = await Recipe.files(recipeId)
 
-        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
 
         return files[0]
       }
@@ -96,9 +91,11 @@ module.exports = {
         return recipe
       })
 
-      const lastAdded = await Promise.all(recipesPromise)
+      recipes = await Promise.all(recipesPromise)
 
-      return response.render("admin/chefs/show", { chef, recipes:lastAdded, files, success, error })
+      chef.total_recipes = recipes.length
+
+      return response.render("admin/chefs/show", { chef, recipes, files, success, error })
     } 
     catch (err) {
       console.error(err)
@@ -107,16 +104,13 @@ module.exports = {
 
   async edit(request, response) {
     try {
-      let results = await Chef.find(request.params.id)
-      const chef = results.rows[0]
+      const { id } = request.params
 
-      results = await Chef.files(chef.id)
-      let files = results.rows
+      const chef = await Chef.findOne({ where: { id } })
+
+      let files = await Chef.files(id)
   
-      files = files.map( file => ({
-        ...file,
-        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
-      }))
+      files.src = `${request.protocol}://${request.headers.host}${files.path.replace("public", "")}`
   
       return response.render("admin/chefs/edit", { chef, files }) 
     } 
