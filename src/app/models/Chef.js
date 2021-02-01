@@ -37,7 +37,7 @@ module.exports = {
       `
       
       const results = await db.query(query)
-      return results.rows[0]
+      return results.rows
     } 
     catch (err) {
       console.error(err)

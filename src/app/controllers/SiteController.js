@@ -120,6 +120,7 @@ module.exports = {
 
       async function getImage(chefId) {
         let files =  await Chef.files(chefId)
+        
         files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace('public', '')}`)
 
         return files[0]

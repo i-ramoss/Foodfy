@@ -1,3 +1,5 @@
+const { unlinkSync } = require("fs")
+
 const Chef = require("../models/Chef")
 const Recipe = require("../models/Recipe")
 const File = require("../models/File")
@@ -72,8 +74,11 @@ module.exports = {
       let chef = await Chef.findOne({ where: { id } })
 
       let files = await Chef.files(id)
-
-      files.src = `${request.protocol}://${request.headers.host}${files.path.replace("public", "")}`
+      
+      files = files.map( file => ({	
+        ...file,	
+        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`	
+      }))
 
       let recipes = await Recipe.findAll({ where: { chef_id: chef.id } })
 
@@ -106,13 +111,19 @@ module.exports = {
     try {
       const { id } = request.params
 
+      let { success, error } = request.session
+      request.session.success = "", request.session.error = ""
+
       const chef = await Chef.findOne({ where: { id } })
 
       let files = await Chef.files(id)
   
-      files.src = `${request.protocol}://${request.headers.host}${files.path.replace("public", "")}`
+      files = files.map( file => ({	
+        ...file,	
+        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`	
+      }))
   
-      return response.render("admin/chefs/edit", { chef, files }) 
+      return response.render("admin/chefs/edit", { chef, files, success, error }) 
     } 
     catch (err) {
       console.error(err)
@@ -121,36 +132,41 @@ module.exports = {
 
   async update(request, response) {
     try {
-      let { chef_id: id } = request
+      const { id: chef_id, name, removed_files } = request.body
+      const { files }  = request
 
-      await Chef.update(request.body, id)
+      if (request.files.length !== 0) {
+        const file_id = await File.create({ name:  files[0].filename, path: files[0].path })
+
+        await Chef.update(chef_id, { name, file_id })
+      }
+
+      await Chef.update(chef_id, { name })
 
       if (request.body.removed_files) {
         if (request.files.length === 0 ) {
-          return response.render("admin/chefs/edit", {
-            chef: request.body,
-            error: "Please, sendo at least one image!"
-          })
+          request.session.error = "Please, sendo at least one image!"
+          return response.redirect(`/admin/chefs/${chef_id}/edit`)
         }
 
-        const removedFiles = request.body.removed_files.split(",")
-        const lastIndex = removedFiles.length - 1
-  
-        removedFiles.splice(lastIndex, 1)
-  
-        const removedFilesPromise = removedFiles.map( id => File.delete(id))
-  
-        await Promise.all(removedFilesPromise)
+        const removedFiles = removed_files.split(",")
+        const file_id = removedFiles[0]
+
+        const file = await File.findOne({ where: { id: file_id }})
+
+        unlinkSync(file.path)
+
+        await File.delete(file_id)
       }
 
       request.session.success = "Chef updated successfully!"
 
-      return response.status(200).redirect(`/admin/chefs/${id}`)  
+      return response.status(200).redirect(`/admin/chefs/${chef_id}`)  
     } 
     catch (err) {
       console.error(err)
       request.session.error = "Something went wrong!"
-      return response.redirect(`/admin/chefs/${id}`) 
+      return response.redirect(`/admin/chefs/${request.body.id}`) 
     }
   },
 
