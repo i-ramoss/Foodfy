@@ -174,9 +174,9 @@ module.exports = {
       }
 
       async function getImage(recipeId) {
-        let results = await Recipe.files(recipeId)
+        let files = await Recipe.files(recipeId)
 
-        const files = results.rows.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
+        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
 
         return files[0]
       }

@@ -43,9 +43,9 @@ module.exports = {
 
   async post(request, response) {
     try {
-      const { file } = request
-      
-      const file_id = await File.create({name: file.filename, path: file.path})
+      const { files } = request
+
+      const file_id = await File.create({ name: files[0].filename, path: files[0].path })
     
       await Chef.create({
         name: request.body.name,
@@ -143,7 +143,7 @@ module.exports = {
 
       await Chef.update(chef_id, { name })
 
-      if (request.body.removed_files) {
+      if (removed_files) {
         if (request.files.length === 0 ) {
           request.session.error = "Please, sendo at least one image!"
           return response.redirect(`/admin/chefs/${chef_id}/edit`)
@@ -156,7 +156,7 @@ module.exports = {
 
         unlinkSync(file.path)
 
-        await File.delete(file_id)
+        await File.delete('id', file_id)
       }
 
       request.session.success = "Chef updated successfully!"

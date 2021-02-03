@@ -53,11 +53,15 @@ module.exports = {
 
   async post(request, response) {
     try {
-      const { title, chef_id, ingredients, preparation, information } = request.body
+      const { title, chef, ingredients, preparation, information } = request.body
+
+      const filesPromise = request.files.map( file => File.create({ name: file.filename, path: file.path }))
+
+      const filesIds = await Promise.all(filesPromise)
 
       const recipe_id = await Recipe.create({ 
         title,
-        chef_id,
+        chef_id: chef,
         user_id: request.session.userId,
         ingredients: `{${ingredients}}`,
         preparation: `{${preparation}}`,
@@ -65,9 +69,11 @@ module.exports = {
         created_at: date(Date.now()).iso
       })
 
-      const filesPromise = request.files.map( file => File.createRecipeFile({ name: file.filename, path: file.path, recipe_id }))
+      File.init({ table: "recipe_files" })
 
-      await Promise.all(filesPromise)
+      const recipeFilesPromise = filesIds.map( file_id => File.create({ recipe_id, file_id }))
+
+      await Promise.all(recipeFilesPromise)
 
       request.session.success = "Recipe successfully created!"
 
@@ -108,6 +114,9 @@ module.exports = {
     try {
       const { recipe } = request
 
+      let { success, error } = request.session
+      request.session.success = "", request.session.error = ""
+
       const chefsOptions = await Chef.findAll()
 
       let files = await Recipe.files(recipe.id)
@@ -117,7 +126,7 @@ module.exports = {
         src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
       }))
       
-      return response.render("admin/recipes/edit", { recipe, chefsOptions, files })
+      return response.render("admin/recipes/edit", { recipe, chefsOptions, files, success, error })
     } 
     catch (err) {
       console.error(err)
@@ -126,9 +135,9 @@ module.exports = {
 
   async update(request, response) {
     try {
-      let { id, title, chef, ingredients, preparation, information } = request.body
+      let { id: recipe_id, title, chef, ingredients, preparation, information } = request.body
 
-      await Recipe.update(id, {
+      await Recipe.update(recipe_id, {
         title,
         chef_id: chef,
         ingredients: `{${ingredients}}`,
@@ -138,7 +147,7 @@ module.exports = {
 
       request.session.success = "Recipe successfully updated!"
   
-      return response.status(200).redirect(`/admin/recipes/${id}`)
+      return response.status(200).redirect(`/admin/recipes/${recipe_id}`)
     } 
     catch (err) {
       console.error(err)

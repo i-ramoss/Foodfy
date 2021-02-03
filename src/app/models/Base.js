@@ -88,8 +88,8 @@ const Base = {
     }
   },
 
-  delete(id) {
-    return db.query(`DELETE FROM ${this.table} WHERE id = ${id}`)
+  delete(field, id) {
+    return db.query(`DELETE FROM ${this.table} WHERE ${field} = ${id}`)
   }
 }
 

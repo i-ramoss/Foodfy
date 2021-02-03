@@ -1,3 +1,5 @@
+const { unlinkSync } = require("fs")
+
 const Chef = require("../models/Chef")
 const Recipe = require("../models/Recipe")
 const File = require("../models/File")
@@ -24,8 +26,15 @@ async function index(request, response, next) {
 async function create(request, response, next) {
   const keys = Object.keys(request.body)
 
-  let results = await Recipe.chefSelectOptions()
-  const chefsOptions = results.rows
+  const chefsOptions = await Chef.findAll()
+
+  if(request.files.length === 0) {
+    return response.render("admin/recipes/create", {
+      recipe: request.body,
+      chefsOptions,
+      error: "Please, send at least one image!"
+    })
+  }
 
   for (key of keys) {
     if (request.body[key] === "")
@@ -34,14 +43,6 @@ async function create(request, response, next) {
         chefsOptions,
         error: "Please, fill all fields!"
       })
-  }
-
-  if(request.files.length === 0) {
-    return response.render("admin/recipes/create", {
-      recipe: request.body,
-      chefsOptions,
-      error: "Please, send at least one image!"
-    })
   }
 
   next() 
@@ -58,6 +59,7 @@ async function show(request, response, next) {
 }
 
 async function update(request, response, next) {
+  const { id: recipe_id, removed_files } = request.body
   const keys = Object.keys(request.body)
 
   const chefsOptions = await Chef.findAll()
@@ -71,32 +73,40 @@ async function update(request, response, next) {
       })
   }
 
-  if (request.files.length != 0) {
-    const newFilesPromise = request.files.map( file => 
-      File.createRecipeFile({
-        ...file, 
-        recipe_id: request.body.id
-      })
-    )
+  if (request.files.length !== 0 ) {
+    File.init({ table: "files" })
 
-    await Promise.all(newFilesPromise)
+    const newFilesPromise = request.files.map( file => File.create({ name: file.filename, path: file.path }))
+    const filesIds = await Promise.all(newFilesPromise)
+
+    File.init({ table: "recipe_files" })
+
+    const relationPromise = filesIds.map( file_id => File.create({ recipe_id, file_id }))
+    await Promise.all(relationPromise)
   }
 
-  if (request.body.removed_files) {
-    if(request.files.length === 0) {
-      return response.render("admin/recipes/edit", {
-        recipe: request.body,
-        chefsOptions,
-        error: "Please, send at least one image!"
-      })
-    }
-  
-    const removedFiles = request.body.removed_files.split(",")
+  if (removed_files) {
+    let removedFiles = removed_files.split(",")
     const lastIndex = removedFiles.length - 1
 
     removedFiles.splice(lastIndex, 1)
 
-    const removedFilesPromise = removedFiles.map( id => File.delete(id))
+    const removedFilesPromise = removedFiles.map( async id => {
+      try {
+        const file = await File.findOne({ where: { id } })
+        
+        unlinkSync(file.path)
+
+        File.init({ table: "recipe_files" })
+        await File.delete('file_id', id)
+
+        File.init({ table: "files" })
+        await File.delete('id', id)
+      } 
+      catch (err) {
+        console.error(err)  
+      }
+    })
 
     await Promise.all(removedFilesPromise)
   }
