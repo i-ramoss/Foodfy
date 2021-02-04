@@ -25,9 +25,9 @@
       </div>
 
       <div id="images-preview">
-        {% if files %}
+        {% if recipe.files %}
 
-          {% for image in files %}
+          {% for image in recipe.files %}
             <div id="{{image.id}}" class="image">
               <img src="{{image.src}}" alt="{{ image.name }}">
               <i 

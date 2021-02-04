@@ -20,20 +20,20 @@
       <div class="gallery">
 
         <div class="highlight">
-          {% if not files[0] %}
+          {% if not recipe.files[0] %}
             <img src="http://placehold.it/940x280?text=RECIPE WITHOUT IMAGE">
           
             {% else %}
               <img 
-                src="{{files[0].src}}" 
-                alt="Image of {{ files[0].name }}"
+                src="{{recipe.files[0].src}}" 
+                alt="Image of {{ recipe.files[0].name }}"
                 onclick="LightBox.open()"
               >
 
           {% endif %}
 
           <div class="lightbox-target">
-            <img src="{{ files[0].src }}" alt="{{ files[0].name }}"/>
+            <img src="{{ recipe.files[0].src }}" alt="{{ recipe.files[0].name }}"/>
             <a href="#" class="lightbox-close">
               <i class="material-icons" onclick="LightBox.close()">close</i>
             </a>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="gallery-preview">
-          {% for image in files %}
+          {% for image in recipe.files %}
             <img 
               src="{{ image.src }}" 
               alt="Image of {{ image.name }}"

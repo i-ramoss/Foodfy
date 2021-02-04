@@ -8,17 +8,12 @@ async function permission(request, response, next) {
   const { id } = request.params
   const { userId, isAdmin } = request.session
   
-  const recipe = await Recipe.findOne({ where: { id }})
+  const recipe = await Recipe.findOne({ where: { id } })
 
-  if (recipe.user_id != userId && !isAdmin) return response.redirect("/admin/recipes")
-
-  next()
-}
-
-async function index(request, response, next) {
-  const { userId, isAdmin } = request.session
-
-  isAdmin ? recipes = await Recipe.findAll() : recipes = await Recipe.userRecipes(userId)
+  if (recipe.user_id != userId && !isAdmin) {
+    request.session.error = "Sorry, you don't have permission to access this recipe."
+    return response.redirect("/admin/recipes")
+  } 
 
   next()
 }
@@ -46,16 +41,6 @@ async function create(request, response, next) {
   }
 
   next() 
-}
-
-async function show(request, response, next) {
-  const recipe = await Recipe.findOne({ where: { id: request.params.id }})
-
-  if(!recipe) return response.status(404).render("admin/recipes/not-found")
-
-  request.recipe = recipe
-
-  next()
 }
 
 async function update(request, response, next) {
@@ -116,8 +101,6 @@ async function update(request, response, next) {
 
 module.exports = {
   permission,
-  index,
   create,
-  show,
   update
 }

@@ -4,6 +4,8 @@ const Recipe = require("../models/Recipe")
 const File = require("../models/File")
 const Chef = require("../models/Chef")
 
+const LoadRecipeService = require("../services/LoadRecipeService")
+
 const { date } = require("../lib/utils")
 
 module.exports = {
@@ -12,28 +14,7 @@ module.exports = {
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
-      async function getImage(recipeId) {
-        let files = await Recipe.files(recipeId)
-
-        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
-
-        return files[0]
-      }
-
-      async function getChef(recipeId) {
-        let chef = await Chef.findOne({ where: { id: recipeId } })
-
-        return chef.name
-      }
-
-      const recipesPromise = recipes.map( async recipe => {
-        recipe.image = await getImage(recipe.id)
-        recipe.chef_name = await getChef(recipe.chef_id)
-
-        return recipe
-      })
-
-      recipes = await Promise.all(recipesPromise)
+      const recipes = await LoadRecipeService.load("recipes")
 
       return response.render("admin/recipes/index", { recipes, success, error })
     } 
@@ -90,22 +71,14 @@ module.exports = {
 
   async show(request, response) {
     try { 
-      let { recipe } = request
-
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
-      let chef = await Chef.findOne({ where: { id: recipe.chef_id } })
+      const recipe = await LoadRecipeService.load("recipe", { where: { id: request.params.id } })
 
-      recipe.chef_name = chef.name
+      if(!recipe) return response.status(404).render("admin/recipes/not-found")
 
-      let files = await Recipe.files(recipe.id)
-      files = files.map( file => ({
-        ...file,
-        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
-      }))
-
-      return response.render("admin/recipes/show", { recipe, files, success, error })
+      return response.render("admin/recipes/show", { recipe, success, error })
     } 
     catch (err) {
       console.error(err)
@@ -114,21 +87,16 @@ module.exports = {
 
   async edit(request, response) {
     try {
-      const { recipe } = request
-
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
+      const recipe = await LoadRecipeService.load("recipe", { where: { id: request.params.id } })
+
+      if(!recipe) return response.status(404).render("admin/recipes/not-found")
+
       const chefsOptions = await Chef.findAll()
 
-      let files = await Recipe.files(recipe.id)
-
-      files = files.map( file => ({
-        ...file,
-        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
-      }))
-      
-      return response.render("admin/recipes/edit", { recipe, chefsOptions, files, success, error })
+      return response.render("admin/recipes/edit", { recipe, chefsOptions, success, error })
     } 
     catch (err) {
       console.error(err)

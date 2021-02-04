@@ -1,33 +1,13 @@
 const Recipe = require("../models/Recipe")
 const Chef = require("../models/Chef")
 
+const LoadRecipeService = require("../services/LoadRecipeService")
+
 module.exports = {
   async index(request, response) {
     try {
-      let recipes = await Recipe.findAll()
-
-      async function getImage(recipeId) {
-        let files = await Recipe.files(recipeId)
-
-        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
-
-        return files[0]
-      }
-
-      async function getChef(recipeId) {
-        let chef = await Chef.findOne({ where: { id: recipeId } })
-
-        return chef.name
-      }
-
-      const recipesPromise = recipes.map( async recipe => {
-        recipe.image = await getImage(recipe.id)
-        recipe.chef_name = await getChef(recipe.chef_id)
-
-        return recipe
-      }).filter((recipe, index) => index > 5 ? false : true)
-
-      recipes = await Promise.all(recipesPromise)
+      const allRecipes = await LoadRecipeService.load("recipes")
+      const recipes = allRecipes.filter((recipe, index) => index > 5 ? false : true)
 
       return response.render("site/index", { recipes })
     } 
@@ -93,21 +73,11 @@ module.exports = {
 
   async show(request, response) {
     try {
-      const recipe = await Recipe.findOne({ where: { id: request.params.id } })
+      const recipe = await LoadRecipeService.load("recipe", { where: { id: request.params.id } })
 
-      if(!recipe) return response.status(404).render("site/not-found")
-
-      let chef = await Chef.findOne({ where: { id: recipe.chef_id } })
-
-      recipe.chef_name = chef.name
-
-      let files = await Recipe.files(recipe.id)
-      files = files.map( file => ({
-        ...file,
-        src: `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`
-      }))
+      if(!recipe) return response.status(404).render("admin/recipes/not-found")
       
-      return response.render("site/recipe", { recipe, files })
+      return response.render("site/recipe", { recipe })
     } 
     catch (err) {
       console.error(err)
