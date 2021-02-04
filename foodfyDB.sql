@@ -52,6 +52,7 @@ ALTER TABLE "chefs" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id");
 ALTER TABLE "recipe_files" ADD FOREIGN KEY ("file_id") REFERENCES "files" ("id");
 ALTER TABLE "recipe_files" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipes" ("id");
 ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "recipes" ADD FOREIGN KEY ("chef_id") REFERENCES "chefs" ("id");
 
 -- Create procedure
 CREATE FUNCTION trigger_set_timestamp()
@@ -87,10 +88,11 @@ ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFE
 
 -- to run seeds
 DELETE FROM recipe_files;
+DELETE FROM recipes;
 DELETE FROM chefs;
 DELETE FROM files;
-DELETE FROM recipes;
 DELETE FROM users;
+-- DELETE FROM session;
 
 -- restart sequence auto_increment from tables ids
 ALTER SEQUENCE users_id_seq RESTART WITH 1;

@@ -108,7 +108,7 @@ module.exports = {
 
   async delete(request, response) {
     try {
-      await User.delete(request.body.id)
+      await User.delete("id", request.body.id)
 
       request.session.success = "User deleted successfully!"
 

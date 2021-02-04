@@ -1,3 +1,5 @@
+const { unlinkSync } = require("fs")
+
 const Recipe = require("../models/Recipe")
 const File = require("../models/File")
 const Chef = require("../models/Chef")
@@ -33,7 +35,7 @@ module.exports = {
 
       recipes = await Promise.all(recipesPromise)
 
-      return response.render('admin/recipes/index', { recipes, success, error })
+      return response.render("admin/recipes/index", { recipes, success, error })
     } 
     catch (err) {
       console.error(err)
@@ -44,7 +46,7 @@ module.exports = {
     try {
       const chefsOptions = await Chef.findAll()
 
-      return response.render('admin/recipes/create', { chefsOptions })
+      return response.render("admin/recipes/create", { chefsOptions })
     } 
     catch (err) {
       console.error(err)
@@ -158,16 +160,33 @@ module.exports = {
 
   async delete(request, response) {
     try {
-      await Recipe.delete(request.body.id)
+      const { id: recipe_id } = request.body
+
+      const files = await Recipe.files(recipe_id)
+
+      await Recipe.delete("id", recipe_id)
+
+      files.map( async file => {
+        try {
+          unlinkSync(file.path)
+
+          File.init({ table: "files" })
+          
+          await File.delete("id", file.file_id)
+        }
+        catch (err) {
+          console.error(err)
+        }
+      })
 
       request.session.success = "Recipe deleted successfully!"
 
-      return response.status(200).redirect("/admin/recipes")
+      return response.status(200).redirect("/admin/recipes/")
     } 
     catch(err) {
       console.error(err)
       request.session.error = "Something went wrong!"
-      return response.redirect(`/admin/recipes/${id}`)
+      return response.redirect(`/admin/recipes/${request.body.id}/edit`)
     }
   }
 }

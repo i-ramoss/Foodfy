@@ -172,30 +172,38 @@ module.exports = {
 
   async delete(request, response) {
     try {
-      const id = request.body.id
+      const { id: chef_id } = request.body
 
-      let result = await Chef.find(id)
+      const recipesOfChef = await Recipe.findAll({ where: { chef_id } })
+      const recipeFilesPromise = recipesOfChef.map( recipe => Recipe.files(recipe.id))
+      const recipeFiles = await Promise.all(recipeFilesPromise)
 
-      result = await Chef.findRecipesByChef(id)
-      const recipes = result.rows
+      const chefFile = await Chef.files(chef_id)
 
-      if (recipes.length == 0) {
-        result = await Chef.delete(id)
+      await Chef.delete("id", chef_id)
 
-        request.session.success = "Chef deleted successfully!"
+      unlinkSync(chefFile[0].path)
 
-        response.status(200).redirect("/admin/chefs")
-      }
-      else {
-        request.session.error = "You can't delete this Chef because there is a recipe registered on him"
+      await File.delete("id", chefFile[0].file_id)
 
-        return response.status(401).redirect(`/admin/chefs/${id}/edit`)
-      }
+      const removeRecipesFilesPromise = recipeFiles.map( files => {
+        files.map( file => {
+          unlinkSync(file.path)
+
+          File.delete("id", file.file_id)
+        })
+      })
+
+      await Promise.all(removeRecipesFilesPromise)
+
+      request.session.success = "Chef deleted successfully!"
+
+      return response.redirect("/admin/chefs")
     }
     catch (err) {
       console.error(err)
       request.session.error = "Something went wrong!"
-      return response.redirect(`/admin/chefs/${id}/edit`)
+      return response.redirect("/admin/chefs/")
     }
   }
 }

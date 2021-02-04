@@ -1,7 +1,5 @@
 const db = require('../../config/db');
 
-const fs = require("fs")
-
 const Base = require("./Base")
 
 Base.init({ table: "recipes" })
@@ -17,28 +15,6 @@ module.exports = {
       WHERE recipes.title ILIKE '%${filter}%'
       ORDER BY recipes.title ASC
     `)
-  },
-  
-  async delete(id) {
-    try{
-      const results = await db.query(`
-        SELECT * FROM files
-        INNER JOIN recipe_files ON (files.id = recipe_files.file_id)
-        WHERE recipe_files.recipe_id = $1`, [id]
-      )
-      
-      const removedFiles = results.rows.map( async file => {
-        fs.unlinkSync(file.path)
-  
-        await db.query(`DELETE FROM recipe_files WHERE recipe_files.file_id = $1`, [file.file_id])
-        await db.query(`DELETE FROM files WHERE id = $1`, [file.file_id])
-      })
-  
-      return db.query(`DELETE FROM recipes WHERE id = $1`, [id])
-    }
-    catch(err){
-      console.error(err)
-    }
   },
 
   paginate(params) {
@@ -78,14 +54,15 @@ module.exports = {
   async files(id) {
     try {
       const query = `
-        SELECT files.* FROM files
-        LEFT JOIN recipe_files ON (files.id = recipe_files.file_id)
+        SELECT * FROM files
+        LEFT JOIN recipe_files ON (recipe_files.file_id = files.id)
         WHERE recipe_files.recipe_id = ${id}
       `
       
       const results = await db.query(query)
       return results.rows
-    } catch (err) {
+    } 
+    catch (err) {
       console.error(err)
     }
   },
