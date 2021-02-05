@@ -9,13 +9,13 @@
   <div class="content recipe">
 
     <div class="image__container">
-      {% if not files[0] %}
+      {% if not recipe.files[0] %}
         <img src="http://placehold.it/940x280?text=RECIPE WITHOUT IMAGE">
       
         {% else %}
           <img 
-            src="{{files[0].src}}" 
-            alt="Image of {{ files[0].name }}"
+            src="{{recipe.files[0].src}}" 
+            alt="Image of {{ recipe.files[0].name }}"
           >
       {% endif %}
       <h3>{{recipe.title}}</h3>

@@ -11,7 +11,7 @@ module.exports = {
     try {
       const query = `
         SELECT * FROM files
-        LEFT JOIN chefs ON (files.id = chefs.file_id)
+        LEFT JOIN chefs ON (chefs.file_id = files.id)
         WHERE chefs.id = ${id}
       `
       

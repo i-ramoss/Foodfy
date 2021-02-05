@@ -76,8 +76,6 @@ module.exports = {
 
       const recipe = await LoadRecipeService.load("recipe", { where: { id: request.params.id } })
 
-      if(!recipe) return response.status(404).render("admin/recipes/not-found")
-
       return response.render("admin/recipes/show", { recipe, success, error })
     } 
     catch (err) {
@@ -91,8 +89,6 @@ module.exports = {
       request.session.success = "", request.session.error = ""
 
       const recipe = await LoadRecipeService.load("recipe", { where: { id: request.params.id } })
-
-      if(!recipe) return response.status(404).render("admin/recipes/not-found")
 
       const chefsOptions = await Chef.findAll()
 

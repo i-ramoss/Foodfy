@@ -1,6 +1,3 @@
-const Chef = require("../models/Chef")
-const File = require("../models/File")
-
 async function create(request, response, next) {
   const keys = Object.keys(request.body)
 

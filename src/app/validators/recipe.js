@@ -10,6 +10,8 @@ async function permission(request, response, next) {
   
   const recipe = await Recipe.findOne({ where: { id } })
 
+  if(!recipe) return response.status(404).render("admin/recipes/not-found")
+
   if (recipe.user_id != userId && !isAdmin) {
     request.session.error = "Sorry, you don't have permission to access this recipe."
     return response.redirect("/admin/recipes")

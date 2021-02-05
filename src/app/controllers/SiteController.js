@@ -1,6 +1,7 @@
 const Recipe = require("../models/Recipe")
 const Chef = require("../models/Chef")
 
+const LoadChefService = require("../services/LoadChefService")
 const LoadRecipeService = require("../services/LoadRecipeService")
 
 module.exports = {
@@ -86,26 +87,7 @@ module.exports = {
 
   async chefs(request, response) {
     try {
-      let chefs = await Chef.findAll()
-
-      async function getImage(chefId) {
-        let files =  await Chef.files(chefId)
-        
-        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace('public', '')}`)
-
-        return files[0]
-      }
-
-      const chefsPromise = chefs.map( async chef => {
-        const totalChefRecipe = await Recipe.findAll({ where: { chef_id: chef.id } })
-
-        chef.avatar = await getImage(chef.id)
-        chef.total_recipes = totalChefRecipe.length
-
-        return chef
-      })
-
-      chefs = await Promise.all(chefsPromise)
+      const chefs = await LoadChefService.load("chefs")
 
       return response.render("site/chefs", { chefs })
     } 

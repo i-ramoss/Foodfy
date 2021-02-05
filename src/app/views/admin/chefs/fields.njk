@@ -22,9 +22,9 @@
       </div>
 
       <div id="images-preview">
-        {% if files %}
-          <div id="{{files[0].id}}" class="image">
-            <img src="{{files[0].src}}" alt="{{files[0].name}}">
+        {% if chef.files %}
+          <div id="{{chef.files[0].id}}" class="image">
+            <img src="{{chef.files[0].src}}" alt="{{chef.files[0].name}}">
             <i 
               class="material-icons"
               onclick="ImagesUpload.removeOldImage(event)"
