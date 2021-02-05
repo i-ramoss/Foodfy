@@ -118,7 +118,7 @@ module.exports = {
     catch (err) {
       console.error(err)
       request.session.error = "Something went wrong!"
-      return response.redirect(`/admin/recipes/${recipeId}/edit`)
+      return response.redirect(`/admin/recipes/${request.body.id}/edit`)
     }
   },
 

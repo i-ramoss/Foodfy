@@ -70,15 +70,20 @@ async function createFiles() {
 async function createRecipes() {
   console.time("Creating Recipes")
 
-  let recipes = []
+  let recipes = [], ingredients = [], preparation = []
+
+  for (let i = 0; i < 5; i++) {
+      ingredients.push(faker.lorem.words(Math.ceil(Math.random() * 10)));
+      preparation.push(faker.lorem.words(Math.ceil(Math.random() * 7)));
+  }
 
   while (recipes.length < totalRecipes) {
     recipes.push({
       chef_id: chefsIds[Math.floor(Math.random() * totalChefs)],
       user_id: usersIds[Math.floor(Math.random() * totalUsers)],
-      title: faker.name.title(),
-      ingredients: `{${faker.lorem.paragraph(Math.ceil(Math.random() * 5))}}`,
-      preparation: `{${faker.lorem.paragraph(Math.ceil(Math.random() * 5))}}`,
+      title: faker.commerce.productName(),
+      ingredients,
+      preparation,
       information: faker.lorem.paragraph(Math.ceil(Math.random() * 10))
     })
   }
