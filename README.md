@@ -38,6 +38,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [JavaScript][js]
 - [Nunjucks][njk]
 - [SweetAlert2][swal2]
+- [Lottie][lottie]
 
 ### Backend:
 - [Node.js][nodejs]
@@ -45,6 +46,9 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [PostgreSQL][postgresql]
 - [PG][pg]
 - [Multer][multer]
+- [Nodemailer][nodemailer]
+- [BcryptJs][bcryptjs]
+- [Faker][faker]
 
 
 ## :construction_worker: Como usar: (Em desenvolvimento)
@@ -154,6 +158,10 @@ Feito com :green_heart: por **Ian Ramos** :fire: [Entre em contato!][linkedin]
 [postbird]: https://www.electronjs.org/apps/postbird
 [multer]: https://github.com/expressjs/multer
 [swal2]: https://sweetalert2.github.io/
+[lottie]: https://github.com/airbnb/lottie-web
+[nodemailer]: https://nodemailer.com/about/
+[bcryptjs]: https://www.npmjs.com/package/bcrypt
+[faker]: https://github.com/marak/Faker.js/
 [git]: https://git-scm.com
 [license]: https://github.com/i-ramoss/Foodfy/blob/master/LICENSE
 [linkedin]: https://www.linkedin.com/in/ian-ramos/
