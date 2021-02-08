@@ -93,6 +93,24 @@ const Base = {
 
   delete(field, id) {
     return db.query(`DELETE FROM ${this.table} WHERE ${field} = ${id}`)
+  },
+
+  async pagination2(params) {
+    try {
+      let { limit, offset } = params
+
+      let query = `
+        SELECT ${this.table}.*, (SELECT count(*) FROM ${this.table}) AS total
+        FROM ${this.table}
+        LIMIT ${limit} OFFSET ${offset}
+      `
+
+      const results = await db.query(query)
+      return results.rows
+    } 
+    catch (err) {
+      console.error(err)  
+    }
   }
 }
 

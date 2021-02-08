@@ -35,8 +35,7 @@ module.exports = {
         offset
       }
 
-      let results = await Recipe.paginate(params)
-      let recipes = results.rows
+      let recipes = await Recipe.paginate(params)
 
       if (recipes == "") {
         const pagination = { page }
@@ -111,9 +110,8 @@ module.exports = {
         offset
       }
 
-      let results = await Recipe.paginate(params)
-      let recipes = results.rows
-
+      let recipes = await Recipe.paginate(params)
+      
       if (recipes == "") {
         const pagination = { page }
 

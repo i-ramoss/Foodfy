@@ -17,34 +17,39 @@ module.exports = {
     `)
   },
 
-  paginate(params) {
+  async paginate(params) {
     try {
       const { filter, limit, offset } = params
 
-      let query = "",
-          filterQuery = ""
+      let query = "", filterQuery = "",
           totalQuery = `(
             SELECT count(*) from recipes
           ) AS total`
+
+      let order = "ORDER BY recipes.created_at DESC"
       
       if (filter) {
         filterQuery = `WHERE recipes.title ILIKE '%${filter}%'`
+
         totalQuery = `(
           SELECT count(*) FROM recipes
           ${filterQuery}
         ) AS total`
+        
+        order = "ORDER BY recipes.updated_at DESC"
       }
 
       query = `
-      SELECT recipes.*, ${totalQuery}, chefs.name AS chef_name
-      FROM recipes
-      LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-      ${filterQuery}
-      ORDER BY updated_at DESC
-      LIMIT $1 OFFSET $2
+        SELECT recipes.*, ${totalQuery}, chefs.name AS chef_name
+        FROM recipes
+        LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
+        ${filterQuery}
+        ${order}
+        LIMIT ${limit} OFFSET ${offset}
       `
 
-      return db.query(query, [limit, offset])
+      const results = await db.query(query)
+      return results.rows
     } 
     catch (err) {
       console.error(err)
