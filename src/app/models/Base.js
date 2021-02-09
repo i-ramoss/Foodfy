@@ -95,7 +95,7 @@ const Base = {
     return db.query(`DELETE FROM ${this.table} WHERE ${field} = ${id}`)
   },
 
-  async pagination2(params) {
+  async paginate(params) {
     try {
       let { limit, offset } = params
 

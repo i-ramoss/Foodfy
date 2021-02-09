@@ -1,10 +1,11 @@
 {% macro recipes(name, filter, recipes) %}
 
+{% if name %}
   <div class="topic">
-    {% if name %}
       <h2>{{name}} {% if filter %} "{{filter}}" {% endif %}</h2>
-    {% endif %}
   </div>
+{% endif %}
+
 
   <div class="cards">
     {% for recipe in recipes %}

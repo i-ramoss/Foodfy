@@ -22,53 +22,30 @@ module.exports = {
   },
 
   async all(request, response) {
-    try {
-      let { page, limit } = request.query
+    let { page, limit } = request.query
 
-      page = page || 1
-      limit = limit || 3
-      let offset = limit * (page-1)
+    page = page || 1
+    limit = limit || 9
 
-      const params = {
-        page,
-        limit,
-        offset
-      }
+    let offset = limit * (page -1)
 
-      let recipes = await Recipe.paginate(params)
+    let recipes = await Recipe.paginate({ page, limit, offset })
+    const recipesPromise = recipes.map(LoadRecipeService.format)
 
-      if (recipes == "") {
-        const pagination = { page }
+    recipes = await Promise.all(recipesPromise)
 
-        return response.render("site/recipes", { recipes, pagination })
-      }
+    if (recipes == "") {
+      const pagination = { page }
 
-      const pagination = {
-        total: Math.ceil(recipes[0].total / limit),
-        page
-      }
-
-      async function getImage(recipeId) {
-        let files = await Recipe.files(recipeId)
-
-        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
-
-        return files[0]
-      }
-
-      const recipesPromise = recipes.map( async recipe => {
-        recipe.image = await getImage(recipe.id)
-
-        return recipe
-      })
-
-      recipes = await Promise.all(recipesPromise)
-    
       return response.render("site/recipes", { recipes, pagination })
-    } 
-    catch (err) {
-      console.error(err)
     }
+
+    const pagination = {
+      total: Math.ceil(recipes[0].total / limit),
+      page
+    }
+
+    return response.render("site/recipes", { recipes, pagination })
   },
 
   async show(request, response) {
@@ -89,57 +66,6 @@ module.exports = {
       const chefs = await LoadChefService.load("chefs")
 
       return response.render("site/chefs", { chefs })
-    } 
-    catch (err) {
-      console.error(err)
-    }
-  },
-
-  async results(request, response) {
-    try {
-      let { filter, page, limit } = request.query
-
-      page = page || 1
-      limit = limit || 2
-      let offset = limit * (page-1)
-
-      const params = {
-        filter,
-        page,
-        limit,
-        offset
-      }
-
-      let recipes = await Recipe.paginate(params)
-      
-      if (recipes == "") {
-        const pagination = { page }
-
-        return response.render("site/results", { recipes, pagination })
-      }
-
-      const pagination = {
-        total: Math.ceil(recipes[0].total / limit),
-        page
-      }
-
-      async function getImage(recipeId) {
-        let files = await Recipe.files(recipeId)
-
-        files = files.map( file => `${request.protocol}://${request.headers.host}${file.path.replace("public", "")}`)
-
-        return files[0]
-      }
-
-      const recipesPromise = recipes.map( async recipe => {
-        recipe.image = await getImage(recipe.id)
-
-        return recipe
-      })
-
-      recipes = await Promise.all(recipesPromise)
-
-      return response.render("site/results", { recipes, pagination, filter})
     } 
     catch (err) {
       console.error(err)
