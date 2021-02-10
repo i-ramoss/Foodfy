@@ -23,6 +23,8 @@ body {
 
   background-color: white;
   color: var(--body-color);
+
+  position: relative;
 }
 
 /* Buttons */

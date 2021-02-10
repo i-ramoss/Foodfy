@@ -1,12 +1,13 @@
 {% extends "site/layout.njk" %}
 {% import "site/parts/section-recipes.njk" as section %}
+{% import "site/parts/search.njk" as field %}
 
 {% block head %}
   <title>Foodfy</title>
 {% endblock %}
  
 {% block search %}
-  {% include "./parts/search.njk" %}
+  {{ field.searchField("results", search.term)}}
 {% endblock %}
 
 {% block content %}

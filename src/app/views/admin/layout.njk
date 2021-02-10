@@ -18,8 +18,10 @@
     {% include "./parts/messages.njk" %}
 
     {% include "./parts/header.njk" %}
-    
-    {% block content%}{% endblock %}
+
+    {% block search %}{% endblock %}
+
+    {% block content %}{% endblock %}
 
     <script src="/scripts/admin/admin.js"></script>
   </body>

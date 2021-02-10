@@ -1,0 +1,33 @@
+form.search-field {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  align-items: center;
+
+  position: absolute;
+  right: 0;
+}
+
+form.search-field input {
+  width: 245px;
+  border: 1px solid #dddddd;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  padding: 6px 8px;
+  font-size: 14px;
+  color: var(--p-secondary-color);
+  outline: none;
+}
+
+form.search-field button {
+  padding: 6px 20px;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  color: rgb(66, 58, 58);
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+}

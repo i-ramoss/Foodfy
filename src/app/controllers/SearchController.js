@@ -24,7 +24,23 @@ module.exports = {
     return response.render("site/results", { recipes, search })
   },
 
-  async adminRecipes(request, response) {},
+  async adminRecipes(request, response) {
+    let { filter } = request.query
+
+    if (!filter || filter.toLowerCase() == "all recipes") filter = null
+
+    let recipes = await Recipe.search({ filter })
+
+    const recipesPromise = await recipes.map(LoadRecipeService.format)
+
+    recipes = await Promise.all(recipesPromise)
+
+    const search = {
+      term: filter || "All Recipes"
+    }
+
+    return response.render("admin/recipes/results", { recipes, search })
+  },
 
   async adminChefs(request, response) {},
 
