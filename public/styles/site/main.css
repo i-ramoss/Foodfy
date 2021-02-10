@@ -72,7 +72,6 @@ body {
 /* Footer */
 
 footer {
-  margin-top: auto;
   padding: 23px 0;
   width: 100%;
   background-color: #EEEEEE;
@@ -89,6 +88,8 @@ footer p {
 .pagination {
   display: flex;
   justify-content: center;
+
+  margin: auto 0 10px 0;
 }
 
 .pagination a,

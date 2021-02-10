@@ -22,32 +22,31 @@
       <p>by {{recipe.chef_name}}</p>
     </div>
 
-    <div class="ingredients__container recipe">
+    <div class="ingredients__container recipe toggle-content">
       <div class="section">
         <h3>Ingredients</h3>
         <a class="hide">HIDE</a>
       </div>
       <ul class="data">
-      {% for ingredient in recipe.ingredients %}
-        <li>{{ingredient}};</li>
-      {% endfor %}
+        {% for ingredient in recipe.ingredients %}
+          <li>{{ingredient}};</li>
+        {% endfor %}
       </ul>
     </div>
 
-    <div class="preparation__container recipe">
+    <div class="preparation__container recipe toggle-content">
       <div class="section">
         <h3>Preparation mode:</h3>
         <a class="hide">HIDE</a>
       </div>
       <ul class="data">
         {% for step in recipe.preparation %}
-        <li>{{step}}</li>
-      {% endfor %}
+          <li>{{step}}</li>
+        {% endfor %}
       </ul>
-      
     </div>
 
-    <div class="additional_info__container recipe">
+    <div class="additional_info__container recipe toggle-content">
       <div class="section">
         <h3>Additional Information:</h3>
         <a class="hide">HIDE</a>

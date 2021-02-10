@@ -24,6 +24,7 @@
   color: var(--body-color);
   margin: 20px auto 5px;
 }
+
 .card p {
   font-size: 14px;
   color:var(--p-color);

@@ -10,11 +10,11 @@ for (let recipe of cards) {
 }
 
 // Hide recipe content
-const recipes = document.querySelectorAll('.recipe')
+const infos = document.querySelectorAll('.toggle-content')
 
-for (let recipe of recipes) {
-  const hide = recipe.querySelector('.hide')
-  const data = recipe.querySelector('.data')
+for (let info of infos) {
+  const hide = info.querySelector('.hide')
+  const data = info.querySelector('.data')
 
   hide.addEventListener('click', () => {
     if (hide.innerHTML == 'HIDE')
