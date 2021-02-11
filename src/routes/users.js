@@ -8,6 +8,7 @@ const { onlyUsers, userIsLogged, userIsAdmin } = require("../app/middlewares/ses
 const SessionController = require("../app/controllers/SessionController")
 const ProfileController = require("../app/controllers/ProfileController")
 const UserController = require("../app/controllers/UserController")
+const SearchController = require("../app/controllers/SearchController")
 
 const routes = express.Router()
 
@@ -25,6 +26,9 @@ const routes = express.Router()
 // Profile
 .get("/profile", onlyUsers, UserValidator.profile, ProfileController.index)
 .put("/profile", onlyUsers, UserValidator.profileUpdate, ProfileController.update)
+
+// Search
+.get("/users/search", onlyUsers, SearchController.users)
 
 // Admin
 .get("/users", onlyUsers, UserController.list)

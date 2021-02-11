@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block search %}
-  {{ field.searchField("admin/users/search", "")}}
+  {{ field.searchField("admin/users/search", search.term)}}
 {% endblock %}
 
 {% block content%}
 
   <div class="topic">
-    <h2>Users</h2>
+    <h2>Users {% if filter %} - Searching for: "{{ filter }}" {% endif %}</h2>
 
     {% if session.isAdmin %}
       <a href="/admin/users/register" class="button">New</a>

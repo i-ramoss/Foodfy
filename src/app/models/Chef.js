@@ -21,5 +21,26 @@ module.exports = {
     catch (err) {
       console.error(err)
     }
+  },
+
+  async search({ filter }) {
+    try {
+      let query = "", filterQuery = ""
+
+      if (filter) filterQuery = `AND chefs.name ILIKE '%${filter}%'`
+
+      query = `
+        SELECT * FROM chefs
+        WHERE 1 = 1
+        ${filterQuery}
+        ORDER BY chefs.name ASC
+      `
+      
+      const results = await db.query(query)
+      return results.rows
+    } 
+    catch (err) {
+      console.error(err)  
+    }
   }
 }

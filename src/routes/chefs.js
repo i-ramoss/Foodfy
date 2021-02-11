@@ -6,8 +6,11 @@ const { chefPermission } = require("../app/middlewares/user")
 const ChefValidator = require("../app/validators/chef")
 
 const ChefController = require("../app/controllers/ChefController");
+const SearchController = require("../app/controllers/SearchController");
 
 const routes = express.Router()
+
+.get("/search", SearchController.adminChefs)
 
 .get("/", ChefController.index)
 .get("/create", chefPermission, ChefController.create)

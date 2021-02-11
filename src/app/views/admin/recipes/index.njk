@@ -6,13 +6,13 @@
 {% endblock %}
 
 {% block search %}
-  {{ field.searchField("admin/recipes/search", "")}}
+  {{ field.searchField("admin/recipes/search", search.term)}}
 {% endblock %}
 
 {% block content%}
 
   <div class="topic">
-    <h2>Manage Recipes</h2>
+    <h2>Manage Recipes {% if filter %} - Searching for: "{{ filter }}" {% endif %}</h2>
     <a href="/admin/recipes/create" class="button">New</a>
   </div>
 
