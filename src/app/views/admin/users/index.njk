@@ -1,7 +1,12 @@
 {% extends 'admin/layout.njk' %}
+{% import "admin/parts/search.njk" as field %}
 
 {% block head %}
   <title>Users - Admin</title>
+{% endblock %}
+
+{% block search %}
+  {{ field.searchField("admin/users/search", "")}}
 {% endblock %}
 
 {% block content%}

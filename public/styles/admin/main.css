@@ -85,7 +85,7 @@ button + button {
 
 /* Header */
 
-.container-header {
+.container-header { 
   background-color: var(--body-color);
   margin-bottom: 50px;
   width: 100%;
@@ -111,37 +111,38 @@ button + button {
   justify-content: start;
 }
 
+.menu a.active {
+  color: #FFFFFF;
+}
+
+.exit {
+  position: absolute;
+  right: 0;
+  top: 35px;
+}
 
 .menu a,
-.menu form button {
+.exit form button {
   color: #999999;
   font-size: 15px;
   margin-right: 30px;
   font-weight: 500;
 }
 
-.menu form button {
+.exit form button {
   background-color: var(--body-color);
-
-  margin-right: 0;
 
   outline: none;
 
   cursor: pointer;
-
-  position: absolute;
-  right: 0;
 }
 
-.menu form button:hover {
+.exit form button:hover {
   color: white;
   
   transition: color 400ms;
 }
 
-.menu a.active {
-  color: #FFFFFF;
-}
 
 /* Topics  */
 

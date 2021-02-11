@@ -1,13 +1,15 @@
 {% macro searchField (entity, target) %}
 
-  <form action="/{{ entity }}" method="get" class="search-field">
-    <input 
-      type="text" 
-      name="filter" 
-      value="{{ target }}" 
-      placeholder="Search for:"
-    >
-    <button type="submit">Search</button>
-  </form>
+  <div class="search-field">
+    <form action="/{{ entity }}" method="get">
+      <input 
+        type="text" 
+        name="filter" 
+        value="{{ filter }}" 
+        placeholder="Search for:"
+      >
+      <button type="submit">Search</button>
+    </form>
+  </div>
   
 {% endmacro %}
