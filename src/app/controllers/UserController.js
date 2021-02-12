@@ -4,6 +4,8 @@ const mailer = require("../lib/mailer")
 
 const User = require("../models/User")
 
+const { emailTemplate } = require("../lib/utils")
+
 module.exports = {
   async list(request, response) {
     try {
@@ -30,31 +32,39 @@ module.exports = {
       const firstPassword = crypto.randomBytes(20).toString("hex")
 
       const encryptedPassword = await hash(firstPassword, 8)
+
+      const welcomeEmail = `
+        <h2>Welcome to <strong>Foodfy</strong> Company! 🍕</h2>
+        <h3 style = "font-size: 24px; font-weight: normal;">Hi <strong>${name}!!</strong></h3>
+        <p>It will be a pleasure to work with you!</p>
+        <h3>Here are your <strong>access data:</strong></h3>
+        <p><strong>Login:</strong> ${email}</p>
+        <p><strong>Password:</strong> ${firstPassword}<p>
+        <br>
+        <p>
+          This is your temporary password and you can change it, if you want, on this
+          <a href="http://localhost:3000/admin/forgot-password" target="_blank" style="text-decoration: none; color: black;">
+            <strong>link</strong>
+          </a>
+        </p>
+        <br>
+        <h3>To access your account:</h3>
+        <p>Just click the button below and you will be redirected to the Foodfy login page</p>
+        <p style="text-align: center">
+          <a style="display: block; margin: 32px auto; padding: 16px; width: 150px; color: black; background-color: #FBDFDB; text-decoration: none; border-radius: 4px;" target="_blank" href="http:localhost:5000/admin/login"
+          >
+          <strong>Welcome</strong>
+          </a>
+        </p>
+        <br>
+        <p style="padding-top: 16px; border-top: 2px solid #ccc">Sincelery, <strong>The Foodfy Team</strong> 🧁🥨</p>
+      `
       
       await mailer.sendMail({
         to: email,
         from: "no-reply@foodfy.com.br",
         subject: `Welcome ${name}!`,
-        html: `
-          <h2>Welcome to Foodfy Company!</h2>
-          <p>
-            Don't worry! Click the link below to recover your password.
-          </p>
-          <p>
-            You have just received your provisional password to access the Foodfy admin panel.
-          </p>
-          <p>
-            This password can be changed in the future if you wish, by going to the password recovery session.
-          </p>
-          <h2>
-            Your password: 
-            ${firstPassword}
-          </h2>
-            <a href="http://localhost:3000/admin/login" target="_blank">
-              Foodfy
-            </a>
-          </h2>
-        `
+        html: emailTemplate(welcomeEmail)
       })
 
       await User.create({

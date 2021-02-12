@@ -25,9 +25,12 @@ module.exports = {
 
   async create(request, response) {
     try {
+      let { success, error } = request.session
+      request.session.success = "", request.session.error = ""
+
       const chefsOptions = await Chef.findAll()
 
-      return response.render("admin/recipes/create", { chefsOptions })
+      return response.render("admin/recipes/create", { chefsOptions, success, error })
     } 
     catch (err) {
       console.error(err)

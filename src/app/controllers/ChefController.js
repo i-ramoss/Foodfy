@@ -25,7 +25,10 @@ module.exports = {
   },
 
   create(request, response) {
-    return response.render("admin/chefs/create")
+    let { success, error } = request.session
+    request.session.success = "", request.session.error = ""
+
+    return response.render("admin/chefs/create", { success, error })
   }, 
 
   async post(request, response) {

@@ -4,9 +4,16 @@ const { hash } = require("bcryptjs")
 
 const User = require("../models/User")
 
+const { emailTemplate } = require("../lib/utils")
+
 module.exports = {
   loginForm(request, response) {
-    return response.render("admin/session/login")
+    let { success, error } = request.session
+    request.session.success = "", request.session.error = ""
+
+    const { user } = request
+
+    return response.render("admin/session/login", { user, success, error })
   },
 
   login(request, response) {
@@ -25,7 +32,10 @@ module.exports = {
   },
 
   forgotForm(request, response) {
-    return response.render("admin/session/forgot-password")
+    let { success, error } = request.session
+    request.session.success = "", request.session.error = ""
+
+    return response.render("admin/session/forgot-password", { success, error })
   },
 
   async forgot(request, response) {
@@ -40,45 +50,57 @@ module.exports = {
         reset_token: token,
         reset_token_expires: now
       })
+
+      const resetPasswordEmail = `
+        <h2 style="font-size: 24px;">Did you lose your password? 🔑</h2>
+        <br>
+        <h3>Looks like our amazing cheese recipes messed with your head, huh? 🤣🧀</h3>
+        <p>
+          Jokes aside, let's solve this! 
+          <br><br>
+          Click the button below to <strong>reset your password:<strong>
+        </p>
+        <p style="text-align: center;">
+          <a
+            style="display: block; margin: 32px auto; padding: 30px; width: 150px; color: black; background-color: #FBDFDB; text-decoration: none; border-radius: 4px;" target="_blank" href="http:localhost:5000/admin/reset-password?token=${token}"
+          >
+          <strong>Recover Password</strong>
+          </a>
+        </p>
+        <p style ="padding-top: 20px; border-top: 2px solid #ccc">Sincelery, <strong>The Foodfy Team</strong> 🧁🥨</p>
+      `
   
       await mailer.sendMail({
         to: user.email,
         from: "no-reply@foodfy-recipes.com.br",
         subject: "Password Recovery",
-        html: `
-          <h2>Lost the access key?</h2>
-          <p>Don't worry! Click the link below to recover your password.</p>
-          <p>
-            <a href="http://localhost:3000/admin/reset-password?token=${token}" target="_blank">
-              RECOVER PASSWORD
-            </a>
-          </p>
-        `
+        html: emailTemplate(resetPasswordEmail)
       })
 
-      return response.render("admin/session/forgot-password", {
-        success: "Check your email to reset your password!"
-      })
+      request.session.success = "Check your email to reset your password!"
+
+      return response.redirect("/admin/forgot-password")
     } 
     catch (err) {
       console.error(err) 
-
-      return response.render("admin/session/forgot-password", {
-        error: "Unexpected error, try again!"
-      }) 
+      request.session.error = "Unexpected error, try again!"
+      return response.redirect("/admin/forgot-password") 
     }
   },
 
   resetForm(request, response) {
-    return response.render("admin/session/reset-password", { 
-      token: request.query.token
-    })
+    let { success, error } = request.session
+    request.session.success = "", request.session.error = ""
+
+    const { token } = request.query
+
+    return response.render("admin/session/reset-password", { token, success, error })
   },
 
   async reset(request, response) {
     try {
       let { user } = request
-      let { password, token } = request.body
+      let { password } = request.body
 
       const newPassword = await hash(password, 8)
 

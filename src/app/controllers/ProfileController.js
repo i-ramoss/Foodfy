@@ -5,6 +5,8 @@ module.exports = {
     const { user, session: { success, error } } = request
     request.session.success = "", request.session.error = ""
 
+    user.firstName = user.name.split(" ")[0]
+
     return response.render("admin/users/profile", { user, success, error })
   },
 
