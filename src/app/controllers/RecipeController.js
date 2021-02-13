@@ -14,9 +14,30 @@ module.exports = {
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
-      const recipes = await LoadRecipeService.load("recipes")
+      let { page, limit } = request.query
 
-      return response.render("admin/recipes/index", { recipes, success, error })
+      page = page || 1
+      limit = limit || 12
+
+      let offset = limit * (page - 1)
+
+      let recipes = await Recipe.paginate({ page, limit, offset })
+      const recipesPromise = recipes.map(LoadRecipeService.format)
+
+      recipes = await Promise.all(recipesPromise)
+
+      if (recipes == "") {
+        const pagination = { page }
+
+        return response.render("admin/recipes/index", { recipes, pagination })
+      }
+
+      const pagination = {
+        total: Math.ceil(recipes[0].total / limit),
+        page
+      }
+
+      return response.render("admin/recipes/index", { recipes, pagination, success, error })
     } 
     catch (err) {
       console.error(err)

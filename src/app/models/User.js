@@ -7,7 +7,7 @@ Base.init({ table: "users" })
 module.exports = {
   ...Base,
 
-  async search({ filter }) {
+  async search({ filter, limit, offset }) {
     try {
       let query = "", filterQuery = ""
 
@@ -18,10 +18,12 @@ module.exports = {
       }
       
       query = `
-        SELECT * from users
+        SELECT users.*, (SELECT count(*) FROM users) AS total
+        FROM users
         WHERE 1 = 1
         ${filterQuery}
         ORDER BY users.name ASC
+        LIMIT ${limit} OFFSET ${offset}
       `
 
       const results = await db.query(query)

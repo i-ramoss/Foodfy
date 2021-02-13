@@ -177,3 +177,25 @@ button + button {
 
   max-width: 100%;
 }
+
+/* Pagination */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  margin: auto 0 30px 0;
+}
+
+.pagination a,
+.pagination span {
+  color: var(--body-color);
+  font-weight: bold;
+  margin-right: 14px;
+}
+
+.pagination a:hover {
+  color: var(--button-color);
+  transition: 500ms;
+  border-bottom: 1px solid var(--button-color);
+}

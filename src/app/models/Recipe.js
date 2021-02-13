@@ -17,7 +17,7 @@ module.exports = {
     `)
   },
 
-  async search({ filter }) {
+  async search({ filter, limit, offset }) {
     try { 
       let order = "ORDER BY recipes.created_at DESC"
 
@@ -30,10 +30,12 @@ module.exports = {
       }
 
       query = `
-        SELECT * FROM recipes
+        SELECT recipes.*, (SELECT count(*) FROM recipes) AS total 
+        FROM recipes
         WHERE 1 = 1
         ${filterQuery}
         ${order}
+        LIMIT ${limit} OFFSET ${offset}
       `
 
       const results = await db.query(query)

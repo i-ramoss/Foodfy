@@ -15,9 +15,30 @@ module.exports = {
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
-      const chefs = await LoadChefService.load("chefs")
+      let { page, limit } = request.query
+
+      page = page || 1
+      limit = limit || 16
+
+      let offset = limit * (page - 1)
+
+      let chefs = await Chef.paginate({ page, limit, offset })
+      const chefsPromise = await chefs.map(LoadChefService.format)
+
+      chefs = await Promise.all(chefsPromise)
+
+      if (chefs == "") {
+        const pagination = { page } 
+
+        return response.render("admih/chefs/index", { chefs, pagination })
+      }
+
+      const pagination = {
+        total: Math.ceil(chefs[0].total / limit),
+        page
+      }
       
-      return response.render("admin/chefs/index", { chefs, success, error })
+      return response.render("admin/chefs/index", { chefs, pagination, success, error })
     }
     catch (err) {
       console.error(err)

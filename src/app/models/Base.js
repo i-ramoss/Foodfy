@@ -95,10 +95,8 @@ const Base = {
     return db.query(`DELETE FROM ${this.table} WHERE ${field} = ${id}`)
   },
 
-  async paginate(params) {
+  async paginate({ limit, offset }) {
     try {
-      let { limit, offset } = params
-
       let query = `
         SELECT ${this.table}.*, (SELECT count(*) FROM ${this.table}) AS total
         FROM ${this.table}

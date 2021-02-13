@@ -12,9 +12,27 @@ module.exports = {
       let { success, error } = request.session
       request.session.success = "", request.session.error = ""
 
-      let users = await User.findAll()
+      let { page, limit } = request.query
 
-      return response.render("admin/users/index", { users, success, error })
+      page = page || 1
+      limit = limit || 9
+
+      let offset = limit * (page - 1)
+
+      let users = await User.paginate({ page, limit, offset })
+
+      if (users == "") {
+        const pagination = { page }
+
+        return response.render("admin/users/index", { users, pagination })
+      }
+
+      const pagination = {
+        total: Math.ceil(users[0].total / limit),
+        page
+      }
+
+      return response.render("admin/users/index", { users, pagination, success, error })
     } 
     catch (err) {
       console.error(err)

@@ -23,6 +23,8 @@
 
     {% block content %}{% endblock %}
 
-    <script src="/scripts/admin/admin.js"></script>
+    {% include "./parts/pagination.njk" %}
+
+    {% include "./parts/scripts.njk" %}
   </body>
 </html>

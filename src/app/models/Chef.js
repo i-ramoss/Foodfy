@@ -23,17 +23,19 @@ module.exports = {
     }
   },
 
-  async search({ filter }) {
+  async search({ filter, limit, offset }) {
     try {
       let query = "", filterQuery = ""
 
       if (filter) filterQuery = `AND chefs.name ILIKE '%${filter}%'`
 
       query = `
-        SELECT * FROM chefs
+        SELECT chefs.*, (SELECT count(*) FROM chefs) AS total
+        FROM chefs
         WHERE 1 = 1
         ${filterQuery}
         ORDER BY chefs.name ASC
+        LIMIT ${limit} OFFSET ${offset}
       `
       
       const results = await db.query(query)
