@@ -79,20 +79,13 @@ const confirmDelete = () => {
 */
 
 
-// Delete own accont (admin)
-function adminDelete(form) {	
-  form.addEventListener("submit", (event) => {	
-    const confirmation = confirm("Do you really want to delete this?")	
+// Delete chef, user or recipe
+const formsDelete = document.querySelectorAll("#form-delete")
 
-    if (!confirmation) {	
-      event.preventDefault()	
-    }	
-  })	
-}	
+formsDelete.forEach( form => form.addEventListener("submit", e => {
+  confirm("Do you really want to delete this?") ? null : e.preventDefault()
+}))
 
-const formDelete = document.querySelector("#form-delete")	
-
-if(formDelete) adminDelete(formDelete) 
 
 
 // Image Upload

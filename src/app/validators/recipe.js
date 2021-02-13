@@ -80,6 +80,8 @@ async function update(request, response, next) {
 
     const removedFilesPromise = removedFiles.map( async id => {
       try {
+        File.init({ table: "files" })
+
         const file = await File.findOne({ where: { id } })
         
         unlinkSync(file.path)

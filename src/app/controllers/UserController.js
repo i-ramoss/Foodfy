@@ -1,9 +1,12 @@
 const crypto = require("crypto")
 const { hash } = require("bcryptjs")
-const mailer = require("../lib/mailer")
+const { unlinkSync } = require("fs")
 
 const User = require("../models/User")
+const File = require("../models/File")
+const Recipe = require("../models/Recipe")
 
+const mailer = require("../lib/mailer")
 const { emailTemplate } = require("../lib/utils")
 
 module.exports = {
@@ -136,14 +139,34 @@ module.exports = {
 
   async delete(request, response) {
     try {
-      await User.delete("id", request.body.id)
+      const { id: user_id } = request.body
+
+      const recipesOfUser = await Recipe.findAll({ where: { user_id } })
+      const recipesFilesPromise = recipesOfUser.map( recipe => Recipe.files(recipe.id))
+      const recipesFiles = await Promise.all(recipesFilesPromise)
+
+      await User.delete("id", user_id)
+
+      const removeRecipesFilesPromise = recipesFiles.map( files => {
+        files.map( file => {
+          unlinkSync(file.path)
+
+          File.init({ table: "files" })
+
+          File.delete("id", file.file_id)
+        })
+      })
+
+      await Promise.all(removeRecipesFilesPromise)
 
       request.session.success = "User deleted successfully!"
 
       return response.status(204).redirect("/admin/users")
     } 
     catch (err) {
-      console.error(err)  
+      console.error(err) 
+      request.session.error = "Something went wrong!"
+      return response.redirect("/admin/users") 
     }
   }
 }

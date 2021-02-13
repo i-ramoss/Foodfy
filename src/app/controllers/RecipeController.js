@@ -62,6 +62,8 @@ module.exports = {
     try {
       const { title, chef, ingredients, preparation, information } = request.body
 
+      File.init({ table: "files" })
+
       const filesPromise = request.files.map( file => File.create({ name: file.filename, path: file.path }))
 
       const filesIds = await Promise.all(filesPromise)

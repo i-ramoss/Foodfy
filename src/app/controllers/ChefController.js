@@ -30,7 +30,7 @@ module.exports = {
       if (chefs == "") {
         const pagination = { page } 
 
-        return response.render("admih/chefs/index", { chefs, pagination })
+        return response.render("admin/chefs/index", { chefs, pagination })
       }
 
       const pagination = {
@@ -56,8 +56,10 @@ module.exports = {
     try {
       const { files } = request
 
+      File.init({ table: "files" })
+
       const file_id = await File.create({ name: files[0].filename, path: files[0].path })
-    
+
       await Chef.create({
         name: request.body.name,
         file_id,
@@ -114,6 +116,8 @@ module.exports = {
       const { files }  = request
 
       if (request.files.length !== 0) {
+        File.init({ table: "files" })
+
         const file_id = await File.create({ name:  files[0].filename, path: files[0].path })
 
         await Chef.update(chef_id, { name, file_id })
@@ -161,6 +165,8 @@ module.exports = {
       await Chef.delete("id", chef_id)
 
       unlinkSync(chefFile[0].path)
+
+      File.init({ table: "files" })
 
       await File.delete("id", chefFile[0].file_id)
 
