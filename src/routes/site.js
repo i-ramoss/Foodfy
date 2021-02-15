@@ -10,6 +10,7 @@ const routes = express.Router()
 .get("/recipes", SiteController.all)
 .get("/recipes/:id", SiteController.show)
 .get("/chefs", SiteController.chefs)
+.get("/chefs/:id", SiteController.showChef)
 .get("/results", SearchController.siteRecipes)
 
 

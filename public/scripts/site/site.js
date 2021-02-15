@@ -9,6 +9,17 @@ for (let recipe of cards) {
   })
 }
 
+// Open each chef
+const chef_cards = document.querySelectorAll(".card-admin.chefs img")
+
+for (let chef of chef_cards) {
+  chef.addEventListener("click", () => {
+    let index = chef.getAttribute("id")
+
+    window.location.href = `/chefs/${index}`
+  })
+}
+
 // Hide recipe content
 const infos = document.querySelectorAll('.toggle-content')
 

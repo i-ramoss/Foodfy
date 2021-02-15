@@ -7,8 +7,8 @@
 {% block content%}
   <div class="cards chefs">
     {% for chef in chefs %}
-      <div class="card-admin">
-        <img src="{{chef.avatar}}" alt="Image of {{chef.name}}">
+      <div class="card-admin chefs">
+        <img src="{{chef.avatar}}" alt="Image of {{chef.name}}" id="{{ chef.id }}">
         <h3 class="name">{{chef.name}}</h3>
         <p>
           {% if chef.total_recipes == 1 %} {{chef.total_recipes}} recipe {% endif %}

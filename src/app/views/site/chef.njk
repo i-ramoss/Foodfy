@@ -1,0 +1,37 @@
+{% extends "site/layout.njk" %}
+
+{% block head %}
+  <title>{{ chef.name }} - Foodfy</title>
+{% endblock %}
+
+{% block content%}
+
+  <div class='content'>
+    <div class='image__container chef'>
+      <img src='{{chef.files[0].src}}' alt='Image of {{chef.name}}'>
+      <h3>{{chef.name}}</h3>
+      <p>
+        {% if chef.total_recipes == 1 %} {{chef.total_recipes}} recipe {% endif %}
+        {% if chef.total_recipes >= 0 and chef.total_recipes != 1 %} {{chef.total_recipes}} recipes {% endif %}
+      </p>
+    </div>
+
+    <div class='ingredients__container recipe'>
+      <div class='section'>
+        <h3>Recipes:</h3>
+      </div>
+      
+      <div class='cards recipes'>
+        {% for recipe in recipes %}
+            <div class='card-admin'>
+              <img src='{{recipe.image}}' alt='Image of {{recipe.title}}'>
+              <h3 class='name'>{{recipe.title}}</h3>
+              <p class='chef'>by {{recipe.chef_name or chef.name}}</p>
+              <a href="/recipes/{{recipe.id}}">Visualize</a>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

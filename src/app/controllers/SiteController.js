@@ -1,5 +1,4 @@
 const Recipe = require("../models/Recipe")
-const Chef = require("../models/Chef")
 
 const LoadChefService = require("../services/LoadChefService")
 const LoadRecipeService = require("../services/LoadRecipeService")
@@ -69,6 +68,20 @@ module.exports = {
     } 
     catch (err) {
       console.error(err)
+    }
+  },
+
+  async showChef(request, response) {
+    try {
+      const { id } = request.params
+
+      const chef = await LoadChefService.load("chef", { where: { id } })
+      let recipes = await LoadRecipeService.load("recipes", { where: { chef_id: id } })
+
+      return response.render("site/chef", { chef, recipes })
+    } 
+    catch (err) {
+      console.error(err)  
     }
   }
 }
