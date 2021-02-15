@@ -16,7 +16,7 @@ module.exports = {
 
     let offset = limit * (page - 1)
 
-    let recipes = await Recipe.search({ filter, limit, offset })
+    let recipes = await Recipe.search({ filter, limit, offset, userId: null, isAdmin: null })
     const recipesPromise = await recipes.map(LoadRecipeService.format)
 
     recipes = await Promise.all(recipesPromise)
@@ -41,6 +41,7 @@ module.exports = {
   },
 
   async adminRecipes(request, response) {
+    let { userId, isAdmin } = request.session
     let { filter, page, limit } = request.query
 
     if (!filter || filter.toLowerCase() == "all recipes") filter = null
@@ -50,7 +51,7 @@ module.exports = {
 
     let offset = limit * (page - 1)
 
-    let recipes = await Recipe.search({ filter, limit, offset })
+    let recipes = await Recipe.search({ filter, limit, offset, userId, isAdmin })
     const recipesPromise = await recipes.map(LoadRecipeService.format)
 
     recipes = await Promise.all(recipesPromise)

@@ -7,30 +7,27 @@ Base.init({ table: "recipes" })
 module.exports = {
   ...Base,
 
-  findBy(filter) {
-    return db.query(`
-      SELECT recipes.*, chefs.name AS chef_name 
-      FROM recipes
-      LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-      WHERE recipes.title ILIKE '%${filter}%'
-      ORDER BY recipes.title ASC
-    `)
-  },
-
-  async search({ filter, limit, offset }) {
+  async search({ filter, limit, offset, userId, isAdmin }) {
     try { 
-      let order = "ORDER BY recipes.created_at DESC"
+      let order = "ORDER BY created_at DESC"
+      
+      let query = "", filterQuery = "", userQuery = "", totalQuery = `(SELECT count(*) FROM recipes) AS total`
 
-      let query = "", filterQuery = ""
+      if (!isAdmin && isAdmin !== null) {
+        userQuery = `WHERE user_id = ${userId}`
+        filterQuery = `AND user_id = ${userId}`
+  
+        totalQuery = `(SELECT count(*) FROM recipes ${userQuery}) AS total`
+      }
 
       if (filter) {
-        filterQuery = `AND recipes.title ILIKE '%${filter}%'`
+        filterQuery += ` AND title ILIKE '%${filter}%'`
 
-        order = "ORDER BY recipes.updated_at DESC"
+        order = "ORDER BY updated_at DESC"
       }
 
       query = `
-        SELECT recipes.*, (SELECT count(*) FROM recipes) AS total 
+        SELECT recipes.*, ${totalQuery} 
         FROM recipes
         WHERE 1 = 1
         ${filterQuery}
@@ -62,20 +59,24 @@ module.exports = {
     }
   },
 
-  async userRecipes(userId) {
-    try {
-      const results = await db.query(`
-        SELECT recipes.*, chefs.name AS chef_name
-        FROM recipes
-        LEFT JOIN chefs ON (recipes.chef_id = chefs.id)
-        LEFT JOIN users ON (recipes.user_id = users.id)
-        WHERE users.id = $1`, [userId]
-      )
+  async userPaginate({ limit, offset, userId, isAdmin }) {
+    let query = "", filterQuery = "", totalQuery = `(SELECT count(*) FROM recipes) AS total`
 
-      return results.rows
-    } 
-    catch (err) {
-      console.error(err)  
+    if (!isAdmin) {
+      filterQuery = `WHERE user_id = ${userId}`
+
+      totalQuery = `(SELECT count(*) FROM recipes ${filterQuery}) AS total`
     }
+
+    query = `
+      SELECT recipes.*, ${totalQuery}
+      FROM recipes
+      ${filterQuery}
+      ORDER BY title ASC
+      LIMIT ${limit} OFFSET ${offset}
+    `
+
+    const results = await db.query(query)
+    return results.rows
   }
 }

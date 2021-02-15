@@ -11,7 +11,7 @@ const { date } = require("../lib/utils")
 module.exports = {
   async index(request, response) {
     try {
-      let { success, error } = request.session
+      let { success, error, userId, isAdmin } = request.session
       request.session.success = "", request.session.error = ""
 
       let { page, limit } = request.query
@@ -21,7 +21,7 @@ module.exports = {
 
       let offset = limit * (page - 1)
 
-      let recipes = await Recipe.paginate({ page, limit, offset })
+      let recipes = await Recipe.userPaginate({ limit, offset, userId, isAdmin })
       const recipesPromise = recipes.map(LoadRecipeService.format)
 
       recipes = await Promise.all(recipesPromise)
