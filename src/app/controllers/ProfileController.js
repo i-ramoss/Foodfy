@@ -20,14 +20,11 @@ module.exports = {
        email
      })
 
-     request.session.success = "User updated successfully!"
-
-     return response.status(200).redirect(`/admin/profile`)
+     return response.status(200).render("admin/animationsMessages/users/update", { name })
     } 
     catch (err) {
       console.error(err)
-      request.session.error = "Something went wrong!"
-      return response.redirect(`/admin/profile`) 
+      return response.render("admin/animationsMessages/error")
     }
   }
 }

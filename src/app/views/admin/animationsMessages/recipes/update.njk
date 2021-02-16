@@ -1,0 +1,25 @@
+{% extends "admin/layout.njk" %}
+
+{% block content %}
+  <div class="success message-lottie">
+    <div class="update-lottie"></div>
+    <h2>The recipe {{ title }} has been updated successfully!</h2>
+    <a class="button" href="/admin/recipes/{{ recipe_id }}">See recipe</a>
+  </div>
+  
+  <script src="/animations/lottie.min.js"></script>
+  <script>
+    const element = document.querySelector(".update-lottie")
+
+    lottie
+      .loadAnimation({
+        container: element,
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        path: "/animations/recipe/45730-recipes-book-animation.json"
+      })
+      .setSpeed(1.5)
+  </script>
+
+{% endblock %}

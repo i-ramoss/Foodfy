@@ -84,14 +84,11 @@ module.exports = {
 
       await Promise.all(recipeFilesPromise)
 
-      request.session.success = "Recipe successfully created!"
-
-      return response.status(201).redirect("/admin/recipes")
+      return response.status(201).render("admin/animationsMessages/recipes/success")
     } 
     catch (err) {
       console.error(err)
-      request.session.error = "Something went wrong!"
-      return response.redirect("/admin/recipes/create")
+      return response.render("admin/animationsMessages/error")
     }
   },
 
@@ -137,14 +134,11 @@ module.exports = {
         information
       })
 
-      request.session.success = "Recipe successfully updated!"
-  
-      return response.status(200).redirect(`/admin/recipes/${recipe_id}`)
+      return response.status(200).render("admin/animationsMessages/recipes/update", { title, recipe_id })
     } 
     catch (err) {
       console.error(err)
-      request.session.error = "Something went wrong!"
-      return response.redirect(`/admin/recipes/${request.body.id}/edit`)
+      return response.render("admin/animationsMessages/error")
     }
   },
 
@@ -169,14 +163,11 @@ module.exports = {
         }
       })
 
-      request.session.success = "Recipe deleted successfully!"
-
-      return response.status(200).redirect("/admin/recipes/")
+      return response.status(201).render("admin/animationsMessages/recipes/delete")
     } 
     catch(err) {
       console.error(err)
-      request.session.error = "Something went wrong!"
-      return response.redirect(`/admin/recipes/${request.body.id}/edit`)
+      return response.render("admin/animationsMessages/error")
     }
   }
 }

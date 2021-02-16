@@ -95,14 +95,11 @@ module.exports = {
         password: encryptedPassword
       })
 
-      request.session.success = "User successfully created!"
-
-      return response.status(200).redirect("/admin/users")
+      return response.status(201).render("admin/animationsMessages/users/success")
     } 
     catch (err) {
       console.error(err)
-      request.session.error = "Something went wrong!"
-      return response.redirect("/admin/users/register")
+      return response.render("admin/animationsMessages/error")
     }
   },
 
@@ -122,18 +119,13 @@ module.exports = {
         name,
         email,
         is_admin: is_admin || false
-      }) 
+      })
 
-      request.session.success = "Account updated successfully!"
-
-      return response.status(200).redirect(`/admin/users/${user.id}/edit`)
+      return response.status(200).render("admin/animationsMessages/users/update", { name })
     } 
     catch (err) {
       console.error(err)
-
-      request.session.error = "Something went wrong!"
-
-      return response.redirect(`/admin/users/${user.id}/edit`)
+      return response.render("admin/animationsMessages/error")
     }
   },
 
@@ -158,15 +150,12 @@ module.exports = {
       })
 
       await Promise.all(removeRecipesFilesPromise)
-
-      request.session.success = "User deleted successfully!"
-
-      return response.status(204).redirect("/admin/users")
+      
+      return response.status(201).render("admin/animationsMessages/users/delete")
     } 
     catch (err) {
       console.error(err) 
-      request.session.error = "Something went wrong!"
-      return response.redirect("/admin/users") 
+      return response.render("admin/animationsMessages/error")
     }
   }
 }

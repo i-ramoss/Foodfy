@@ -1,0 +1,43 @@
+.message-lottie {
+  display: flex;
+  flex-direction: column;
+
+  margin: auto;
+
+  width: 100%;
+  max-width: 940px;
+
+  text-align: center;
+}
+
+.message-lottie h2 {
+  font-size: 36px;
+  
+  margin-bottom: 10px;
+}
+
+.message-lottie p {
+  font-size: 18px;
+
+  margin-bottom: 15px;
+}
+
+.message-lottie a {
+  width: 150px;
+
+  align-self: center;
+
+  text-align: center;
+}
+
+.success-lottie, 
+.error-lottie,
+.update-lottie {
+  height: 300px;
+
+  margin-bottom: 55px;
+}
+
+.error.message-lottie a {
+  background-color : rgb(220, 104, 104);
+}

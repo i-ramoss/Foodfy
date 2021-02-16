@@ -66,14 +66,11 @@ module.exports = {
         created_at: date(Date.now()).iso
       })
 
-      request.session.success = "Chef successfully created!"
-      
-      return response.status(201).redirect(`/admin/chefs`)
+      return response.status(201).render("admin/animationsMessages/chefs/success")
     } 
     catch (err) {
       console.error(err)
-      request.session.error = "Something went wrong!"
-      return response.redirect(`/admin/chefs`)
+      return response.render("admin/animationsMessages/error")
     }
   },
 
@@ -141,14 +138,11 @@ module.exports = {
         await File.delete('id', file_id)
       }
 
-      request.session.success = "Chef updated successfully!"
-
-      return response.status(200).redirect(`/admin/chefs/${chef_id}`)  
+      return response.status(200).render("admin/animationsMessages/chefs/update", { name, chef_id })
     } 
     catch (err) {
       console.error(err)
-      request.session.error = "Something went wrong!"
-      return response.redirect(`/admin/chefs/${request.body.id}`) 
+      return response.render("admin/animationsMessages/error")
     }
   },
 
@@ -180,14 +174,11 @@ module.exports = {
 
       await Promise.all(removeRecipesFilesPromise)
 
-      request.session.success = "Chef deleted successfully!"
-
-      return response.redirect("/admin/chefs")
+      return response.status(201).render("admin/animationsMessages/chefs/delete")
     }
     catch (err) {
       console.error(err)
-      request.session.error = "Something went wrong!"
-      return response.redirect("/admin/chefs/")
+      return response.render("admin/animationsMessages/error")
     }
   }
 }
