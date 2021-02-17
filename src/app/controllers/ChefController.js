@@ -174,7 +174,7 @@ module.exports = {
 
       await Promise.all(removeRecipesFilesPromise)
 
-      return response.status(201).render("admin/animationsMessages/chefs/delete")
+      return response.status(201).redirect("/admin/chefs")
     }
     catch (err) {
       console.error(err)

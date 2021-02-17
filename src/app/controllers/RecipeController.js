@@ -163,7 +163,8 @@ module.exports = {
         }
       })
 
-      return response.status(201).render("admin/animationsMessages/recipes/delete")
+      return response.status(201).redirect("/admin/recipes")
+
     } 
     catch(err) {
       console.error(err)
