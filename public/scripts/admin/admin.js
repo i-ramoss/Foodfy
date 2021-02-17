@@ -36,56 +36,38 @@ const AddIngredientAndStepPreparation = {
 }
 
 
-// Confirm delete (Sweet Alert)
-/*
-const form = document.getElementById("form-delete")
-const buttons = document.querySelectorAll(".delete")
-
-const confirmDelete = () => {
-  for (button of buttons) {
-    button.addEventListener("click", event => {
-      event.preventDefault()
-  
-      const alert = Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#04f704",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then( result => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-  
-          const confirm = document.querySelector(".swal2-confirm.swal2-styled")
-  
-          confirm.addEventListener("click", () => {
-            setTimeout(() => {
-              form.submit()
-            }, 200)
-          })
-        }
-      })
-    })
-  }
-}
-
-// if (buttons || button) confirmDelete()
-*/
-
-
-// Delete chef, user or recipe
+// Delete chef, user or recipe using SweetAlert
 const formsDelete = document.querySelectorAll("#form-delete")
 
 formsDelete.forEach( form => form.addEventListener("submit", e => {
-  confirm("Do you really want to delete this?") ? null : e.preventDefault()
-}))
+  e.preventDefault()
 
+  const alert = Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#04f704",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then( result => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        'Deleted!',
+        'The data has been successfully deleted.',
+        'success'
+      )
+
+      const confirm = document.querySelector(".swal2-confirm.swal2-styled")
+
+      confirm.addEventListener("click", () => {
+        setTimeout(() => {
+          form.submit()
+        }, 200)
+      })
+    }
+  })
+}))
 
 
 // Image Upload
