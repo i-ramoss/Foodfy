@@ -21,11 +21,13 @@
 
 ## :interrobang: O que é o Foodfy?
 
-O Foodfy é um site de receitas que foi desenvolvido no Bootcamp LaunchBase.
+O Foodfy é o desafio fullstack final do Bootcamp Launchbase, da Rocketseat.
+<br>
+É uma aplicação desenvolvida para o gerenciamento de receitas onde se é possível cadastrar os Chefs e suas respectivas receitas.
 
 ## :rocket: Tecnologias:
 
-Esse projeto foi desenvolvido com as seguintes tecnologias:
+Este projeto foi desenvolvido com as seguintes tecnologias:
 
 ### Frontend:
 - [HTML][html]
@@ -48,7 +50,12 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## :fork_and_knife: Gif - Sessão Pública do Foodfy: 
 <div align="center">
-  <img src=".github/public-session-foodfy.gif" alt="Foodfy" height="450px">
+  <img src=".github/public-session-foodfy.gif" alt="Public-Foodfy" height="450px">
+</div>
+
+## :fork_and_knife: Gif - Sessão Administrativa do Foodfy: 
+<div align="center">
+  <img src=".github/admin-session-foodfy.gif" alt="Private-Foodfy" height="450px">
 </div>
 
 
@@ -127,6 +134,9 @@ $ cd Foodfy
 $ npm start
 
 # A aplicação estará rodando na porta 5000 (http://localhost:5000/)
+
+# Popule o DB com dados falsos, utilizando o Faker.js
+$ node seeds.js
 ```
 
 
