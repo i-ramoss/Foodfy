@@ -19,11 +19,6 @@
 </p>
 
 
-<div align="center">
-  <img src=".github/foodfy_2.gif" alt="Foodfy" height="450px">
-</div>
-
-
 ## :interrobang: O que é o Foodfy?
 
 O Foodfy é um site de receitas que foi desenvolvido no Bootcamp LaunchBase.
@@ -49,6 +44,12 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Nodemailer][nodemailer]
 - [BcryptJs][bcryptjs]
 - [Faker][faker]
+
+
+## :fork_and_knife: Gif - Sessão Pública do Foodfy: 
+<div align="center">
+  <img src=".github/public-session-foodfy.gif" alt="Foodfy" height="450px">
+</div>
 
 
 ## :construction_worker: Como usar: (Em desenvolvimento)
