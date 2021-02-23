@@ -6,7 +6,7 @@ const Chef = require("../models/Chef")
 
 const LoadRecipeService = require("../services/LoadRecipeService")
 
-const { date } = require("../lib/utils")
+const { date } = require("../../lib/utils")
 
 module.exports = {
   async index(request, response) {

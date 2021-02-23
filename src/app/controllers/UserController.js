@@ -6,8 +6,8 @@ const User = require("../models/User")
 const File = require("../models/File")
 const Recipe = require("../models/Recipe")
 
-const mailer = require("../lib/mailer")
-const { emailTemplate } = require("../lib/utils")
+const mailer = require("../../lib/mailer")
+const { emailTemplate } = require("../../lib/utils")
 
 module.exports = {
   async list(request, response) {

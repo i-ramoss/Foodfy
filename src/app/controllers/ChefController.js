@@ -7,7 +7,7 @@ const File = require("../models/File")
 const LoadChefService = require("../services/LoadChefService")
 const LoadRecipeService = require("../services/LoadRecipeService")
 
-const { date } = require("../lib/utils")
+const { date } = require("../../lib/utils")
 
 module.exports = {
   async index(request, response) {
