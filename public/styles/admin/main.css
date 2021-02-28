@@ -130,7 +130,7 @@ button + button {
 }
 
 .exit form button {
-  background-color: var(--body-color);
+  background: none;
 
   outline: none;
 
